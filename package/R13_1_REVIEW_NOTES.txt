@@ -35,6 +35,10 @@ Sources reviewed (Drive folder TLM_R13):
   c) 00_START_HERE.txt said the manifest lists 79 files. It lists 80
      (the Q19.2 rain burst was added). Corrected.
   d) Fix list, START_HERE and BUILD_METADATA updated to match.
+  e) The 10 placeholder sounds R13.1 left untouched (S07, Q1, Q2, Q11, Q37,
+     Q38, Q42.5, Q43, Q59, Q65) are in none of the Drive zips. They are
+     bundled in this package, taken from TLM_R13_REBUILT_Show_Files on Drive;
+     each file's length matches what the QLab workspace expects.
 
 3. STILL TO DO (these can't be done in the files)
   Show Mac, in QLab Workspace Settings (they depend on that Mac's hardware):
