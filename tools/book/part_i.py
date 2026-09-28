@@ -32,7 +32,7 @@ BACKDROPS = {  # id: (title, image prompt, motion prompt or None, note)
               "Plays under 'the lighting churns' (Q16.5); out on the Q17 blackout."),
     "BG-05": ("Ship — calm sea",
               "A blue sunny day on a gentle ocean, soft white clouds, distant horizon (R10: ship deck removed to "
-              "match the script, p 21).", "Gentle swell, clouds drift, sun glints move on the water.",
+              "match the script, p 19).", "Gentle swell, clouds drift, sun glints move on the water.",
               "Keep the rocking tiny — strong motion on a big screen makes audiences queasy."),
     "BG-06": ("Weather report — 'sunny'",
               "An absurdly perfect sunny sky, a big bright sun, perfect blue sky, fluffy clouds, over a calm sea.",
@@ -83,21 +83,21 @@ BACKDROPS = {  # id: (title, image prompt, motion prompt or None, note)
     "BG-18": ("Grand ballroom",
               "A grand royal ballroom by the sea, crystal chandeliers, red drapes and tall arched windows with the "
               "ocean beyond, red carpet, warm evening light.",
-              "Chandelier crystals glint, curtains stir, the sea sparkles.", "Scene Six (script p 39)."),
+              "Chandelier crystals glint, curtains stir, the sea sparkles.", "Scene Six (script p 34)."),
     "BG-19": ("Dingy cave with jars and bones",
               "A dark sea-witch's cave, shelves of glowing potion jars, fish skeletons on the floor, eerie green and "
               "purple glow, a faint pool of light in the centre.",
               "Potions glow and pulse slowly, murky particles drift, green mist creeps.",
-              "Scene Eight (script p 50). The shell is lit by SP4 — no bright glow in the video centre."),
+              "Scene Eight (script p 43). The shell is lit by SP4 — no bright glow in the video centre."),
     "BG-20": ("Palace gardens wedding (outdoors)",
               "The sunny outdoor terrace of a seaside palace dressed for a wedding, a white flower arch, rose "
               "garlands, the blue sea beyond, soft golden light.",
-              "Petals drift down slowly, garlands flutter, the sea sparkles.", "Scene Ten (script p 59)."),
+              "Petals drift down slowly, garlands flutter, the sea sparkles.", "Scene Ten (script p 51)."),
     "BG-21": ("After the storm — clearing sky",
               "Storm clouds breaking apart to a calm blue sky and a rainbow, the sea settling (R10: built from the "
               "real BG-07 clouds clearing to the BG-05 sky).",
               "Clouds drift apart, sunlight widens, the rainbow brightens slowly.",
-              "Q27 — 'the cyclorama reverts to calm seas' (script p 25)."),
+              "Q27 — 'the cyclorama reverts to calm seas' (script p 22)."),
     "BG-22": ("Rock Lobster beach party",
               "A retro beach party under the sea: the reef strung with glowing lanterns in hot pink, orange, lime and "
               "turquoise, surfboards in the sand, bubbles like confetti.",
@@ -227,16 +227,16 @@ def build(path):
                            ("LEFTPADDING", (0, 0), (-1, -1), 1), ("RIGHTPADDING", (0, 0), (-1, -1), 1)]))
     d.add(g)
 
-    d.add(H1("3 Script cyclorama calls — checked against R13.1"))
+    d.add(H1("3 Script cyclorama calls — April 2026 script pages"))
     calls = [("p 8", "Busy coral reef with fish and sea creatures", "Q9", "BG-17 (after BG-22 for Rock Lobster at Q8)"),
-             ("p 21", "Blue sunny day on a gentle ocean", "Q18", "BG-05 (deck removed in R10)"),
-             ("p 24", "Dark and stormy with lightning", "Q20", "BG-07; lightning from the Mantra"),
-             ("p 25", "Cyclorama reverts to calm seas", "Q27", "BG-21 clearing sky"),
-             ("p 31", "Underwater scene", "Q31", "BG-02 loop B"),
-             ("p 39", "Inside a grand ballroom", "Q39", "BG-18; BG-23 rave for Crab Rave at Q40"),
-             ("p 47", "Under the sea (curtains slowly open)", "Q45–45.5", "BG-11 jellyfish"),
-             ("p 50", "Dark dingy cave, fish bones and weird jars", "Q50", "BG-19; BG-09 magic at Q52"),
-             ("p 59", "Outdoors at the royal palace, wedding flowers", "Q60", "BG-20; BG-25 confetti at Q63")]
+             ("p 19", "Blue sunny day on a gentle ocean", "Q18", "BG-05 (deck removed in R10)"),
+             ("p 21", "Dark and stormy with lightning", "Q20", "BG-07; lightning from the Mantra"),
+             ("p 22", "Cyclorama reverts to calm seas", "Q27", "BG-21 clearing sky"),
+             ("p 27", "Underwater scene", "Q31", "BG-02 loop B"),
+             ("p 34", "Inside a grand ballroom", "Q39", "BG-18; BG-23 rave for Crab Rave at Q40"),
+             ("p 41", "Under the sea (curtains slowly open)", "Q45–45.5", "BG-11 jellyfish"),
+             ("p 43", "Dark dingy cave, fish bones and weird jars", "Q50", "BG-19; BG-09 magic at Q52"),
+             ("p 51", "Outdoors at the royal palace, wedding flowers", "Q60", "BG-20; BG-25 confetti at Q63")]
     d.add(table(["Page", "Script calls for", "Cue", "R13.1 media"], [list(c) for c in calls],
                 [14 * mm, 70 * mm, 20 * mm, 66 * mm]))
     d.add(P("Scenes Two, Four and Nine are played in front of the tabs: their pictures (BG-03, BG-08, BG-13) are "
