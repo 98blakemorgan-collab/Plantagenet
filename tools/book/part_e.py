@@ -37,14 +37,13 @@ def build(path):
     d.add(stats([(str(S_.TOTAL_QLAB_CUES), "cues in the workspace"), (str(S_.N_MASTER), "master cue groups"),
                  ("10", "song groups, %d section GOs" % S_.N_SONG_SECTIONS), ("80", "media files · 99 targets"),
                  ("3", "emergency cues E1–E3")]))
-    d.add(box("new", "WHAT CHANGED FROM R8",
-              ["**R8** built the workspace on the Mac with an AppleScript and left every sound as a red placeholder. "
-               "**R13.1 is already built:** open `%s` from the show folder — no build script." % S_.QLAB_NAME,
+    d.add(box("rule", "HOW THE WORKSPACE WORKS",
+              ["The workspace is already built: open `%s` from the show folder — no build script." % S_.QLAB_NAME,
                "Every lighting cue targets the split Mantra memories (P2/P3/P4). Flash returns are timed Network cues "
                "(0.2–1.0 s pre-wait). Each section/song change also releases the memory it leaves (Level=0). Q57 "
-               "starts the HAYWIRE chase and the new **Q57b** restores Ariel. 58 audio cues now play the new SFX pack "
+               "starts the HAYWIRE chase and **Q57b** restores Ariel. 58 audio cues play the SFX pack "
                "and the 9 supplied songs; Q19.2 plays a rain burst; songs fade and stop at Q9, Q15, Q15.5, Q19, "
-               "Q41 and Q52. Stale R11 aliases are cleared so media is found by its path inside the show folder."]))
+               "Q41 and Q52. Media is found by its path inside the show folder."]))
 
     d.add(H1("1 Licence and Mac preparation"))
     d.add(table(["Need", "Unlicensed", "With any licence"], [
@@ -74,7 +73,7 @@ def build(path):
         ["R13_1_SFX_RETARGET_MAP.csv", "Which new SFX file plays on which cue"],
         ["R13_MANTRA_SECTION_MAP.csv/.txt", "Which QLab cue fires each Mantra cue"],
         ["R13_1_QLAB_AND_DESK_FIX_LIST.csv", "Done / still to do"],
-        ["docs/", "Cue sheets, Mantra labels, FOH notice, review, R13 guide"]],
+        ["docs/", "Cue sheets, Mantra labels, FOH notice, review and fix list"]],
         [60 * mm, 110 * mm]))
     d.add(P("To assemble the folder from the Drive zips use `ASSEMBLE_R13_1.command` from the R13.1 package "
             "(it checks all 80 media paths and the file checksums)."))
@@ -158,7 +157,7 @@ def build(path):
         ["No sound at the desk", "Audio patch device; outputs 1–2; StudioLive channel source = USB"],
         ["Video on the laptop screen", "Stage 1 assigned to the wrong display; displays mirrored"],
         ["Mantra doesn't respond", "Licence; MANTRA patch interface = wired Ethernet; OSC trigger on the desk; port 8000"],
-        ["Old R11 media opens", "Can't happen in R13.1 (aliases cleared) — check the folder name and Desktop location"],
+        ["Media shows red / missing", "Check the show folder name and that it sits on the Desktop"],
         ["A cue plays the wrong length", "Audio was replaced under the same name — use a new name and re-drag"]],
         [48 * mm, 122 * mm], bold_first=True))
     d.add(notes_area("QLab notes", 6))

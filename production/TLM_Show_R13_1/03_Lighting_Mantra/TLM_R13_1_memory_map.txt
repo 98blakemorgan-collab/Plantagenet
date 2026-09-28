@@ -1,5 +1,5 @@
 TLM_SHOW_2026_R13_FLASHY_SCENE_SPLIT.mtr - memory map (R13.1, 28 September 2026)
-Patch, custom fixtures, rig view and network unchanged from BASE_SHOW_2026 / R8. Desk opens on Page 2.
+Patch, custom fixtures, rig view and network as BASE_SHOW_2026 (venue base). Desk opens on Page 2.
 QLab fires /PlayMemory/Page=P/Memory=M/Cue=C/Level=100/Fade=ms  and releases with Level=0.
 
 P1  Venue / rig base           Venue house looks (base file)

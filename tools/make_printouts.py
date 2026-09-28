@@ -516,7 +516,7 @@ def build_cue_sheets(groups, by_pmc, mems):
     story.append(make_table(["Q", "Moment", "Haze", "Water", "Action / preset", "Done"],
                             rows, [13 * mm, 55 * mm, 22 * mm, 16 * mm, 156 * mm, 15 * mm], st, rs, interval))
     story += strip("Stop haze or water immediately if visibility, slip or electrical safety is compromised — tell SM on Ch B. "
-                   "No strobe is stored in R13; white flash hits in the storm (Q21/23/25), transformation (Q35) and restore (Q57b). "
+                   "No strobe is stored in the show; white flash hits in the storm (Q21/23/25), transformation (Q35) and restore (Q57b). "
                    "Flashing-lights / haze notice for the doors: docs/FOH_Flashing_Lights_and_Haze_Notice.pdf.", st)
     doc.build(story)
     return path
@@ -569,7 +569,7 @@ def build_labels(mems):
 
     # fixture faders: 4 rows of 12 → two rows of 12 per table, cut lines
     story += [P("Fixture fader labels — Mantra Lite 1–24 · Wing 1 25–36 · Wing 2 37–48", st["title"]),
-              P("Unchanged from R8: R13 keeps the venue patch. Cut on the lines and stick one label above each "
+              P("The venue patch. Cut on the lines and stick one label above each "
                 "fixture fader. Numbers = Mantra fixture numbers. Colour bar = fixture type.", st["sub"]),
               Spacer(0, 3 * mm)]
     titles = ["CONSOLE · 1–12", "CONSOLE · 13–24", "WING 1 · 25–36", "WING 2 · 37–48"]
@@ -628,7 +628,7 @@ def build_labels(mems):
     pages.append(("PAGE 7 – LOOK LIBRARY", [(60 + i, mem_name(60 + i)) for i in range(7)] + [(None, "")] * 3))
 
     story += [P("Playback labels — 10 playback faders, one row per page", st["title"]),
-              P("R13 splits the show: <b>P2 Act One, P3 Act Two, P4 songs</b>. QLab picks the right memory; keep the "
+              P("The show is split: <b>P2 Act One, P3 Act Two, P4 songs</b>. QLab picks the right memory; keep the "
                 "P2 row on the desk in Act One, swap to P3 at the interval, and keep P4 handy for song recovery. "
                 "Blank cells are empty memories.", st["sub"]), Spacer(0, 2 * mm)]
     perf = ("PAGE 2", "PAGE 3", "PAGE 4")

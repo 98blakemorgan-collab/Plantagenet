@@ -1,8 +1,8 @@
-"""Part J — Prompt Copy (PRIVATE).
+"""Part J — Prompt Copy.
 
-Built from the licensed script (production/private/, gitignored): each script page is reduced onto an A4 page with a
-cue margin (amber standbys, green GOs, blue song starts) taken from the calling script. The output contains the
-licensed text, so it is written to production/private only and must never be committed to this public repo.
+Built from the licensed script (production/script_source/): each script page is reduced onto an A4 page with a
+cue margin (amber standbys, green GOs, blue song starts) taken from the calling script. Licensed material: keep this
+repository private.
 """
 import os
 
@@ -13,7 +13,7 @@ import show as S_
 from core import REV, DATE
 
 HERE = os.path.dirname(os.path.abspath(__file__))
-SCRIPT = os.path.join(HERE, "..", "..", "production", "private", "TLM_Script_Revised_April_2026.pdf")
+SCRIPT = os.path.join(HERE, "..", "..", "production", "script_source", "TLM_Script_Revised_April_2026.pdf")
 FONT = "/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf"
 FONTB = "/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf"
 AMBER, GREEN, BLUE, NAVY, GREY = (0.93, 0.55, 0.05), (0.1, 0.55, 0.3), (0.15, 0.4, 0.75), (0.07, 0.16, 0.29), (0.45, 0.45, 0.5)
@@ -49,7 +49,7 @@ def build(path):
     pg.insert_text((50, 90), "PART J", fontname="djb", fontsize=14, color=(1, 1, 1))
     pg.insert_text((50, 130), "Prompt Copy — Licensed Script", fontname="djb", fontsize=24, color=(1, 1, 1))
     pg.insert_text((50, 160), "The Little Mermaid · %s · %s" % (REV, DATE), fontname="dj", fontsize=11, color=(1, 1, 1))
-    body = ("The licensed script (Nick Lawrence Pantomimes, revised April 2026), %d pages, with every R13.1 cue in the margin.\n\n"
+    body = ("The licensed script (Nick Lawrence Pantomimes, revised April 2026), %d pages, with every cue in the margin.\n\n"
             "AMBER  SB = standby, on the line shown.\n"
             "GREEN  GO = the QLab GO; departments and what happens.\n"
             "BLUE   SONG = the song group fires straight after the GO; its section GOs follow the music.\n\n"

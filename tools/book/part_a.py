@@ -34,10 +34,10 @@ RECS = [
     ("R-25", "Medium", "Lighting", "Turn the upstage bar away from the projection screen", "LX", "§4"),
     ("R-26", "High", "Rigging", "Floor booms in place of side trusses", "TD / producer", "§4"),
     ("R-27", "High", "Crew", "One show operator: keep the sound mix simple", "Producer / Sound", "§2"),
-    ("R-28", "High", "Audio", "NEW: supply the backing tracks (S2, S3, S5, check S4), the S7 song and the ten silent placeholders before dress", "MD / Sound", "§8"),
-    ("R-29", "High", "Show control", "NEW: set the show-Mac QLab settings (audio, video, network interface) and add the Mantra OSC trigger", "QLab op / LX", "§7"),
-    ("R-30", "Medium", "Lighting", "NEW: check the R13 colour-forward looks from the house — faces, screen washout, bold backlight choices", "LX / Director", "§6"),
-    ("R-31", "Medium", "Show control", "NEW: agree who calls the 56 song-section GOs (DSM or QLab op to the music)", "SM / QLab op", "§12"),
+    ("R-28", "High", "Audio", "Supply the backing tracks (S2, S3, S5, check S4), the S7 song and the ten silent placeholders before dress", "MD / Sound", "§8"),
+    ("R-29", "High", "Show control", "Set the show-Mac QLab settings (audio, video, network interface) and add the Mantra OSC trigger", "QLab op / LX", "§7"),
+    ("R-30", "Medium", "Lighting", "Check the colour-forward looks from the house — faces, screen washout, bold backlight choices", "LX / Director", "§6"),
+    ("R-31", "Medium", "Show control", "Agree who calls the 56 song-section GOs (DSM or QLab op to the music)", "SM / QLab op", "§12"),
 ]
 
 MICS = [("1", "Ariel (Hayley)", "Headset/radio", "Lead vocal: Part of Your World, Time of My Life; offstage voice lines (Scene Eight)"),
@@ -105,36 +105,35 @@ def build(path):
 
     d.add(H1("Document control"))
     d.add(table(["Item", "Detail"], [
-        ["Revision", "%s — the R13 FLASHY SCENE SPLIT show with the R13.1 fixes (supersedes R8/R9)" % REV],
+        ["Revision", "%s" % REV],
         ["Date", DATE],
         ["Show files", "%s · %s · folder %s" % (S_.QLAB_NAME, S_.MTR_NAME, S_.FOLDER)],
         ["Companion parts", "B Lighting · C Patch · D Mantra · E QLab · F Cue sheets · G DSM script · H Props · I Projection · J Prompt copy · K Quick reference · L Stream Deck & tech test"]],
         [34 * mm, 136 * mm], bold_first=True))
-    d.add(H2("What changed in R13.1 (since R8)"))
+    d.add(H2("The show at a glance"))
     d.add(bullets([
-        "**Show control rebuilt (R13):** the Mantra show is split — P2 Act One scenes, P3 Act Two scenes, P4 songs, P5 FX, "
+        "**Show control:** the Mantra show is split — P2 Act One scenes, P3 Act Two scenes, P4 songs, P5 FX, "
         "P6–P7 look library, P8 the full 153-position backup. QLab targets the exact memory and cue for every step.",
-        "**Colour-forward lighting (R13):** stronger LX1 colour, side light, LX2 backlight and PixBar movement over neutral faces; "
+        "**Colour-forward lighting:** strong LX1 colour, side light, LX2 backlight and PixBar movement over neutral faces; "
         "fast colour snaps on musical impacts; no strobe (Part B).",
         "**Songs:** ten song memories (S1–S10) with %d section cues; nine tracks supplied (S2, S3, S5 still vocal versions; S7 "
         "to choose)." % S_.N_SONG_SECTIONS,
-        "**R13.1 fixes:** flash returns fired by QLab (no desk link times), memory releases so looks can't stack, HAYWIRE on at "
-        "Q57 and a new **Q57b** Ariel restored, 58 audio cues re-targeted to the new SFX pack, Q19.2 rain burst, song fade-and-stops, "
-        "stale R11 aliases cleared.",
-        "**Projection:** backdrops R10 — 21 in the cue plan, ship scenes matched to the script, seamless 15–16 s loops (Part I).",
-        "**Script:** re-paged to the licensed script as supplied (55 pp); the contents now list a Scene Eleven that has no text (R-01).",
+        "**Timing:** flash returns are fired by QLab (no desk link times), memory releases stop looks stacking, HAYWIRE runs "
+        "from Q57 to Q57b, Q19.2 is the rain burst, and songs fade and stop on the next scene cue.",
+        "**Projection:** 21 backdrops in the cue plan, matched to the script's cyclorama calls, seamless 15–16 s loops (Part I).",
+        "**Script:** paged to the licensed script (revised April 2026, 55 pp); the contents list a Scene Eleven that has no text (R-01).",
         "**Casting:** microphone plan and beginners built from the casting sheet (§8)."]))
-    d.add(P("Key: teal boxes = recommendations (R-xx), coral = verify on site / safety, navy = operating rules, yellow = new in R13.1.", "muted"))
+    d.add(P("Key: teal boxes = recommendations (R-xx), coral = verify on site / safety, navy = operating rules, yellow = to action before tech.", "muted"))
 
     d.add(H1("R Recommendations register"))
     d.add(stats([(str(len([r for r in RECS if r[1] == "High"])), "high priority"),
                  (str(len([r for r in RECS if r[1] == "Medium"])), "medium priority"),
                  (str(len([r for r in RECS if r[1] == "Low"])), "low priority"),
-                 ("4", "new in R13.1 (R-28 to R-31)")]))
+                 ("4", "to action before tech (R-28 to R-31)")]))
     d.add(table(["ID", "Priority", "Area", "Recommendation", "Owner", "Ref", "Done"],
                 [[r[0], r[1], r[2], r[3], r[4], r[5], "☐"] for r in RECS],
                 [13 * mm, 15 * mm, 22 * mm, 70 * mm, 27 * mm, 11 * mm, 12 * mm],
-                tints=[(i, "new") for i, r in enumerate(RECS) if "NEW" in r[3]]))
+                tints=[(i, "new") for i, r in enumerate(RECS) if r[0] in ("R-28", "R-29", "R-30", "R-31")]))
 
     d.add(H1("1 Production basis and technical philosophy"))
     d.add(P("Fixed lighting and reliable local fallback rather than moving-head dependence or fragile automation. "
@@ -143,7 +142,7 @@ def build(path):
     d.add(table(["Requirement", "Technical response"], [
         ["No moving heads", "Zone washes and pre-focused specials; crossfade specials to suggest movement (voice transfer)"],
         ["Projection screen", "Front/key beams kept off the screen; projection for environment, lighting for performers"],
-        ["Colour-forward R13 design", "Energy from LX1, side, back and PixBars; FOH faces stay near-white"],
+        ["Colour-forward design", "Energy from LX1, side, back and PixBars; FOH faces stay near-white"],
         ["One show operator", "QLab GO fires light, sound and video together; Mantra and StudioLive beside the Mac as fallback"],
         ["Haze", "Short, controlled bursts for underwater, storm, magic and lair; clear air for dialogue"]],
         [48 * mm, 122 * mm], bold_first=True))
@@ -193,7 +192,7 @@ def build(path):
             "PARs (#23–32, 39), 6 PixBars (#33–38) and the hazer (#40). FOH truss #1–8; LX1 #9–18; LX2 #19–20, 23–28, 33–39; "
             "SR boom #21, 29, 30; SL boom #22, 31, 32. The projector hangs centre stage towards the back and throws upstage. "
             "Rig plan, positions and focus: Part B §1 and §7; Quick Reference card 1."))
-    d.add(box("rec", "R-24 · R-25 · R-26", "Confirm bar loads, boom bases and wing space. Turn LX2 away from the screen — R13 runs "
+    d.add(box("rec", "R-24 · R-25 · R-26", "Confirm bar loads, boom bases and wing space. Turn LX2 away from the screen — the show runs "
               "the backlight hard. Use a weighted floor boom in each wing (no side trusses)."))
 
     d.add(H1("5 Power, data, cable and rigging"))
@@ -216,7 +215,7 @@ def build(path):
     d.add(table(["Look", "Desk", "Layers", "As programmed"],
                 [["**%s**" % L["name"], "P%d M%d" % (L["page"], L["mem"]), swatch_strip(L["summary"]), describe(L["summary"])]
                  for L in S_.LOOKS], [30 * mm, 14 * mm, 57 * mm, 69 * mm]))
-    d.add(box("rec", "R-30 · NEW", "The R13 looks are deliberately bold. At the focus session check every look from the house: "
+    d.add(box("rec", "R-30", "The looks are deliberately bold. At the focus session check every look from the house: "
               "faces readable, screen not washed out, and bold choices (e.g. coral-red backlight in M03 UNDERWATER) agreed with "
               "the director. Photograph each look at dress (R-20)."))
     d.add(table(["Before the show", "During the show", "If something goes wrong"], [[
@@ -249,18 +248,18 @@ def build(path):
                 [["**%s** %s" % (s["num"], s["title"]), "Q" + s["at"], s["credit"].split(" - ")[-1] if False else s["mus"],
                   s["track_kind"], s["status"]] for s in S_.SONGS], [50 * mm, 12 * mm, 26 * mm, 42 * mm, 40 * mm],
                 tints=[(i, "crit") for i, s in enumerate(S_.SONGS) if s["status"] != "supplied"]))
-    d.add(box("rec", "R-28 · NEW", "Before dress: backing tracks for S2 Feeling Good, S3 Part of Your World and S5 Time of My "
+    d.add(box("rec", "R-28", "Before dress: backing tracks for S2 Feeling Good, S3 Part of Your World and S5 Time of My "
               "Life (and S4 if the file has vocals); choose the S7 jellyfish chorus; supply house/preshow, end of Act One, "
               "interval and exit music (Q1, Q2, Q37, Q38, Q65), Ariel's recorded line (Q42.5), the cue-card underscore (Q43), "
               "the soft resolve (Q11) and land ambience (Q59). Save each under a NEW file name and drag it onto the cue."))
-    d.add(H2("Sound effects — R13.1 pack"))
-    d.add(P("38 new *_v2 files built from the 40-sound SFX pack, plus Q19.2 rain burst and Q57.5 voice-restore resolve. Beds "
+    d.add(H2("Sound effects"))
+    d.add(P("38 *_v2 files built from the 40-sound SFX pack, plus Q19.2 rain burst and Q57.5 voice-restore resolve. Beds "
             "loop (Q4, Q20, Q22, Q31, Q45, Q50, Q60); Q25 runs 60 s and Q26 90 s. Full map: Part E §6."))
     d.add(box("rec", "R-06 · R-09 · R-19", "Legal, coordinated wireless frequencies (no 694–820 MHz). 8 radio packs + 1 spare; "
               "consider packs for the two Spirits. Check levels with an SPL meter for a family audience."))
 
     d.add(H1("9 Projection and media"))
-    d.add(P("Backdrops R10 in the R13.1 cue plan (Part I). Each picture change is a 2 s crossfade in the same GO as its light "
+    d.add(P("The backdrops in the cue plan (Part I). Each picture change is a 2 s crossfade in the same GO as its light "
             "and sound; blackouts fade to black (plus projector AV-mute)."))
     story = []
     items = [("Q4", "BG-02"), ("Q8", "BG-22"), ("Q20", "BG-07"), ("Q27", "BG-21"), ("Q39", "BG-18"), ("Q40", "BG-23"),
@@ -405,7 +404,7 @@ def build(path):
     d.add(H2("C Sources"))
     d.add(bullets(["Licensed script, Nick Lawrence Pantomimes, revised April 2026 (as supplied); casting sheet 28 Sep 2026.",
                    "R13.1 show files: %s, %s, section map, media manifest, SFX retarget map, fix list." % (S_.QLAB_NAME, S_.MTR_NAME),
-                   "Production Book R8.1, R13 User Guide, R13 Production Book update, R13.1 review and fix list, Backdrops R10.",
+                   "Show user guide, review and fix list, backdrop set BG-01–BG-26.",
                    "LSC Mantra Lite User Manual v3; Figure 53 QLab 5 documentation."]))
     d.add(notes_area("Technical notes", 8))
     return d.build()

@@ -6,7 +6,7 @@ import show as S_
 def build(path):
     d = PartDoc(path, "L", "Stream Deck & Tech Test Run",
                 "Stream Deck key layout and profile set-up, emergency hotkeys, and the tech test run that steps through every "
-                "cue, song section and critical sequence of the R13.1 show.")
+                "cue, song section and critical sequence of the show.")
     d.add(title_block("PART L · %s · %s" % (REV, DATE), "Stream Deck & Tech Test Run",
                       "The show operator's Stream Deck, and a structured run through every cue"))
     d.add(stats([("8", "Stream Deck keys"), (str(S_.N_MASTER), "master cues"), (str(S_.N_SONG_SECTIONS), "song-section GOs"),
@@ -19,13 +19,13 @@ def build(path):
         ["STOP SOUND", "row 2, key 3", "F15 → E1 STOP ALL"], ["SAVE", "row 3, key 5", "Cmd+S — rehearsals only"]],
         [30 * mm, 30 * mm, 110 * mm], bold_first=True))
     d.add(P("Every key is a plain Hotkey, so QLab must be the front window. The profile (05_Stream_Deck/TLM QLab "
-            "Show.streamDeckProfile) is unchanged from R8 — the keys are the same in R13.1."))
+            "Show.streamDeckProfile) holds this layout."))
     d.add(H2("A Import the profile"))
     d.add(steps(["Install the Elgato Stream Deck app; plug the Stream Deck in.",
                  "Double-click TLM QLab Show.streamDeckProfile › Import. Select the TLM QLab Show profile.",
                  "If the import fails, build the keys by hand: System › Hotkey on each key, press the key in the table, add the title."]))
     d.add(H2("B Give the emergency cues their hotkeys in QLab"))
-    d.add(box("verify", "NOT SET IN THE R13.1 WORKSPACE", "E1–E3 exist below cue 66 but have no hotkeys yet."))
+    d.add(box("verify", "NOT SET IN THE WORKSPACE", "E1–E3 exist below cue 66 but have no hotkeys yet."))
     d.add(steps(["Select **E1 STOP ALL** › Inspector › Triggers › tick Hotkey › press F15.",
                  "Select **E2 VID-99 BLACK** › Triggers › Hotkey › F13.",
                  "Select **E3 SAFE LIGHT** › Triggers › Hotkey › F14.",
@@ -34,9 +34,7 @@ def build(path):
             "positions and icons. Allow OSC access in Workspace Settings › Network (no passcode)."))
 
     d.add(H1("2 Tech test run"))
-    d.add(box("new", "R13.1", "The R8 TLM_Tech_Test_Run AppleScript was written for the old single-list workspace and has not "
-              "been re-tested against R13.1 (its Mantra-position display assumes P2 M1). It is kept in 02_QLab/scripts for "
-              "reference; use the structured run below, which works straight from the R13.1 workspace."))
+    d.add(P("Run the test straight from the workspace in the passes below; no script is needed."))
     d.add(H2("Before you start"))
     d.add(checklist(["QLab front window, Edit Mode", "Mantra on, Default Show loaded, O (All Cues Off)", "Haze off, water disconnected",
                      "Playback low on the StudioLive", "Anyone on stage warned before storm and flash cues",

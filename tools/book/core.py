@@ -167,7 +167,7 @@ def table(header, rows, widths, tints=(), bold_first=False, total=170 * mm, repe
 
 def box(kind, title, text, width=170 * mm):
     """kind: rec (teal recommendation), verify (coral safety/verify), rule (navy
-    operating rule), new (yellow: changed in R13.1)."""
+    operating rule), new (yellow: action needed)."""
     body = [Paragraph(md(title), ParagraphStyle("bt", parent=S["boxt"], textColor=BOXLINE[kind]))]
     for para in (text if isinstance(text, list) else [text]):
         body.append(Paragraph(md(para), S["boxb"]))
@@ -316,7 +316,7 @@ def swatch_strip(summary, cell=9 * mm, h=5.2 * mm, labels=False):
 
 def swatch_legend():
     return P("Swatch order: **Face** (FOH #1–6) · **Top** (LX1 #13–18) · **Side** (booms) · **Back** "
-             "(LX2 COB) · **Pix** (PixBars) · **Spec** (specials). Colour as programmed in the R13.1 show "
+             "(LX2 COB) · **Pix** (PixBars) · **Spec** (specials). Colour as programmed in the show "
              "file, darker = lower level, black = off.", "muted")
 
 

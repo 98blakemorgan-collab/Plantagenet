@@ -21,7 +21,7 @@ ITEMS = [
     ("Show control", "Turn off Art-Net or sACN on the Mantra (whichever the node doesn't use)", "LX", "Tech"),
     ("Show control", "Who calls the 56 song-section GOs — DSM or QLab op to the music (R-31)", "SM / QLab op", "Before tech"),
     ("Lighting", "Confirm fixtures #38 (PixBar) and #39 (TourCOB) exist and are patched", "LX / venue", "Rig day"),
-    ("Lighting", "Check the R13 colour-forward looks from the house: faces, screen washout, backlight (R-30)", "LX / director", "Focus"),
+    ("Lighting", "Check the colour-forward looks from the house: faces, screen washout, backlight (R-30)", "LX / director", "Focus"),
     ("Lighting", "Cue-to-cue: flash returns Q21/23/25/35/47/57b, the Q57 → Q57b HAYWIRE sequence, the Level=0 releases (run Q8 > S1 > Q9) and the six song fade-outs", "LX / QLab op", "Tech"),
     ("Lighting", "Pinspots #41–42 (P5 M7) only if the mirror ball is used", "LX", "Rig day"),
     ("Projection", "Projector bar rating and bond (R-22); screen size and throw", "Venue / TD", "Site walk"),
@@ -37,7 +37,7 @@ ITEMS = [
 def build(path):
     d = PartDoc(path, "", "To Find and Confirm", divider=False)
     d.add(title_block("%s · %s" % (REV, DATE), "To Find and Confirm",
-                      "Everything the R13.1 files can't settle on their own — tick it off as it's found or agreed"))
+                      "Everything the show files can't settle on their own — tick it off as it's found or agreed"))
     d.add(stats([(str(len(ITEMS)), "open items"), ("10", "placeholder sounds"), ("3", "script questions"),
                  ("4", "settings not stored in the files")]))
     areas = []

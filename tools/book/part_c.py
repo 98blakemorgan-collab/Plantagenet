@@ -1,4 +1,4 @@
-"""Part C — DMX Patch & Step-by-Step Guide (venue patch, unchanged; procedure updated for R13.1)."""
+"""Part C — DMX Patch & Step-by-Step Guide."""
 from core import *  # noqa: F401,F403
 import show as S_
 from part_b import FOCUS
@@ -28,14 +28,13 @@ def fader(n):
 def build(path):
     d = PartDoc(path, "C", "DMX Patch & Step-by-Step Guide",
                 "The venue patch (40 fixtures + optional pinspots), channel maps, Art-Net/sACN network, fader map, the "
-                "patch procedure for the R13.1 show file, rig sheets, power and troubleshooting.")
+                "patch procedure for the show file, rig sheets, power and troubleshooting.")
     d.add(title_block("PART C · %s · %s" % (REV, DATE), "DMX Patch & Step-by-Step Guide",
                       "Confirmed desk patch, channel maps, network, and the procedure from load to rig check"))
     d.add(stats([("40", "fixtures patched (base file)"), ("2", "optional pinspots #41–42"),
                  ("2", "universes (DMX + Art-Net/sACN)"), ("0", "re-addressing needed")]))
-    d.add(box("new", "R13.1", ["The patch is unchanged: %s carries the venue base patch, custom fixtures and network "
-               "exactly as R8. What changed is where things live on the desk: **HAZE is P5 M4** (was P2 M4), and P2 M3 is now "
-               "the ship/storm scene memory, so the optional pinspots go on **P5 M7** (free)." % S_.MTR_NAME]))
+    d.add(box("rule", "WHERE THINGS LIVE", ["%s carries the venue base patch, custom fixtures and network. "
+               "**HAZE is P5 M4**, P2 M3 is the ship/storm scene memory, and the optional pinspots go on **P5 M7** (free)." % S_.MTR_NAME]))
     d.add(box("rule", "THE ADDRESS TRAVELS WITH THE FIXTURE", "Every fixture keeps its desk number and DMX address wherever it "
               "hangs. Moving a C42 to the FOH truss means re-cabling it into the universe 2 line — not changing its address."))
     d.add(H2("Address map"))

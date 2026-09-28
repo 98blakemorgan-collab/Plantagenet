@@ -34,7 +34,7 @@ def card2():
                 ["P5 M5 HAYWIRE", "QLab starts it at Q57 and stops it at Q57b"],
                 ["P5 M6 JELLY PULSE", "Bump for extra Q47 repeats"],
                 ["O · A then L · T then S", "All Cues Off · Clear All · Save"]], [52 * mm, 118 * mm], bold_first=True),
-            box("new", "NO LINK TIMES", "R8 needed six link times typed into P2 M1. R13.1 needs none: QLab fires every flash return "
+            box("rule", "NO LINK TIMES", "No link times are set on the desk: QLab fires every flash return "
                 "(Q21, Q23, Q25 +0.2 s · Q35 +0.3 s · Q47 +1 s · Q57b +0.3 s) and releases each memory as it leaves it.")]
 
 
@@ -103,7 +103,7 @@ def card6():
             P("**3 Mantra**"), *steps(["Tools › Export Show (venue backup).",
                                       "Tools › Import Show › %s. Check P2 Act One, P3 Act Two, P4 songs, P5 FX, P8 backup." % S_.MTR_NAME,
                                       "Tools › Setup › Remote Triggers › Add › OSC · Play Memory · port 8000. Turn off Art-Net or sACN (whichever the node doesn't use).",
-                                      "Save (T S) and set as Default Show. **No link times needed in R13.1.**"]),
+                                      "Save (T S) and set as Default Show. **No link times needed.**"]),
             P("**4 QLab Mac**"), *steps(["Harden the Mac (R-07); install QLab 5 and the licence.",
                                         "Put %s on the Desktop (exact name). Open %s." % (S_.FOLDER, S_.QLAB_NAME),
                                         "Workspace Settings: Audio → StudioLive USB · Video Stage 1 → projector · Network MANTRA → Ethernet interface. Save.",
@@ -140,7 +140,7 @@ CARDS = [card1, card2, card3, card4, card5, card6, card7]
 def build(path):
     d = PartDoc(path, "K", "Quick Reference Cards",
                 "Seven one-page cards: rig layout, desk layout, DMX and network, specials and looks, system connections, "
-                "first-time setup, and session start-up and shut-down — for R13.1.")
+                "first-time setup, and session start-up and shut-down.")
     for i, c in enumerate(CARDS):
         d.add(c())
         if i < len(CARDS) - 1:
