@@ -2,3 +2,4 @@ score.json
 *.mp4
 *.png
 __pycache__/
+*.pdf

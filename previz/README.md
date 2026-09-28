@@ -8,6 +8,7 @@ Mantra lighting looks, backdrop cues and running audio for each one.
     python3 render_previz.py --still 204.7 --out frame.png  # check a frame
     python3 render_previz.py --start 200 --end 215 --out sample.mp4
     python3 render_previz.py --parts 4                      # -> TLM_R13_1_previz.mp4
+    pip install reportlab && python3 make_scene_pdf.py      # -> TLM_R13_1_Scene_by_Scene.pdf
 
 - `qlab_read.py` decodes the QLab 5 workspace (a nested NSKeyedArchiver plist).
 - `score_data.py` reads `package/TLM_R13_REBUILT_Show_Files`: the QLab cue list
