@@ -14,6 +14,10 @@ STEPS (on the show Mac)
  2. From Drive > TLM_R13, download into that same folder:
         TLM_R13_1.zip   TLM_R13_1_SFX.zip   TLM_Backdrops_R10.zip
     (links in SOURCE_ZIPS.csv). Do NOT let Safari unzip them.
+    Also download this one file into the same folder (it is not in any of
+    the zips and could not be bundled here):
+        Q043_SFX_Cue_Card_Underscore.wav
+        https://drive.google.com/file/d/18qZi04vfASQxE2SuIPA6-tTnSCn97Oky/view
  3. Double-click ASSEMBLE_R13_1.command.
     If macOS blocks it: right-click > Open, or in Terminal run
         bash ~/Downloads/TLM_R13_1_Package/ASSEMBLE_R13_1.command

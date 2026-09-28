@@ -74,6 +74,13 @@ find "$WORK" -name "__MACOSX" -type d -prune -exec rm -rf {} + 2>/dev/null
 find "$WORK" -name ".DS_Store" -type f -delete 2>/dev/null
 find "$WORK" -name "._*" -type f -delete 2>/dev/null
 
+# Loose media files dropped next to this script (e.g. a single WAV downloaded
+# from Drive) are used too.
+mkdir -p "$WORK/loose"
+find "$HERE" -maxdepth 1 -type f \( -iname "*.wav" -o -iname "*.mp3" -o -iname "*.aif*" \
+  -o -iname "*.mp4" -o -iname "*.mov" -o -iname "*.jpg" -o -iname "*.png" \) \
+  -exec cp -p {} "$WORK/loose/" \;
+
 # Index every extracted file by a loose key (lower case, letters/digits/dots
 # only), so "BG-01 House Preshow loop.MP4" matches "BG-01_House_Preshow_loop.mp4".
 key() { printf '%s' "$1" | tr '[:upper:]' '[:lower:]' | tr -cd 'a-z0-9.'; }
@@ -104,6 +111,18 @@ merge_tree() {  # $1 = extracted zip root
   done
 }
 for z in $ZIPS; do merge_tree "$WORK/${z%.zip}"; done
+
+# Backdrop zips keep video/ and stills/ at the top level rather than under
+# media/. Copy them in too, so the unused spares are kept as fallbacks.
+for kind in video stills; do
+  find "$WORK" -type d -name "$kind" ! -path "*/media/*" | while IFS= read -r vd; do
+    say "adding spare $kind from ${vd#$WORK/}"
+    mkdir -p "$OUT/media/$kind"
+    find "$vd" -maxdepth 1 -type f | while IFS= read -r f; do
+      [ -e "$OUT/media/$kind/$(basename "$f")" ] || cp -p "$f" "$OUT/media/$kind/"
+    done
+  done
+done
 
 # 4. Place every manifest file at its exact path. Anything still missing is
 #    looked up by file name anywhere in the extracted zips.
@@ -168,6 +187,7 @@ if [ "$missing" = 0 ]; then
   finish 0
 else
   say "INCOMPLETE: $missing problem(s) listed above. Nothing was deleted;"
-  say "fix the source zip(s) and run again after removing the OUTPUT folder."
+  say "download any missing file from Drive (see SOURCE_ZIPS.csv), put it next"
+  say "to this script, delete the OUTPUT folder and run again."
   finish 1
 fi
