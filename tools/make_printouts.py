@@ -300,9 +300,20 @@ def song_title(g):
     return re.sub(r"\s*\(S\d+\) - at Q\d+$", "", g["name"])
 
 
-def page_ref(trigger):
+# Optional {cue number: script page} from the production book's calling script; when set, it replaces the
+# old production-copy "(pNN)" page references carried in the QLab cue notes.
+PAGE_OVERRIDE = {}
+
+
+def page_ref(trigger, num=None):
+    if num in PAGE_OVERRIDE:
+        return "p%s" % PAGE_OVERRIDE[num]
     m = re.search(r"\(p(\d+)\)", trigger)
     return "p" + m.group(1) if m else ""
+
+
+def trigger_text(trigger):
+    return re.sub(r"\s*\(p\d+\)", "", trigger) if PAGE_OVERRIDE else trigger
 
 
 def haze_mark(fx):
@@ -364,8 +375,8 @@ def build_cue_sheets(groups, by_pmc, mems):
         vid = " ".join(v for v in g["video"] if v)
         fx = f.get("FX", "")
         fxm = " ".join(x for x in (haze_mark(fx), water_mark(fx)) if x)
-        rows.append(["<b>%s</b>" % esc(g["num"]), esc(g["name"]), esc(trig), esc(f.get("LX", "")),
-                     "●" if (g["audio"] or g["track"]) else "", esc(vid), esc(fxm), page_ref(trig)])
+        rows.append(["<b>%s</b>" % esc(g["num"]), esc(g["name"]), esc(trigger_text(trig)), esc(f.get("LX", "")),
+                     "●" if (g["audio"] or g["track"]) else "", esc(vid), esc(fxm), page_ref(trig, g["num"])])
         if is_critical(g):
             rs.append((len(rows) - 1, "crit"))
         if g["num"] == "38":

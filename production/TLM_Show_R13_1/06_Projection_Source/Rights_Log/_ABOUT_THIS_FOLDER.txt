@@ -1,0 +1,1 @@
+How each backdrop was made: R10_Backdrop_Prompt_Log.csv (tool, prompts, date).

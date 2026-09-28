@@ -1,2 +1,7 @@
 dist/
 .DS_Store
+# licensed script and anything built from it: production use only, never in this public repo
+production/private/
+__pycache__/
+# full-size backdrop stills (the book uses assets/thumbs)
+production/assets/stills/

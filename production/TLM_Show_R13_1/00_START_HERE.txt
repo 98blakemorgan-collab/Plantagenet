@@ -1,0 +1,28 @@
+THE LITTLE MERMAID - Plantagenet Hall - show folder - R13.1 (28 September 2026)
+
+01_Production_Book     Complete book + one PDF per part (Sections), quick guide, to-find list
+02_QLab                README + cue list. THE SHOW FOLDER is package/TLM_R13_REBUILT_Show_Files:
+                         TLM_Show_R13_1.qlab5  (479 cues, 83 master cues, songs S1-S10)
+                         media/  80 files (R13_MEDIA_MANIFEST.csv) - assembled on the Mac by
+                         package/ASSEMBLE_R13_1.command from the Drive zips
+03_Lighting_Mantra     TLM_SHOW_2026_R13_FLASHY_SCENE_SPLIT.mtr + memory map, section map, labels
+04_Sound_StudioLive    mixer template + backups
+05_Stream_Deck         exported profile (unchanged)
+06_Projection_Source   originals, rejects, rights/prompt log (not used in the show)
+07_Rehearsal_and_Tech_Notes
+08_Venue_and_Rig
+99_Show_Backups
+
+WHAT CHANGED FROM R8
+- The Mantra show is split by scene: P2 Act One, P3 Act Two, P4 the ten songs, P5 FX, P6-P7 looks, P8 backup.
+  QLab fires every cue by page/memory/cue and releases each memory as it leaves it (31 releases).
+- Flash returns are QLab pre-waits - no link times to type into the desk.
+- Songs are QLab groups S1-S10 with 66 section GOs.
+- The book is re-paged to the licensed script revised April 2026, with the 28 Sep 2026 casting.
+
+BOOK: 01_Production_Book/The_Little_Mermaid_Complete_Production_Book_R13.1.pdf
+      (Part J, the prompt copy, contains the licensed script and is kept privately - not in the public repo.)
+FIRST: 01_Production_Book/TLM_To_Find_and_Confirm_R13_1.pdf - what is still to supply or decide.
+SET-UP: 01_Production_Book/TLM_Setup_and_Startup_Quick_Guide_R13_1.pdf (cards 6-7).
+
+Rebuild everything in this folder with: python3 tools/book/build.py

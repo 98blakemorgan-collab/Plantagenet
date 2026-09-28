@@ -1,0 +1,1 @@
+Whole-folder backups: copy the show folder here after each session, dated.
