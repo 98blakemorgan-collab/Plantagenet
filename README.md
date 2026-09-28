@@ -7,5 +7,8 @@ Source for the single R13.1 download package.
   `ASSEMBLE_R13_1.command` script that merges in the media from the three
   Drive zips, and the read-me / review notes.
 - `tools/build_package.sh` — builds `dist/TLM_R13_1_Package.zip`.
+- `tools/make_printouts.py` — rebuilds the R13.1 operator cue sheets and Mantra
+  labels in `docs/` from the QLab workspace, Mantra file and section map
+  (`pip install reportlab`).
 
 Start with `package/READ_ME_FIRST.txt` and `package/R13_1_REVIEW_NOTES.txt`.

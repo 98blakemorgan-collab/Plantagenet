@@ -36,7 +36,8 @@ FINAL FOLDER LAYOUT
    BUILD_METADATA.json
    R13_MEDIA_MANIFEST.csv   R13_MANTRA_SECTION_MAP.csv/.txt
    R13_1_SFX_RETARGET_MAP.csv   R13_1_QLAB_AND_DESK_FIX_LIST.csv
-   docs/            review PDF, R13 guide & book, R9 book, archive_R13_original
+   docs/            review PDF, R13.1 cue sheets + Mantra labels, FOH notice,
+                    R13 guide & book, R9 book, archive_R13_original
    media/
      audio/
        00_SFX_Pack_2026-09-28_originals/   (untouched pack sources, reference)

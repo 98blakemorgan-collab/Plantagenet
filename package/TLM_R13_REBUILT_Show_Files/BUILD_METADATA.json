@@ -58,6 +58,7 @@
     "QLab: stale R11 alias data cleared on the 38 remaining media cues (95 old alias blobs emptied, same method as the 58 re-targeted cues); no other cue, setting or target changed; all 99 targets still resolve to the 80 manifest paths",
     "docs/FOH_Flashing_Lights_and_Haze_Notice.pdf added",
     "00_START_HERE.txt: manifest count corrected to 80; R11 step updated",
-    "Fix list updated"
+    "Fix list updated",
+    "docs/TLM_R13_1_Operator_Cue_Sheets.pdf and docs/TLM_R13_1_Mantra_Labels.pdf rebuilt from the R13.1 QLab/Mantra files (replace the R8 printouts)"
   ]
 }

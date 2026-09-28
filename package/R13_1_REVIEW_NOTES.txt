@@ -39,6 +39,14 @@ Sources reviewed (Drive folder TLM_R13):
      Q38, Q42.5, Q43, Q59, Q65) are in none of the Drive zips. They are
      bundled in this package, taken from TLM_R13_REBUILT_Show_Files on Drive;
      each file's length matches what the QLab workspace expects.
+  f) Printouts rebuilt for R13.1 from the QLab workspace, the Mantra file
+     and the section map (the R8 ones still showed one long P2 M1 list):
+       docs/TLM_R13_1_Operator_Cue_Sheets.pdf - SM master calls, QLab GO list
+         (incl. song-section GOs and the automatic flash returns), Mantra
+         backup with P2/P3/P4 targets + P8 positions, haze/FX + deck
+       docs/TLM_R13_1_Mantra_Labels.pdf - fixture fader labels (patch
+         unchanged), playback rows for P1-P8, reminder strips, page tabs
+     Rebuild with: python3 tools/make_printouts.py
 
 3. STILL TO DO (these can't be done in the files)
   Show Mac, in QLab Workspace Settings (they depend on that Mac's hardware):
@@ -55,6 +63,7 @@ Sources reviewed (Drive folder TLM_R13):
       (Q1, Q2, Q37, Q38, Q65), and Ariel's recorded line Q42.5
     - S1 Rock Lobster is the 7:05 music-video cut; confirm the edit
   Front of house: print and post the notice from docs/.
+  Print: the R13.1 cue sheets and Mantra labels from docs/ (bin the R8 ones).
   Cue-to-cue: flash return timings (Q21/23/25/35/47), the Q57 -> Q57b
   sequence, the Level=0 memory releases (run Q8 > S1 > Q9) and the six song
   fade-outs.

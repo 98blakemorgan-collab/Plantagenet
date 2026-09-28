@@ -19,3 +19,4 @@ DONE in R13.1,2,Q19.2 Weather: periodic rain,Rain burst audio cue added (Q019-2_
 TO DO,2,Rig,Confirm PixBar #38 and TourCOB #39 exist (patch has 39 LED fixtures),R9 text disagrees
 DONE in R13.1 package,2,Front of house,Printable notice supplied: docs/FOH_Flashing_Lights_and_Haze_Notice.pdf - print and post it at the doors,White flash hits in storm/transformation/restore
 TO DO,1,Cue-to-cue,"Check every flash return timing, the Q57/Q57b sequence, and the song fades; adjust pre-waits/fade times to taste",
+DONE in R13.1 package,2,Printouts,"Operator cue sheets and Mantra labels rebuilt for R13.1: docs/TLM_R13_1_Operator_Cue_Sheets.pdf, docs/TLM_R13_1_Mantra_Labels.pdf - print and replace the R8 sheets/labels",R8 printouts showed the old single P2 M1 show list

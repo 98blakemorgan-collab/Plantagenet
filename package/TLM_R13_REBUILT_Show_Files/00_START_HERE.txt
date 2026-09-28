@@ -19,6 +19,11 @@ ALREADY DONE IN R13.1 (no action needed)
   - Removed stale memo cues, empty MUS placeholders, empty SONGS list.
   - Old R11 aliases cleared on the remaining 38 media cues (package fix).
   - Flashing-lights/haze notice ready to print: docs/FOH_Flashing_Lights_and_Haze_Notice.pdf
+  - Printouts rebuilt for R13.1 (replace the R8 sheets and desk labels):
+      docs/TLM_R13_1_Operator_Cue_Sheets.pdf  SM calls, QLab GO list, Mantra
+                                              backup, haze/FX + deck
+      docs/TLM_R13_1_Mantra_Labels.pdf        fader labels, P1-P8 playback
+                                              rows, reminder strips, page tabs
 
 SETUP ON THE SHOW MAC
 1. (Optional tidy) Rename or remove any old TLM_R11_FLASHY_Show_Files
@@ -55,5 +60,6 @@ FILES
   R13_MEDIA_MANIFEST.csv            80 media files used by R13.1
   R13_1_SFX_RETARGET_MAP.csv        new SFX -> cues
   R13_1_QLAB_AND_DESK_FIX_LIST.csv  what is done / what is left
-  docs/                             review, R13 guide & book, R9 book,
+  docs/                             review, R13.1 cue sheets + Mantra labels,
+                                    FOH notice, R13 guide & book, R9 book,
                                     archive_R13_original (R13 workspace)
