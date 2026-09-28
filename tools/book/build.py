@@ -8,6 +8,7 @@ and it is written to production/private/ — never into the public tree.
 """
 import csv
 import os
+import re
 import shutil
 import sys
 
@@ -50,7 +51,7 @@ BUILDERS = {"A": part_a.build, "B": part_b.build, "C": part_c.build, "D": part_d
 
 ABOUT = {
     "01_Production_Book": "The R13.1 production book: the complete book, one PDF per part in Sections, the quick guide and the to-find list.",
-    "01_Production_Book/Sections": "One PDF per part of the book (00 cover, A-L). Part J is private - see the note in this folder.",
+    "01_Production_Book/Sections": "One PDF per part of the book (00 cover, A-L). Part J reproduces the licensed script: keep it private (it is left out of the public repository copy).",
     "01_Production_Book/Cue_Sheets_Printed": "Scans or photos of the marked-up printed cue sheets from tech and each show.",
     "02_QLab": "QLab: README, the R13.1 cue list as a spreadsheet. The show folder itself is package/TLM_R13_REBUILT_Show_Files.",
     "03_Lighting_Mantra": "Mantra: memory map, section map, labels. The R13.1 show file is in package/TLM_R13_REBUILT_Show_Files.",
@@ -119,7 +120,7 @@ def cue_list_csv(path):
         w.writerow(["Cue", "Name", "Trigger", "Script page", "Mantra target", "Look", "Sound", "Video", "FX", "Song", "Critical"])
         for c in S_.CUES:
             tgt = "; ".join("P%d M%d cue %d" % (x["p"], x["m"], x["c"]) for x in c["lx"])
-            w.writerow([c["num"], c["name"], c["trigger"], calls.GO_PAGE.get(c["num"], ""), tgt, c["look"], c["sound"],
+            w.writerow([c["num"], c["name"], re.sub(r"\s*\(p\d+\)", "", c["trigger"]), calls.GO_PAGE.get(c["num"], ""), tgt, c["look"], c["sound"],
                         " ".join(c["video"]), c["fx"], c["song"] or "", "yes" if c["critical"] else ""])
             if c["song"]:
                 s = S_.SONG[c["song"]]
