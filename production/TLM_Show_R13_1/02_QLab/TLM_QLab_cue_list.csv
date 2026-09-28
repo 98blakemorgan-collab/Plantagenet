@@ -23,9 +23,9 @@ S3,Part of Your World,Straight after Q15,16,P4 M3 (7 sections),,S03 Part of Your
 17,Scene Two blackout,Scene ends,17,P2 M2 cue 8,M01 BLACKOUT,Music/SFX clean out,,House remains independent,,
 18,Ship number,Ship scene / song starts,19,P2 M3 cue 1,M06 SHIP,MUS-A1-04 + VID-03,BG-05,Optional low haze,S4,
 S4,Wellerman (Sea Shanty),Straight after Q18,19,P4 M4 (7 sections),,S04 Wellerman (swap for backing if vocal).mp3,,,S4,
-19,Weather gag,Weather report beat,20,P2 M3 cue 2,M06 + quick accent,Wind / comedy FX / rain cue as scripted,BG-06,Wet FX standby only,,yes
+19,Weather gag,Weather report beat,20,P2 M3 cue 2,M06 + quick accent,"Weather report (wind/rain bed disarmed - gusts at 19.1, rain at 19.2)",BG-06,Wet FX standby only,,yes
 19.1,Weather: gusts of wind,"""With gusts of wind""",20,,-,Fart sound,,Comedy beat,,
-19.2,Weather: periodic rain,"""And periodic rain.""",20,,-,-,,Water pistols spray audience (R-23),,yes
+19.2,Weather: periodic rain,"""And periodic rain.""",20,,-,Rain burst,,Water pistols spray audience (R-23),,yes
 19.3,Weather: back to normal,Pistols stop,20,P2 M3 cue 3,Return to M06 SHIP,-,BG-05,Towels ready,,
 20,Storm wind build,Storm begins,21,P2 M3 cue 4,M08 STORM,Wind + rain build + VID-04,BG-07,HZ-04 burst,,
 21,Lightning 1,First lightning action,21,P2 M3 cue 5; P2 M3 cue 6,M09 LIGHTNING -> M08,Lightning crack + thunder,,Short flash only,,yes

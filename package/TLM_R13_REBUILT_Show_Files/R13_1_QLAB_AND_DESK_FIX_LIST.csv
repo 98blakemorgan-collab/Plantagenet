@@ -20,3 +20,12 @@ TO DO,2,Rig,Confirm PixBar #38 and TourCOB #39 exist (patch has 39 LED fixtures)
 DONE in R13.1 package,2,Front of house,Printable notice supplied: docs/FOH_Flashing_Lights_and_Haze_Notice.pdf - print and post it at the doors,White flash hits in storm/transformation/restore
 TO DO,1,Cue-to-cue,"Check every flash return timing, the Q57/Q57b sequence, and the song fades; adjust pre-waits/fade times to taste",
 DONE in R13.1 package,2,Printouts,"Operator cue sheets and Mantra labels rebuilt for R13.1: docs/TLM_R13_1_Operator_Cue_Sheets.pdf, docs/TLM_R13_1_Mantra_Labels.pdf - print and replace the R8 sheets/labels",R8 printouts showed the old single P2 M1 show list
+DONE in LX/sound review,1,"Mantra flash cues Q21, Q23, Q25, Q35, Q57b + look M09","Colour fixtures set to white (FOH stays cool white), also in the P8 backup list","Flashes were full white plus saturated colour, so they read as tinted hits"
+DONE in LX/sound review,1,Mantra storm Q20-Q25b and Q26,"Q20-Q25b use the M08 STORM colours (levels unchanged); Q26 is a low deep-blue tail (back 45 %, side 30 %)","Backlight changed colour on every storm cue and each flash returned to a different colour"
+DONE in LX/sound review,2,"Mantra Q1, Q2, Q3, Q38, Q65",Backlight in the M02 HOUSE colour,"Preshow backlight changed colour in front of the audience"
+DONE in LX/sound review,1,Mantra Q36 and Q52-Q56,Side and backlight at the M12 VOICE SHELL levels (16 % / 18 %),"Backlight at 88-90 % outshone the shell special at 85 %"
+DONE in LX/sound review,1,QLab (69 audio cues),"Starting levels: songs and Q42.5 0 dB, thunder/impact -3, SFX and house music -6, storm loops -9, beds -15, Q41 -18; FADE TO cues at Q3/Q46/Q51 keep the same drop","Every cue was at 0 dB"
+DONE in LX/sound review,1,QLab storm Q22/Q26/Q27,"Q22 fades out Q20 (3 s); Q26 fades out Q25 and takes Q22 to -21 dB (4 s); Q27 storm fade-outs 2.5 s","Four storm layers stacked at 0 dB and buried the Q26 splash/decay"
+DONE in LX/sound review,2,QLab Q19,"Wind/rain bed disarmed; Q19/Q19.2 notes updated","It played rain before the ""periodic rain"" line"
+DONE in LX/sound review,2,"QLab Q1, Q2, Q37, Q38, Q65",Music set to loop,"House and interval music must last the whole house-open / interval"
+TO DO,1,Cue-to-cue,"Check the new storm colours, white flashes and shell levels from the house; trim every sound level with the real files","Levels and colours are starting points"

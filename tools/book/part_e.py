@@ -124,16 +124,22 @@ def build(path):
     d.add(box("verify", "STILL SILENT PLACEHOLDERS", "S07 jellyfish song, Q1 house music, Q2 preshow, Q11 soft "
               "resolve, Q37 end of Act One, Q38 interval, Q42.5 Ariel's recorded line, Q43 cue-card underscore, Q59 "
               "land ambience, Q65 exit music. Their lengths already match the cues, so a real file drops straight in."))
+    d.add(box("verify", "STARTING LEVELS — SET FINAL LEVELS AT TECH", "Every sound has a starting level on its cue: "
+              "songs and Ariel's recorded line 0 dB · thunder cracks and the transformation impact −3 dB · stings, magic, "
+              "palace intro, chase music and house/interval music −6 dB · storm wind/rain loops and the rain burst −9 dB · "
+              "cue-card underscore −12 dB · ambience beds −15 dB · Q41 underscore −18 dB. The FADE TO cues keep the same "
+              "drop from those levels (Q3 −16 dB, Q46 and Q51 −27 dB). House, preshow, end-of-act, interval and exit "
+              "music loop until faded. Q19's wind/rain bed is disarmed so the rain lands on Q19.2."))
     d.add(box("rule", "SWAPPING AUDIO — ALWAYS A NEW FILE NAME", "Save the new file under a new name (e.g. "
               "`S02 Feeling Good (backing).mp3`), drag it onto the cue, and check the cue's end time. Replacing a file "
               "under the same name keeps the old end time in QLab."))
 
     d.add(H1("7 Critical sequences"))
     d.add(table(["Sequence", "QLab", "Mantra"], [
-        ["Storm Q20–27", "Q20 wind/rain loop + BG-07; Q21/23/25 crack + thunder; Q22 creaks; Q24 groan + water; Q26 splash + low bed (90 s); Q27 fades five storm layers, BG-21", "P2 M3 cues 4–14; flashes 5/8/11 return +0.2 s"],
+        ["Storm Q20–27", "Q20 wind/rain loop + BG-07; Q21/23/25 crack + thunder; Q22 creaks; Q24 groan + water; Q26 splash + low bed (90 s), fades out Q25 and takes Q22 to −21 dB; Q22 fades out Q20; Q27 fades the rest over 2.5 s, BG-21", "P2 M3 cues 4–14; flashes 5/8/11 return +0.2 s"],
         ["Transformation Q33–36", "Q33 magic build + BG-09; Q34 swell; Q35 impact; Q36 shell voice", "P2 M5 cues 3–7; flash 5 returns +0.3 s"],
         ["Voice transfer Q52–57b", "Q52 shell magic + BG-09; Q53–56 transfer sting ×4; Q57 haywire SFX; Q57b restore SFX", "P3 M3 cues 3–10; HAYWIRE P5 M5 on at Q57, off at Q57b; 57c +0.3 s"],
-        ["Jellyfish Q45–49", "Q45 comic bed (fades to −12 dB at Q46); S7 chorus; Q47 sting", "P3 M2; Q47 pulse returns +1 s"],
+        ["Jellyfish Q45–49", "Q45 comic bed (fades to −27 dB at Q46); S7 chorus; Q47 sting", "P3 M2; Q47 pulse returns +1 s"],
         ["Cue cards Q43", "Cue-card underscore (placeholder — choose music)", "P3 M1 cue 6"]],
         [32 * mm, 88 * mm, 50 * mm], bold_first=True))
     d.add(P("Actor-paced cues (voice transfer, jellyfish repeats) are GO only when the actor is on the mark. If a "

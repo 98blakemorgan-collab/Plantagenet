@@ -20,8 +20,8 @@ WORK="$HERE/.assemble_work"
 REPORT="$HERE/OUTPUT/ASSEMBLY_REPORT.txt"
 ZIPS="TLM_R13_1.zip TLM_R13_1_SFX.zip TLM_Backdrops_R10.zip"
 
-QLAB_SHA="5dca0842f16f9c12c096e4389d939a564bca6a3d874619dd3fa97eda1bcb86ab"
-MTR_SHA="95cf3c690c2cef573c58e761f27eb54491f3e102684a1ab3f597a232fcae24c2"
+QLAB_SHA="8cfcd76e83f9884d251ea36053825801bd0ab8269f15eba69664fa8d3208f6fa"
+MTR_SHA="9301c0f9375e4483a6f0e819f23f2a2466e027e322dcf32a5a12f69522619a1b"
 
 say() { echo "$*" | tee -a "$REPORT"; }
 sha() { if command -v shasum >/dev/null 2>&1; then shasum -a 256 "$1" | cut -d' ' -f1; else sha256sum "$1" | cut -d' ' -f1; fi; }

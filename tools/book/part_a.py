@@ -255,7 +255,9 @@ def build(path):
               "the soft resolve (Q11) and land ambience (Q59). Save each under a NEW file name and drag it onto the cue."))
     d.add(H2("Sound effects — R13.1 pack"))
     d.add(P("38 new *_v2 files built from the 40-sound SFX pack, plus Q19.2 rain burst and Q57.5 voice-restore resolve. Beds "
-            "loop (Q4, Q20, Q22, Q31, Q45, Q50, Q60); Q25 runs 60 s and Q26 90 s. Full map: Part E §6."))
+            "loop (Q4, Q20, Q22, Q31, Q45, Q50, Q60); Q25 runs 60 s and Q26 90 s. Every cue has a starting level (songs "
+            "0 dB, SFX −6 dB, beds −15 dB); Q22 fades out Q20 and Q26 fades Q25 out and Q22 down, so the storm "
+            "layers never stack. Full map and levels: Part E §6."))
     d.add(box("rec", "R-06 · R-09 · R-19", "Legal, coordinated wireless frequencies (no 694–820 MHz). 8 radio packs + 1 spare; "
               "consider packs for the two Spirits. Check levels with an SPL meter for a family audience."))
 

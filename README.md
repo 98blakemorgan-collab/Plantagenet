@@ -10,5 +10,9 @@ Source for the single R13.1 download package.
 - `tools/make_printouts.py` — rebuilds the R13.1 operator cue sheets and Mantra
   labels in `docs/` from the QLab workspace, Mantra file and section map
   (`pip install reportlab`).
+- `tools/apply_lx_sound_edits.py` — the lighting and sound review edits to the
+  Mantra and QLab files (white flash hits, one storm palette, house backlight,
+  shell levels, starting sound levels, storm layer fades, looping house music).
+  Already applied; it refuses to run on anything but the original R13.1 files.
 
 Start with `package/READ_ME_FIRST.txt` and `package/R13_1_REVIEW_NOTES.txt`.

@@ -24,7 +24,7 @@ SCENES = [
     ]),
     ("SCENE TWO — THE SINGING LESSON", "pp 13–18", [
         ("13", "13", "“Now, I wonder if there are any singing sensations…”", "13", "“…shall we have a look at you?”", "QLAB FOH", "House lights come up", ""),
-        ("14", "13", "“Oh, (NAME OF MAN), that's a lovely name!”", "14", "“…I'm going to do it anyway!”", "QLAB", "Song: Dame Beluga — S2 Feeling Good follows", "House back down"),
+        ("14", "13", "“Oh, (NAME OF MAN), that's a lovely name!”", "14", "“…I'm going to do it anyway!”", "QLAB FOH", "Song: Dame Beluga — S2 Feeling Good follows; house lights back down", "House back down"),
         ("15", "15", "“The AUDIENCE reply ‘From the Top!’”", "16", "ARIEL: “Ok, how about this one…”", "QLAB", "Song: Ariel — S3 Part of Your World follows", ""),
         ("15.5", "16", "Song ends", "16", "FLANDERS: “That was incredible.”", "LX", "Lighting shifts; Ariel looks up (ship above); song fades", ""),
         ("16", "16", "“Oh dear. I've got a bad feeling about this.”", "16", "FLANDERS exits after her", "QLAB", "Evil chord; OCTAVIA emerges", ""),

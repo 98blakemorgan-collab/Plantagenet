@@ -19,8 +19,8 @@
     "sfx_pack_originals": 40
   },
   "sha256": {
-    "mantra": "95cf3c690c2cef573c58e761f27eb54491f3e102684a1ab3f597a232fcae24c2",
-    "qlab": "5dca0842f16f9c12c096e4389d939a564bca6a3d874619dd3fa97eda1bcb86ab"
+    "mantra": "9301c0f9375e4483a6f0e819f23f2a2466e027e322dcf32a5a12f69522619a1b",
+    "qlab": "8cfcd76e83f9884d251ea36053825801bd0ab8269f15eba69664fa8d3208f6fa"
   },
   "sha256_r13_original": {
     "mantra": "743f2eedb8a8ba2fb0ebfc14321a2c51aafae9d11d1790500e447a01220eb3d8",
@@ -60,5 +60,20 @@
     "00_START_HERE.txt: manifest count corrected to 80; R11 step updated",
     "Fix list updated",
     "docs/TLM_R13_1_Operator_Cue_Sheets.pdf and docs/TLM_R13_1_Mantra_Labels.pdf rebuilt from the R13.1 QLab/Mantra files (replace the R8 printouts)"
+  ],
+  "sha256_before_lx_sound_edits": {
+    "mantra": "95cf3c690c2cef573c58e761f27eb54491f3e102684a1ab3f597a232fcae24c2",
+    "qlab": "5dca0842f16f9c12c096e4389d939a564bca6a3d874619dd3fa97eda1bcb86ab"
+  },
+  "r13_1_lx_sound_edits": [
+    "Mantra: flash hits Q21/Q23/Q25/Q35/Q57b and look M09 LIGHTNING are white on every colour fixture",
+    "Mantra: storm Q20-Q25b use the M08 STORM colours (levels unchanged); Q26 is a low deep-blue tail (back 45 %, side 30 %)",
+    "Mantra: Q1/Q2/Q3/Q38/Q65 backlight in the M02 HOUSE colour",
+    "Mantra: Q36 and Q52-Q56 side/backlight at the M12 VOICE SHELL levels",
+    "Mantra: the same edits made at each cue's P8 backup position; [ZZ_FileEnd] Size re-checked",
+    "QLab: starting levels on all 69 audio cues (songs 0 dB, beds -15/-18 dB, SFX -6 dB, thunder -3 dB, house music -6 dB); FADE TO cues at Q3/Q46/Q51 keep the same drop",
+    "QLab: storm - Q22 fades out Q20 (3 s); Q26 fades out Q25 and takes Q22 to -21 dB (4 s); Q27 fade-outs 2.5 s (fade cues moved from Q27, total cue count unchanged)",
+    "QLab: Q19 wind/rain bed disarmed; Q19/Q19.2 notes updated",
+    "QLab: Q1/Q2/Q37/Q38/Q65 music set to loop"
   ]
 }
