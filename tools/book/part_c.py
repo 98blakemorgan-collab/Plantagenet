@@ -36,7 +36,7 @@ def build(path):
     d.add(box("rule", "WHERE THINGS LIVE", ["%s carries the venue base patch, custom fixtures and network. "
                "**HAZE is P5 M4**, P2 M3 is the ship/storm scene memory, and the optional pinspots go on **P5 M7** (free)." % S_.MTR_NAME]))
     d.add(box("rule", "THE ADDRESS TRAVELS WITH THE FIXTURE", "Every fixture keeps its desk number and DMX address wherever it "
-              "hangs. Moving a C42 to the FOH truss means re-cabling it into the universe 2 line — not changing its address."))
+              "hangs. Moving a C42 to the FOH bar means re-cabling it into the universe 2 line — not changing its address."))
     d.add(H2("Address map"))
     d.add(table(["Universe", "Range", "Fixtures", "Free"], [
         ["U1", "1–36", "PixBars #33–38 (6 ch)", ""], ["U1", "37–38", "Pinspots #41–42 (optional)", ""],
@@ -69,7 +69,7 @@ def build(path):
     d.add(H1("3 DMX runs, network and fader map"))
     d.add(table(["Line", "Route"], [
         ["Universe 1 (desk XLR)", "Desk → LX1 Zooms #13–18 → LX2 (#19–20, 23–28, 39, 33–38) → SR boom (#21, 29–30) → SL boom (#22, 31–32) → hazer #40 · terminate"],
-        ["Universe 2 (Ethernet)", "Desk → switch → node 2.0.0.10 → FOH truss C42 #1–8 → LX1 C42 #9–12 · terminate"]],
+        ["Universe 2 (Ethernet)", "Desk → switch → node 2.0.0.10 → FOH bar C42 #1–8 → LX1 C42 #9–12 · terminate"]],
         [38 * mm, 132 * mm], bold_first=True))
     d.add(table(["Setting", "Desk (Mantra)", "Node for universe 2"], [
         ["IP address", "2.0.0.1 (static, DHCP off)", "2.0.0.10"], ["Subnet mask", "255.0.0.0", "255.0.0.0"],
@@ -93,7 +93,7 @@ def build(path):
         ("5 Pinspots — only if the mirror ball is used", ["Generic dimmer, U1:37 as #41 and U1:38 as #42 → Patch.",
                                                           "Record both at full on **P5 M7** (free in R13.1). Save."]),
         ("6 Network and universe 2", ["Tools › Setup › Network: 2.0.0.1, 255.0.0.0; turn off Art-Net or sACN (whichever the node doesn't use).",
-                                      "Set the node, connect it through the switch, run its DMX out to the FOH truss. Test C42 #1 at 50 %."]),
+                                      "Set the node, connect it through the switch, run its DMX out to the FOH bar. Test C42 #1 at 50 %."]),
         ("7 Remote trigger for QLab (R13.1)", ["Tools › Setup › Remote Triggers › Add › OSC · Play Memory · port 8000. Save."]),
         ("8 Cable, power, terminate", ["One chain per universe in the order of section 3; label both ends; terminate the last fixture.",
                                        "No more than about 1,840 W per 10 A circuit."]),

@@ -93,7 +93,7 @@ def build(path):
                       "Lighting · Sound · Projection · QLab · LSC Mantra · StudioLive · Haze · Stage management · Effects · Show control"))
     d.add(table(["System", "Project configuration"], [
         ["Production basis", "Licensed script, Nick Lawrence Pantomimes, revised April 2026 (55 pp as supplied); casting sheet 28 Sep 2026"],
-        ["Venue", "Plantagenet Hall — installed LED rig, FOH truss, two stage bars, floor booms, projector and screen"],
+        ["Venue", "Plantagenet Hall — installed LED rig, FOH bar, two stage bars, floor booms, projector and screen"],
         ["Lighting control", "LSC Mantra Lite + 2 wings · %s" % S_.MTR_NAME],
         ["Show control / media", "QLab 5 · %s — one GO fires light, sound and video" % S_.QLAB_NAME],
         ["Audio", "PreSonus StudioLive 16 · radio mics + QLab stereo return ch 11–12"],
@@ -189,7 +189,7 @@ def build(path):
 
     d.add(H1("4 Venue, stage and lighting layout"))
     d.add(P("The venue's own rig as patched: 12 Lightsky 8800-C42 profiles (#1–12), 10 Tour Pro Zooms (#13–22), 11 TourCOB "
-            "PARs (#23–32, 39), 6 PixBars (#33–38) and the hazer (#40). FOH truss #1–8; LX1 #9–18; LX2 #19–20, 23–28, 33–39; "
+            "PARs (#23–32, 39), 6 PixBars (#33–38) and the hazer (#40). FOH bar #1–8; LX1 #9–18; LX2 #19–20, 23–28, 33–39; "
             "SR boom #21, 29, 30; SL boom #22, 31, 32. The projector hangs centre stage towards the back and throws upstage. "
             "Rig plan, positions and focus: Part B §1 and §7; Quick Reference card 1."))
     d.add(box("rec", "R-24 · R-25 · R-26", "Confirm bar loads, boom bases and wing space. Turn LX2 away from the screen — the show runs "

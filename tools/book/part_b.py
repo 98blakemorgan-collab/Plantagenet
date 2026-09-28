@@ -68,9 +68,9 @@ FOCUS = [(1, "C42", "FOH", "U2:101", "Face zone 1 — DSR (from house left)"),
      (30, "COB", "SR boom", "U1:463", "Low side (shin) — boom arm ~0.4 m"),
      (31, "COB", "SL boom", "U1:469", "Mid side — boom arm ~1.2 m, knee to hip"),
      (32, "COB", "SL boom", "U1:475", "Low side (shin) — boom arm ~0.4 m")] + \
-    [(33 + i, "PIX", "LX2", "U1:%d" % (1 + 6 * i), "Effect row, tilted downstage off the screen (R-25)")
+    [(33 + i, "PIX", "LX2", "U1:%d" % (1 + 6 * i), "Effect row, tilted downstage off the back wall (R-25)")
      for i in range(6)] + \
-    [(39, "COB", "LX2", "U1:481", "Extra backlight — centre (confirm it exists, R13.1 fix list)"),
+    [(39, "COB", "LX2", "U1:481", "Extra backlight — centre (confirm fitted)"),
      (40, "HAZE", "Floor, US", "U1:487", "Atmosphere — P5 M4 HAZE (50 %, fan 50 %)"),
      (41, "PIN", "FOH SR end", "U1:37", "Mirror ball (optional, not patched)"),
      (42, "PIN", "FOH SL end", "U1:38", "Mirror ball (optional, not patched)")]
@@ -116,10 +116,11 @@ def build(path):
     d.add(H1("1 The installed rig"))
     d.add(table(["Fixture", "Qty", "Mantra #", "DMX", "What it is", "Job in the show"],
                 [list(r) for r in RIG], [30 * mm, 9 * mm, 17 * mm, 26 * mm, 42 * mm, 46 * mm], bold_first=True))
-    d.add(P("Positions: 8 × C42 on the FOH truss (#1–8), LX1 downstage bar (C42 #9–12, "
+    d.add(P("Positions: 8 × C42 on the FOH bar (#1–8), LX1 downstage bar (C42 #9–12, "
             "Zoom #13–18), LX2 upstage bar (Zoom #19–20, COB #23–28, 39, PixBar #33–38), a floor boom in each "
             "wing (SR #21, 29, 30 · SL #22, 31, 32) and the hazer upstage on the floor (#40). The projector hangs "
-            "centre stage towards the back and throws upstage (R-11)."))
+            "centre stage towards the back and throws upstage onto the painted back wall (R-11). The drawn plan with every "
+            "fixture, mark and address is B2, the Stage Lighting Layout Plan (A3)."))
     d.add(box("rule", "DESIGN RULE", "FOH #1–6 keep faces readable in every look. The flashier colour movement "
               "comes from the LX1 Zooms, side booms, LX2 backlight and PixBars. Never aim high-intensity "
               "backlight or PixBars at the projection screen (R-25)."))

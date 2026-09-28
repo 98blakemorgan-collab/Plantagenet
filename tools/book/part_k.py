@@ -6,15 +6,15 @@ from part_d import PAGEMAP
 
 def card1():
     return [P("1 Rig layout", "h1"),
-            P("One FOH truss, two stage bars (LX1, LX2) and a floor boom in each wing. Projector centre stage towards the back, "
+            P("One FOH bar, two stage bars (LX1, LX2) and a floor boom in each wing. Projector centre stage towards the back, "
               "throwing upstage onto the screen.", "muted"),
             table(["Position", "Fixtures (desk numbers)", "Qty"], [
-                ["FOH truss", "8 × Lightsky C42 #1–8 (#1–6 faces, #7 SP1 Ariel, #8 SP2 Spirit)", "8"],
+                ["FOH bar", "8 × Lightsky C42 #1–8 (#1–6 faces, #7 SP1 Ariel, #8 SP2 Spirit)", "8"],
                 ["LX1 — downstage bar", "4 × C42 #9–12 (SP3 Octavia, SP4 Shell, V1 Dame, V2 Flanders) · 6 × Zoom #13–18 colour wash", "10"],
                 ["LX2 — upstage bar", "2 × Zoom #19–20 (V3 Theodore, V4 Marina) · 7 × TourCOB #23–28, 39 · 6 × PixBar #33–38", "15"],
                 ["SR floor boom", "Zoom #21 high · TourCOB #29 mid, #30 shin", "3"],
                 ["SL floor boom", "Zoom #22 high · TourCOB #31 mid, #32 shin", "3"],
-                ["Floor, upstage", "Hazer #40", "1"], ["Optional", "Pinspots #41–42 on the FOH truss ends (mirror ball only)", "(2)"]],
+                ["Floor, upstage", "Hazer #40", "1"], ["Optional", "Pinspots #41–42 on the FOH bar ends (mirror ball only)", "(2)"]],
                 [36 * mm, 120 * mm, 14 * mm], bold_first=True),
             box("rule", "THE RULES", "Faces come from FOH (C42 #1–6). LX1 = colour top wash. LX2 = backlight + PixBars, focused "
                 "downstage and never onto the screen (R-25). Booms = side colour across the stage (R-26). Every fixture keeps its "
