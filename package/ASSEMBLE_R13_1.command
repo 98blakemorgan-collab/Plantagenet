@@ -58,9 +58,28 @@ for z in $ZIPS; do
     finish 1
   fi
 done
+# Zips inside the zips (e.g. an SFX pack delivered as several zips) are
+# extracted in place, a few levels deep.
+for pass in 1 2 3; do
+  inner="$(find "$WORK" -type f -iname "*.zip" ! -path "*/__MACOSX/*")"
+  [ -z "$inner" ] && break
+  echo "$inner" | while IFS= read -r iz; do
+    say "extracting inner zip ${iz#$WORK/}"
+    unzip -q -o "$iz" -d "${iz%.*}" || say "  WARNING: could not extract ${iz#$WORK/}"
+    rm -f "$iz"
+  done
+done
 # Drop macOS metadata.
 find "$WORK" -name "__MACOSX" -type d -prune -exec rm -rf {} + 2>/dev/null
 find "$WORK" -name ".DS_Store" -type f -delete 2>/dev/null
+find "$WORK" -name "._*" -type f -delete 2>/dev/null
+
+# Index every extracted file by a loose key (lower case, letters/digits/dots
+# only), so "BG-01 House Preshow loop.MP4" matches "BG-01_House_Preshow_loop.mp4".
+key() { printf '%s' "$1" | tr '[:upper:]' '[:lower:]' | tr -cd 'a-z0-9.'; }
+find "$WORK" -type f | while IFS= read -r f; do
+  printf '%s\t%s\n' "$(key "$(basename "$f")")" "$f"
+done > "$WORK/.index"
 
 # 3. Layer the folders. Edited control files go in first; later layers never
 #    overwrite a file that is already there (cp -n), so the edited QLab/Mantra
@@ -96,7 +115,7 @@ tail -n +2 "$OUT/R13_MEDIA_MANIFEST.csv" | tr -d '\r' | while IFS= read -r rel; 
   if [ -f "$OUT/$rel" ]; then echo "ok"; continue; fi
   name="$(basename "$rel")"
   src="$(find "$WORK" -type f -name "$name" | head -n 1)"
-  [ -z "$src" ] && src="$(find "$WORK" -type f -iname "$name" | head -n 1)"
+  [ -z "$src" ] && src="$(awk -F'\t' -v k="$(key "$name")" '$1==k {print $2; exit}' "$WORK/.index")"
   if [ -n "$src" ]; then
     mkdir -p "$OUT/$(dirname "$rel")"; cp -p "$src" "$OUT/$rel"
     echo "moved"; echo "  placed by name: $rel" >> "$REPORT"
@@ -126,6 +145,19 @@ if [ "$m" = "$MTR_SHA" ];  then say "Mantra .mtr - checksum OK"; else say "Mantr
 for d in "$HOME/Desktop/TLM_R11_FLASHY_Show_Files" "$HOME/TLM_R11_FLASHY_Show_Files"; do
   [ -d "$d" ] && say "Note: $d still exists. R13.1 no longer uses it, but renaming it avoids confusion."
 done
+
+if [ "$missing" != 0 ]; then
+  {
+    echo ""
+    echo "===== WHAT IS INSIDE THE ZIPS (for matching up missing files) ====="
+    for z in $ZIPS; do
+      echo "--- ${z}"
+      (cd "$WORK/${z%.zip}" 2>/dev/null && find . -type f | sed 's|^\./||' | sort)
+    done
+  } >> "$REPORT"
+  say "The report lists every missing file and everything found in the zips."
+  say "Send ASSEMBLY_REPORT.txt back if you need help matching them up."
+fi
 
 rm -rf "$WORK"
 say ""
