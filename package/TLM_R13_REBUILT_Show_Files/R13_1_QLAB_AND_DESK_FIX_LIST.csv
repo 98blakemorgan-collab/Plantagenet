@@ -1,0 +1,21 @@
+Status,Priority,Where,Action,Why
+DONE in R13.1,1,"QLab Q21, Q23, Q25, Q35, Q47",Timed return OSC cues added (0.2/0.2/0.2/0.3/1.0 s) to 21b/23b/25b/35b/47b,Replaces the six hand-set desk link times from R9
+DONE in R13.1,1,QLab Q57 / new Q57b,"HAYWIRE chase on at Q57; Q57b fires 57b flash, 57c Ariel special (+0.3 s), chase off, restore SFX",57b/57c had no trigger
+DONE in R13.1,1,QLab (31 cues),"Release OSC cues: Level=0 to the memory being left, at each section/song change",Stops song and scene looks stacking
+DONE in R13.1,1,"QLab Q9, Q15, Q15.5, Q19, Q41, Q52",3 s fade and stop on the song track,Real tracks would run under the next scene
+DONE in R13.1,1,QLab (58 audio cues),Re-targeted to the new SFX pack and 9 supplied songs; end times set to the real file lengths; stale R11 bookmarks cleared on these cues,
+DONE in R13.1,3,QLab,"Removed 11 stale memos, 10 empty disarmed MUS cues, empty SONGS cue list",
+DONE in R13.1,2,Mantra .mtr,File-size footer corrected to 4479331,Was still the R9 value
+DONE in R13.1 package,1,QLab (38 cues),Stale R11 aliases cleared on the 38 remaining media cues (videos + untouched audio); QLab now finds every file by its path inside the show folder. An old TLM_R11_FLASHY_Show_Files folder can no longer be picked up (removing it is still tidy but optional),Old R11 aliases in the workspace
+TO DO,1,QLab Workspace Settings > Audio,Patch 1 -> StudioLive USB device,Machine-specific - cannot be set from the file
+TO DO,1,QLab Workspace Settings > Video,Stage 1 -> projector output,Machine-specific
+TO DO,1,"Songs S2, S3, S4, S5",Source backing/instrumental versions; save under new names; drag onto S#.0,"Current files are vocal versions (""swap for backing"")"
+TO DO,1,"Q1, Q2, Q37, Q38, Q65","Add house / preshow / end of Act One / interval / exit music (new names, drag onto cue)",Still silent placeholders
+TO DO,1,Q42.5,Record Ariel duet line; drag onto cue,Still silent placeholder
+TO DO,2,S7,Choose jellyfish chorus song; drag onto S7.0,
+TO DO,2,QLab Workspace Settings > Network,MANTRA interface -> wired Ethernet,
+TO DO,2,Mantra network,Turn off Art-Net or sACN (whichever the U2 node does not use),Both enabled
+DONE in R13.1,2,Q19.2 Weather: periodic rain,Rain burst audio cue added (Q019-2_SFX_Rain_Burst.wav),Group was empty
+TO DO,2,Rig,Confirm PixBar #38 and TourCOB #39 exist (patch has 39 LED fixtures),R9 text disagrees
+DONE in R13.1 package,2,Front of house,Printable notice supplied: docs/FOH_Flashing_Lights_and_Haze_Notice.pdf - print and post it at the doors,White flash hits in storm/transformation/restore
+TO DO,1,Cue-to-cue,"Check every flash return timing, the Q57/Q57b sequence, and the song fades; adjust pre-waits/fade times to taste",

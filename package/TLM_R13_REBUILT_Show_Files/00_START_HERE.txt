@@ -1,0 +1,59 @@
+THE LITTLE MERMAID - R13.1 SHOW FILES (28 Sep 2026)
+===================================================
+
+OPEN THESE
+  QLab 5 :  TLM_Show_R13_1.qlab5                      (edited - use this one)
+  Mantra :  TLM_SHOW_2026_R13_FLASHY_SCENE_SPLIT.mtr  (footer fixed)
+  Read   :  docs/TLM_R13_1_Review_and_Fix_List.pdf
+
+ALREADY DONE IN R13.1 (no action needed)
+  - Lightning / transformation / jelly / restore flashes return by themselves
+    (QLab timed returns) - do NOT also set desk link times.
+  - New Q57b "Ariel restored"; HAYWIRE chase starts at Q57, stops at Q57b.
+  - QLab releases each Mantra memory when it moves on, so songs and earlier
+    scenes can't stay lit underneath.
+  - Songs fade out at Q9, Q15, Q15.5, Q19, Q41, Q52.
+  - 58 audio cues now point at the new SFX and the 9 supplied songs, with
+    correct lengths. Old placeholder files are no longer used.
+  - Q19.2 now plays a rain burst.
+  - Removed stale memo cues, empty MUS placeholders, empty SONGS list.
+  - Old R11 aliases cleared on the remaining 38 media cues (package fix).
+  - Flashing-lights/haze notice ready to print: docs/FOH_Flashing_Lights_and_Haze_Notice.pdf
+
+SETUP ON THE SHOW MAC
+1. (Optional tidy) Rename or remove any old TLM_R11_FLASHY_Show_Files
+   folder. Since the R13.1 package, no cue carries an R11 alias any more,
+   so QLab cannot pick it up by mistake.
+2. Put this folder, named exactly TLM_R13_REBUILT_Show_Files, on the
+   Desktop, and open TLM_Show_R13_1.qlab5.
+   Check: no missing-media warnings; select Q4's audio and confirm the
+   target ends in _v2.wav. If any audio cue shows as missing, drag the
+   file named in R13_1_SFX_RETARGET_MAP.csv onto it. Then File > Save.
+3. QLab Workspace Settings (these are specific to the show Mac):
+     Audio   Patch 1 -> StudioLive USB device (NOT System Output)
+     Video   Stage 1 -> projector output (NOT built-in display)
+     Network MANTRA -> interface = wired Ethernet
+4. Mantra: Home > Tools > Import Show > TLM_SHOW_2026_R13_FLASHY_SCENE_SPLIT.mtr
+   Network: Art-Net and sACN are both on - turn off the one the U2 node
+   doesn't use.
+5. Test P2 M10 SAFE LIGHT, then a cue-to-cue.
+
+STILL TO SUPPLY
+  - Backing tracks for S2 Feeling Good, S3 Part of Your World,
+    S4 Wellerman (if it has vocals), S5 Time of My Life - the current files
+    are vocal versions and are named "swap for backing".
+    Save the backing track under a NEW name and drag it onto the S#.0 cue.
+  - S7 jellyfish chorus song (still to be decided).
+  - House, preshow, end of Act One, interval and exit music (Q1, Q2, Q37,
+    Q38, Q65) and Ariel's recorded line Q42.5 - still silent placeholders.
+  Always use a NEW filename when swapping audio - a same-name swap keeps
+  the old end time in QLab.
+
+FILES
+  TLM_Show_R13_1.qlab5 / TLM_SHOW_2026_R13_FLASHY_SCENE_SPLIT.mtr
+  R13_MANTRA_SECTION_MAP.txt/.csv   which QLab cue fires each Mantra cue
+  R13_MEDIA_MANIFEST.csv            80 media files used by R13.1
+  R13_1_SFX_RETARGET_MAP.csv        new SFX -> cues
+  R13_1_QLAB_AND_DESK_FIX_LIST.csv  what is done / what is left
+  docs/                             review, R13 guide & book, R9 book,
+                                    archive_R13_original (R13 workspace)

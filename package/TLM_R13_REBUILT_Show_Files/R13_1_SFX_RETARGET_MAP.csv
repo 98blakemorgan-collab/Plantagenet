@@ -1,0 +1,40 @@
+QLab_cues,Current_file,New_file,Duration_s,Loop_in_QLab,Built_from,Note,In QLab R13.1
+Q4,media/audio/04_Ambience_Beds/Q004_SFX_Low_Ocean_Bed.wav,media/audio/04_Ambience_Beds/Q004_SFX_Low_Ocean_Bed_v2.wav,18.00,Yes (infinite),24_LOW_OCEAN_BED.wav,,Done
+Q31,media/audio/04_Ambience_Beds/Q031_SFX_Ocean_Bar_Ambience.wav,media/audio/04_Ambience_Beds/Q031_SFX_Ocean_Bar_Ambience_v2.wav,24.00,Yes (infinite),39_OCEAN_AMBIENCE_MAGICAL.wav,,Done
+Q45,media/audio/04_Ambience_Beds/Q045_SFX_Comic_Ocean_Bed.wav,media/audio/04_Ambience_Beds/Q045_SFX_Comic_Ocean_Bed_v2.wav,18.00,Yes (infinite),24_LOW_OCEAN_BED.wav,Same bed as Q4,Done
+Q39,media/audio/04_Ambience_Beds/Q039_SFX_Palace_Intro.wav,media/audio/04_Ambience_Beds/Q039_SFX_Palace_Intro_v2.wav,24.00,No,40_PALACE_AMBIENCE_UNDERSEA.wav,Seamless loop file; tick loop if the scene runs longer than 24 s,Done
+Q60,media/audio/03_Underscore/Q060_SFX_Ceremony_Bed.wav,media/audio/03_Underscore/Q060_SFX_Ceremony_Bed_v2.wav,24.00,Yes (infinite),40_PALACE_AMBIENCE_UNDERSEA.wav,No ceremony bed supplied - palace ambience used as stand-in,Done
+Q41,media/audio/03_Underscore/Q041_SFX_Low_Underscore_Palace.wav,media/audio/03_Underscore/Q041_SFX_Low_Underscore_Palace_v2.wav,24.00,No,39_OCEAN_AMBIENCE_MAGICAL.wav,Optional cue - magical ocean ambience as a soft memory bed,Done
+Q58,media/audio/03_Underscore/Q058_SFX_Chase_Comedy_Music.wav,media/audio/03_Underscore/Q058_SFX_Chase_Comedy_Music_v2.wav,23.14,No,35_CROSSFIRE_CHASE_MUSIC_UNDERSEA.wav,,Done
+"Q5, Q28, Q48",media/audio/06_Magic/Q005_SFX_Spirit_Magic.wav,media/audio/06_Magic/Q005_SFX_Spirit_Magic_v2.wav,2.10,No,01_SPIRIT_MAGIC_IN_UNDERSEA.wav,,Done
+Q16.5,media/audio/06_Magic/Q016-5_SFX_Magic_Villain_Swell.wav,media/audio/06_Magic/Q016-5_SFX_Magic_Villain_Swell_v2.wav,3.20,No,04_VILLAIN_MAGIC_SWELL_DEEP_SEA.wav,,Done
+"Q28.5, Q36.7, Q59.5, Q59.7",media/audio/06_Magic/Q028-5_SFX_Magical_Sound.wav,media/audio/06_Magic/Q028-5_SFX_Magical_Sound_v2.wav,1.95,No,02_SPIRIT_MAGIC_OUT_UNDERSEA.wav,Spirit-out sound also used for Spirit enters (Q36.7) - swap to 01 if preferred,Done
+Q29,media/audio/06_Magic/Q029_SFX_Small_Shimmer.wav,media/audio/06_Magic/Q029_SFX_Small_Shimmer_v2.wav,2.40,No,28_TRANSFORMATION_RESOLVE_SPARKLE.wav,,Done
+Q33,media/audio/06_Magic/Q033_SFX_Magic_Build_Ready.wav,media/audio/06_Magic/Q033_SFX_Magic_Build_Ready_v2.wav,3.20,No,04_VILLAIN_MAGIC_SWELL_DEEP_SEA.wav,Villain swell reused for the bargain standby,Done
+Q34,media/audio/06_Magic/Q034_SFX_Magic_Swell_Build.wav,media/audio/06_Magic/Q034_SFX_Magic_Swell_Build_v2.wav,3.62,No,26_TRANSFORMATION_BUILD_UNDERSEA.wav,,Done
+Q35,media/audio/06_Magic/Q035_SFX_Transformation_Impact.wav,media/audio/06_Magic/Q035_SFX_Transformation_Impact_v2.wav,1.55,No,27_TRANSFORMATION_IMPACT_MAGIC.wav,,Done
+Q36,media/audio/06_Magic/Q036_SFX_Shell_Voice.wav,media/audio/06_Magic/Q036_SFX_Shell_Voice_v2.wav,1.95,No,29_VOICE_CAPTURE_INTO_SHELL.wav,,Done
+Q52,media/audio/06_Magic/Q052_SFX_Shell_Magic.wav,media/audio/06_Magic/Q052_SFX_Shell_Magic_v2.wav,1.05,No,30_SHELL_ACTIVATION_PEARL_GLOW.wav,,Done
+"Q53, Q54, Q55, Q56",media/audio/06_Magic/Q053_SFX_Transfer_Sting.wav,media/audio/06_Magic/Q053_SFX_Transfer_Sting_v2.wav,0.85,No,31_VOICE_TRANSFER_STING_WATER.wav,,Done
+Q57,media/audio/06_Magic/Q057_SFX_Magic_Sequence_Resolve.wav,media/audio/06_Magic/Q057_SFX_Magic_Sequence_Resolve_v2.wav,2.95,No,32_VOICE_HAYWIRE_MAGIC.wav,Haywire only - the resolve now lives in the new Q57b,Done
+Q57b (new),(new cue),media/audio/06_Magic/Q057-5_SFX_Voice_Restore_Resolve.wav,2.10,No,33_VOICE_RESTORE_RESOLVE.wav,Add to the new Q57b group with the Mantra 57b cue,Done
+Q62,media/audio/06_Magic/Q062_SFX_Magic_Sting_Dialogue.wav,media/audio/06_Magic/Q062_SFX_Magic_Sting_Dialogue_v2.wav,1.95,No,37_WEDDING_MAGIC_STING.wav,,Done
+Optional NEW cue in Q63.5 or Q64,(new cue),media/audio/06_Magic/Q063-5_SFX_Finale_Transition_Magic.wav,1.95,No,38_FINALE_TRANSITION_MAGIC.wav,Supplied but no existing cue - optional,Spare - not used
+"Q6, Q16, Q32, Q36.5, Q61",media/audio/07_Stings_and_Comedy/Q006_SFX_Evil_Chord.wav,media/audio/07_Stings_and_Comedy/Q006_SFX_Evil_Chord_v2.wav,1.75,No,03_OCTAVIA_EVIL_CHORD_DEEP_SEA.wav,,Done
+Q42,media/audio/07_Stings_and_Comedy/Q042_SFX_Evil_Chord_Tension_Bed.wav,media/audio/07_Stings_and_Comedy/Q042_SFX_Evil_Chord_Tension_Bed_v2.wav,1.75,No,03_OCTAVIA_EVIL_CHORD_DEEP_SEA.wav,,Done
+Q9,media/audio/07_Stings_and_Comedy/Q009_SFX_Short_Sting.wav,media/audio/07_Stings_and_Comedy/Q009_SFX_Short_Sting_v2.wav,0.75,No,06_COMEDY_STING_BUBBLES.wav,,Done
+Q12,media/audio/07_Stings_and_Comedy/Q012_SFX_Comic_Intro.wav,media/audio/07_Stings_and_Comedy/Q012_SFX_Comic_Intro_v2.wav,0.75,No,06_COMEDY_STING_BUBBLES.wav,,Done
+Q10,media/audio/07_Stings_and_Comedy/Q010_SFX_Fanfare.wav,media/audio/07_Stings_and_Comedy/Q010_SFX_Fanfare_v2.wav,1.95,No,05_QUEEN_FANFARE_UNDERSEA.wav,,Done
+Q19.1,media/audio/07_Stings_and_Comedy/Q019-1_SFX_Fart_Sound.wav,media/audio/07_Stings_and_Comedy/Q019-1_SFX_Fart_Sound_v2.wav,0.92,No,07_FART_BUBBLE_GAG.wav,,Done
+Q47,media/audio/07_Stings_and_Comedy/Q047_SFX_Jellyfish_Sting.wav,media/audio/07_Stings_and_Comedy/Q047_SFX_Jellyfish_Sting_v2.wav,0.75,No,34_JELLYFISH_COMEDY_STING.wav,,Done
+Q61.5,media/audio/07_Stings_and_Comedy/Q061-5_SFX_Comic_Sting.wav,media/audio/07_Stings_and_Comedy/Q061-5_SFX_Comic_Sting_v2.wav,1.10,No,36_WEDDING_INTERRUPTION_STING.wav,,Done
+Q19,media/audio/05_Storm/Q019_SFX_Wind_Comedy_Rain.wav,media/audio/05_Storm/Q019_SFX_Wind_Comedy_Rain_v2.wav,16.00,No,08_WIND_LIGHT_STORM.wav + 10_RAIN_LIGHT_STORM.wav,"16 s, fades in/out",Done
+Q20,media/audio/05_Storm/Q020_SFX_Wind_Rain_Build.wav,media/audio/05_Storm/Q020_SFX_Wind_Rain_Build_v2.wav,16.00,Yes (infinite),09_WIND_HEAVY_GALE.wav + 10_RAIN_LIGHT_STORM.wav,Seamless 16 s loop,Done
+Q22,media/audio/05_Storm/Q022_SFX_Wind_Rain_Ship_Creaks.wav,media/audio/05_Storm/Q022_SFX_Wind_Rain_Ship_Creaks_v2.wav,16.00,Yes (infinite),09_WIND_HEAVY_GALE.wav + 11_RAIN_HEAVY_TORRENTIAL.wav + creaks 18/19/20,"Seamless 16 s loop, creaks sit inside the loop",Done
+Q21,media/audio/05_Storm/Q021_SFX_Lightning_Crack_Thunder.wav,media/audio/05_Storm/Q021_SFX_Lightning_Crack_Thunder_v2.wav,5.82,No,12_LIGHTNING_CRACK_1.wav + 16_THUNDER_MEDIUM_ROLL.wav (+0.6 s),Thunder lands 0.6 s after the crack,Done
+Q23,media/audio/05_Storm/Q023_SFX_Close_Thunder_Impact.wav,media/audio/05_Storm/Q023_SFX_Close_Thunder_Impact_v2.wav,4.35,No,14_LIGHTNING_CRACK_3_MAJOR.wav + 17_THUNDER_CLOSE_HEAVY.wav (+0.15 s),,Done
+Q24,media/audio/05_Storm/Q024_SFX_Ship_Groan_Water_Impact.wav,media/audio/05_Storm/Q024_SFX_Ship_Groan_Water_Impact_v2.wav,3.90,No,21_SHIP_GROAN_HULL_STRAIN.wav + 22_WAVE_HIT_SHIP.wav (+0.8 s),,Done
+Q25,media/audio/05_Storm/Q025_SFX_Major_Thunder_Heavy_Rain.wav,media/audio/05_Storm/Q025_SFX_Major_Thunder_Heavy_Rain_v2.wav,60.00,No,13 crack + 17 close + 15/16 rolls over 11 heavy rain,60 s; Q22 wind/rain loop keeps running underneath until Q27,Done
+Q26,media/audio/05_Storm/Q026_SFX_Splash_Low_Water_Bed.wav,media/audio/05_Storm/Q026_SFX_Splash_Low_Water_Bed_v2.wav,90.00,No,23 splash + 25 storm decay + 24 ocean bed,"90 s, settles into the low ocean bed",Done
+Q50,media/audio/04_Ambience_Beds/Q050_SFX_Dark_Lair_Ambience.wav,media/audio/04_Ambience_Beds/Q050_SFX_Dark_Lair_Ambience_v2.wav,18.00,Yes (infinite),24_LOW_OCEAN_BED.wav low-passed at 500 Hz,Stand-in: no lair bed supplied. Replaces the looping 1.4 s evil chord,Done
+Q19.2 (new),(new cue),media/audio/05_Storm/Q019-2_SFX_Rain_Burst.wav,6.00,No,10_RAIN_LIGHT_STORM.wav + 08_WIND_LIGHT_STORM.wav (-6 dB),"Fills the empty ""periodic rain"" group",Done

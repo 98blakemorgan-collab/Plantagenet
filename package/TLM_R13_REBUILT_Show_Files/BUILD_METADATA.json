@@ -1,0 +1,63 @@
+{
+  "revision": "R13.1",
+  "based_on": "R13 REBUILT",
+  "project_folder": "TLM_R13_REBUILT_Show_Files",
+  "mantra": "TLM_SHOW_2026_R13_FLASHY_SCENE_SPLIT.mtr",
+  "qlab": "TLM_Show_R13_1.qlab5",
+  "scene_split": true,
+  "positions": 153,
+  "media_manifest_count": 80,
+  "media_files": {
+    "r13_original": 106,
+    "new_sfx_v2": 38,
+    "new_extra_sfx": [
+      "Q057-5_SFX_Voice_Restore_Resolve.wav",
+      "Q063-5_SFX_Finale_Transition_Magic.wav (spare)",
+      "Q019-2_SFX_Rain_Burst.wav"
+    ],
+    "songs_mp3": 9,
+    "sfx_pack_originals": 40
+  },
+  "sha256": {
+    "mantra": "95cf3c690c2cef573c58e761f27eb54491f3e102684a1ab3f597a232fcae24c2",
+    "qlab": "5dca0842f16f9c12c096e4389d939a564bca6a3d874619dd3fa97eda1bcb86ab"
+  },
+  "sha256_r13_original": {
+    "mantra": "743f2eedb8a8ba2fb0ebfc14321a2c51aafae9d11d1790500e447a01220eb3d8",
+    "qlab": "324d1bc1d253b53eeb30161cd0e08c29327655717c2efb3ddbdbc9ee927d4284"
+  },
+  "r13_1_changes": [
+    "Mantra [ZZ_FileEnd] Size corrected to actual file size 4479331",
+    "Duplicate control-files zip removed",
+    "R13 validation files archived",
+    "Section map CSV extended",
+    "Fix list added",
+    "9 song tracks added as level-matched 320k MP3s (-18 LUFS); S2-S5 flagged as vocal versions needing backing",
+    "New SFX pack (40 sounds) built into 38 *_v2.wav files + originals folder, already wired into QLab"
+  ],
+  "songs_supplied": 9,
+  "total_cues": 479,
+  "r13_1_qlab_changes": [
+    "5 timed flash returns (Q21,Q23,Q25,Q35,Q47)",
+    "HAYWIRE chase on at Q57; new group Q57b (restore flash, 57c Ariel special +0.3 s, chase off, restore SFX)",
+    "31 memory-release OSC cues",
+    "6 song fade-and-stops (Q9,Q15,Q15.5,Q19,Q41,Q52)",
+    "58 audio cues re-targeted to the new SFX and the 9 supplied songs, end times set to real file lengths; their stale R11 bookmarks cleared so QLab resolves by relative path",
+    "Q19.2 periodic rain burst added",
+    "removed 11 stale memos, 10 empty disarmed placeholders and the empty SONGS cue list",
+    "selectedCueListID set to Main Cue List; totalCues 479",
+    "Machine-specific settings NOT changed: audio patch device, video stage screen, network interface",
+    "R13 workspace kept in docs/archive_R13_original/"
+  ],
+  "desk_link_times": "Not required - QLab fires the six flash returns. Only needed if running the P8 backup list by hand.",
+  "sha256_r13_1_before_package": {
+    "mantra": "95cf3c690c2cef573c58e761f27eb54491f3e102684a1ab3f597a232fcae24c2",
+    "qlab": "ea9120780d472457267244ed75895b501fa0f2cb5fb00973aadbe113e2e3aa01"
+  },
+  "r13_1_package_changes": [
+    "QLab: stale R11 alias data cleared on the 38 remaining media cues (95 old alias blobs emptied, same method as the 58 re-targeted cues); no other cue, setting or target changed; all 99 targets still resolve to the 80 manifest paths",
+    "docs/FOH_Flashing_Lights_and_Haze_Notice.pdf added",
+    "00_START_HERE.txt: manifest count corrected to 80; R11 step updated",
+    "Fix list updated"
+  ]
+}

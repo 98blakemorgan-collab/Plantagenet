@@ -1,0 +1,62 @@
+MANTRA PAGE / SECTION LAYOUT — R13.1
+====================================
+
+P1  VENUE / RIG BASE
+    M1 STAGE WORK | M2 FULL WHITE | M3 WARM | M4 COOL | M5 BLUE | M6 RED | M9 PIXBAR WASH | M10 CURTAIN CALL
+
+P2  ACT ONE — SCENE SECTIONS
+    M1 cues 01-11
+    M2 cues 12-17 (incl. 15.5, 16.5) / blackout
+    M3 ship + storm through shore
+    M4 shore / duet
+    M5 underwater bar / transformation / Act One end
+    M6 interval
+    M9 work / focus
+    M10 SAFE LIGHT
+
+P3  ACT TWO — SCENE SECTIONS
+    M1 palace
+    M2 jellyfish
+    M3 lair / voice transfer / haywire
+    M4 dry land
+    M5 wedding
+    M6 bows / end
+
+P4  SONG SECTIONS
+    M1 S1 Rock Lobster
+    M2 S2 Feeling Good
+    M3 S3 Part of Your World
+    M4 S4 Wellerman
+    M5 S5 Time of My Life
+    M6 S6 Crab Rave
+    M7 S7 Jellyfish chorus
+    M8 S8 Poor Unfortunate Souls
+    M9 S9 Absolutely Everybody
+    M10 S10 He's a Pirate
+
+P5  FX / CHASES
+    M1 WARM CHASE 6 @150 BPM | M2 COOL CHASE 6 @144 BPM | M3 PARTY CHASE 8 @168 BPM
+    M4 HAZE (#40, 50%) | M5 HAYWIRE 5 steps @120 BPM (manual, Q57) | M6 JELLY PULSE
+
+P6  LOOK LIBRARY M01-M10
+P7  LOOK LIBRARY M11-M17  (P7 M7 = M17 SAFE LIGHT)
+P8  FULL 153-POSITION BACKUP / REFERENCE LIST ONLY
+Also in the file (from the venue base, internal memory IDs 100-109, not used by the show):
+    LIGHTSKY ROW | ZOOM ROW | TOURCOB ROW | PIXBAR ROW | STAGE RIGHT | CENTRE STAGE | STAGE LEFT | BLACKOUT
+
+QLab performance cues target the split P2/P3/P4 memories directly.
+
+FLASH RETURNS (R13.1) - fired by QLab, no desk link times needed
+ Q21  P2 M3 cue 5 -> cue 6  (21b) after 0.2 s
+ Q23  P2 M3 cue 8 -> cue 9  (23b) after 0.2 s
+ Q25  P2 M3 cue 11 -> cue 12 (25b) after 0.2 s
+ Q35  P2 M5 cue 5 -> cue 6  (35b) after 0.3 s
+ Q47  P3 M2 cue 4 -> cue 5  (47b) after 1.0 s
+ Q57b P3 M3 cue 9 -> cue 10 (57c) after 0.3 s
+ Manual fallback from the desk: press Next Cue again after each flash
+ (or set these as Link Times on the desk if you prefer).
+
+MEMORY RELEASES (R13.1)
+ Every time QLab moves to a new memory it also sends Level=0 to the memory
+ it is leaving, so songs and earlier sections cannot stay lit underneath.
+ Q57 starts the P5 M5 HAYWIRE chase; Q57b stops it.
