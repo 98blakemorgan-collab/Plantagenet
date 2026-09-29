@@ -11,7 +11,7 @@
   "id": "1.2",
   "status": "OK",
   "title": "Control-file SHA-256 = BUILD_METADATA.json + assembler (show) = BASE_METADATA.json (base)",
-  "detail": "4 files, 3 places each: qlab 97f1e0cfd574…, mantra 9f1900285313…, mantra_base e273d54b71ab…, qlab_base 35cf343d1870…"
+  "detail": "4 files, 3 places each: qlab 87841ac57004…, mantra 9f1900285313…, mantra_base e273d54b71ab…, qlab_base 35cf343d1870…"
  },
  {
   "pass": 1,
@@ -31,7 +31,7 @@
   "pass": 1,
   "id": "1.5",
   "status": "OK",
-  "title": "QLab workspaces are intact (references, round trip, totalCues)",
+  "title": "QLab workspaces are intact (references, value encoding, cue targets, round trip, totalCues)",
   "detail": "show 479 cues (totalCues 479), base 456 cues"
  },
  {
@@ -46,7 +46,7 @@
   "id": "1.7",
   "status": "OK",
   "title": "Scripts compile (Python) and parse (bash)",
-  "detail": "33 Python files compile; assembler and build_package.sh parse"
+  "detail": "34 Python files compile; assembler and build_package.sh parse"
  },
  {
   "pass": 2,

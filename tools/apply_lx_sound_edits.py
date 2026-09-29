@@ -235,6 +235,11 @@ class Qlab:
         return self.o[u.data]
 
     def put(self, obj, key, value):
+        """Set obj[key], keeping QLab's encoding: a value it stores inline (a level or fade
+        endValue) stays inline, as QLab throws on a reference there and crashes on load."""
+        if not isinstance(obj.get(key), U):
+            obj[key] = value
+            return
         self.o.append(value)
         obj[key] = U(len(self.o) - 1)
 
@@ -333,8 +338,9 @@ def edit_qlab():
     q.children(q.group("26")).extend([u25, u24])
     q.put(f25, "duration", 4.0)
     # Q24's groan is a 3.9 s one-shot, long gone by Q27: reuse its fade cue to take Q22 down at Q26
-    _, s22 = q.child("22", "SFX Wind/rain + ship creaks")
+    u22, s22 = q.child("22", "SFX Wind/rain + ship creaks")
     f24["cueTargetUniqueID"] = s22["uniqueID"]   # shared immutable string
+    f24["cueTarget"] = u22                       # the target cue object must match the ID
     q.put(f24, "name", "FADE TO -21 dB Q22 SFX Wind/rain + ship creaks")
     q.put(f24, "stopTargetWhenDone", False)
     q.put(f24, "duration", 4.0)

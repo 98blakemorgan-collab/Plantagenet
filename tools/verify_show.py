@@ -242,7 +242,7 @@ def c_mtr_form():
     return verdict(probs, "%d + %d sections" % (len(SEC["mantra"][0]), len(SEC["mantra_base"][0])))
 
 
-@check(1, "1.5", "QLab workspaces are intact (references, round trip, totalCues)")
+@check(1, "1.5", "QLab workspaces are intact (references, value encoding, cue targets, round trip, totalCues)")
 def c_qlab_form():
     probs = []
     for k in ("qlab", "qlab_base"):
@@ -268,6 +268,27 @@ def c_qlab_form():
                     for v in x:
                         scan(v)
             scan(arc["$objects"])
+        # QLab decodes each property one way: a number it writes inline (levels, fade endValues)
+        # crashes it when stored as a reference, so every property must use a single encoding
+        io = inner["$objects"]
+        enc = {}
+        for x in io:
+            if isinstance(x, dict) and "$class" in x:
+                cls = io[x["$class"].data].get("$classname")
+                for key, v in x.items():
+                    enc.setdefault((cls, key), set()).add(isinstance(v, U))
+        for (cls, key), kinds in sorted(enc.items()):
+            if len(kinds) > 1:
+                probs.append("%s: %s.%s stored both inline and as a reference" % (k, cls, key))
+        # a cue's target object must be the cue its target ID names
+        R = lambda x: io[x.data] if isinstance(x, U) else x
+        S = lambda x: R(x)["NS.string"] if isinstance(R(x), dict) and "NS.string" in R(x) else R(x)
+        cues = {i: x for i, x in enumerate(io) if isinstance(x, dict) and "uniqueID" in x and "$class" in x}
+        by_id = {S(c["uniqueID"]): i for i, c in cues.items()}
+        for c in cues.values():
+            t = S(c["cueTargetUniqueID"]) if "cueTargetUniqueID" in c else "$null"
+            if t != "$null" and (t not in by_id or c.get("cueTarget") != U(by_id[t])):
+                probs.append("%s: %s targets %s but its cueTarget is another cue" % (k, S(c["name"]), t))
         _r, ws, lists = load_ws(F[k])
         count = len(walk(lists["cues"][0]["cues"]))
         if ws.get("totalCues") not in (None, count) and k == "qlab":

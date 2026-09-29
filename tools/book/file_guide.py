@@ -156,6 +156,8 @@ TOOLS = [("tools/verify_show.py", "Triple check of the whole build (files, show 
          ("tools/apply_lx_sound_edits.py", "The lighting and sound review edits (already applied, guarded by checksum)",
           "History"),
          ("tools/apply_fixed_foh_jobs.py", "The fixed-FOH C42 job move (already applied, guarded by checksum)", "History"),
+         ("tools/fix_qlab_decode.py", "Repairs the show QLab file so QLab opens it without crashing (already applied, "
+          "guarded by checksum)", "History"),
          ("tools/make_qlab_base.py", "Builds Plantagenet_Players_Base_2026_r1.qlab5 from the base and the show workspace settings",
           "Only if the base changes"),
          ("tools/check_mantra_base.py", "Checks the venue base still matches the show file", "Run by verify_show.py"),

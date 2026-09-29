@@ -20,7 +20,7 @@ WORK="$HERE/.assemble_work"
 REPORT="$HERE/OUTPUT/ASSEMBLY_REPORT.txt"
 ZIPS="TLM_R13_1.zip TLM_R13_1_SFX.zip TLM_Backdrops_R10.zip"
 
-QLAB_SHA="97f1e0cfd574bc1839165e23407fac5d3847985f9ff87cb30de4f85a6c6f6774"
+QLAB_SHA="87841ac57004d82cd22d2c0a9af95184cdca538fefb3155c5adaa377cc6dfb3e"
 MTR_SHA="9f1900285313f4da98713534c3f1f21806e906fdda4693fba8fd7f6463beab12"
 # The Drive media zips still hold the folder under its R13 name
 ZIPSHOW="TLM_R13_REBUILT_Show_Files"

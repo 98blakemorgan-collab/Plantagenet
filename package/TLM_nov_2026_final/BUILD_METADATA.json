@@ -22,7 +22,7 @@
   },
   "sha256": {
     "mantra": "9f1900285313f4da98713534c3f1f21806e906fdda4693fba8fd7f6463beab12",
-    "qlab": "97f1e0cfd574bc1839165e23407fac5d3847985f9ff87cb30de4f85a6c6f6774"
+    "qlab": "87841ac57004d82cd22d2c0a9af95184cdca538fefb3155c5adaa377cc6dfb3e"
   },
   "sha256_r13_original": {
     "mantra": "743f2eedb8a8ba2fb0ebfc14321a2c51aafae9d11d1790500e447a01220eb3d8",
@@ -98,6 +98,7 @@
     "formerly": "TLM_R13_REBUILT_Show_Files / TLM_Show_R13_1.qlab5 / TLM_SHOW_2026_R13_FLASHY_SCENE_SPLIT.mtr"
   },
   "final_names": [
-    "QLab workspaceName set to TLM_nov_2026_final (strings only)"
+    "QLab workspaceName set to TLM_nov_2026_final (strings only)",
+    "QLab load crash fixed (tools/fix_qlab_decode.py): 62 level/fade values stored inline again as QLab writes them; the Q26 fade's cueTarget now points at Q22 to match its target ID"
   ]
 }

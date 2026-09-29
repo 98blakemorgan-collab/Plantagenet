@@ -18,6 +18,9 @@ Source for the single R13.1 download package.
   number order and cannot be moved, so their jobs go by position (faces #1+4, #5+8,
   #9+12; specials #2, 3, 6, 7, 10, 11) and the show programming moves with each job.
   Already applied; the venue base is untouched.
+- `tools/fix_qlab_decode.py` — repairs the show QLab file, which crashed QLab on open:
+  62 level and fade values go back to being stored inline as QLab writes them, and the
+  Q26 fade's target object now matches its target ID. Values unchanged. Already applied.
 - `tools/book/lx_moves.py` — Part B3 Rig Move Guide (what moves from the installed rig,
   kit, order of work, safety, test and focus) and `TLM_nov_2026_final_Lighting_Changes.pdf`
   (every lighting change in one document). Built by `tools/book/build.py`.

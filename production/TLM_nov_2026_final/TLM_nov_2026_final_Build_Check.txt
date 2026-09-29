@@ -5,17 +5,17 @@ PASS 1 - FILES
   [OK  ] 1.1 Every package file is present, with no stray files
          32 files in package/, all 13 control files present
   [OK  ] 1.2 Control-file SHA-256 = BUILD_METADATA.json + assembler (show) = BASE_METADATA.json (base)
-         4 files, 3 places each: qlab 97f1e0cfd574…, mantra 9f1900285313…, mantra_base e273d54b71ab…, qlab_base 35cf343d1870…
+         4 files, 3 places each: qlab 87841ac57004…, mantra 9f1900285313…, mantra_base e273d54b71ab…, qlab_base 35cf343d1870…
   [OK  ] 1.3 Mantra [ZZ_FileEnd] Size footers match the file sizes
          show 4482340 bytes, base 198628 bytes
   [OK  ] 1.4 Mantra files are well formed (sections, cue keys in order, memory headers)
          440 + 120 sections
-  [OK  ] 1.5 QLab workspaces are intact (references, round trip, totalCues)
+  [OK  ] 1.5 QLab workspaces are intact (references, value encoding, cue targets, round trip, totalCues)
          show 479 cues (totalCues 479), base 456 cues
   [OK  ] 1.6 CSV and JSON files parse with the expected rows
          manifest 80, section map 153, fix list and SFX map rectangular, metadata JSON valid
   [OK  ] 1.7 Scripts compile (Python) and parse (bash)
-         33 Python files compile; assembler and build_package.sh parse
+         34 Python files compile; assembler and build_package.sh parse
 
 PASS 2 - THE SHOW (QLab <-> Mantra <-> media)
   [OK  ] 2.1 Cue numbers are unique; emergency cues E1–E3 present
