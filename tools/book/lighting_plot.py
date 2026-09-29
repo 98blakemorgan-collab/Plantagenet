@@ -226,11 +226,11 @@ def plan(c):
 
     # FOH truss (over the house)
     bar(c, Y_FOH, SX0 + 5, SX1 - 5, "FOH BAR", "house ceiling · U2 C42s")
-    for n, x in spread([41, 1, 3, 5, 7, 8, 6, 4, 2, 42], SX0 + 9, SX1 - 9):
+    for n, x in spread([41, 1, 3, 5, 9, 11, 7, 8, 12, 10, 6, 4, 2, 42], SX0 + 9, SX1 - 9):
         unit(c, n, x, Y_FOH)
     # LX1
     bar(c, Y_LX1, PX0, PX1, "LX1", "beam behind the pelmet")
-    for n, x in spread([13, 16, 9, 14, 11, 12, 17, 10, 15, 18], PX0 + 5, PX1 - 5):
+    for n, x in spread([13, 16, 14, 17, 15, 18], PX0 + 5, PX1 - 5):
         unit(c, n, x, Y_LX1)
     # LX2 + PixBar row
     bar(c, Y_LX2, PX0, PX1, "LX2", "upstage beam")
@@ -342,8 +342,8 @@ def page2(c):
     c.line(*P(gx0 + 90, gy0 + 8), *P(gx0 + 240, gy0 + 8))  # stage floor
     text(c, gx0 + 45, gy0 - 5, "HOUSE", 6, "Helvetica-Bold", MUTED)
     text(c, gx0 + 165, gy0 + 3, "STAGE", 6, "Helvetica-Bold", MUTED)
-    for x, h, lab, sub in ((gx0 + 60, 92, "FOH bar (ceiling)", "C42 #1–8 · faces + SP1/SP2"),
-                           (gx0 + 112, 84, "LX1 (behind pelmet)", "C42 #9–12 · Zoom #13–18"),
+    for x, h, lab, sub in ((gx0 + 60, 92, "FOH bar (ceiling)", "C42 #1–12 · faces + specials"),
+                           (gx0 + 112, 84, "LX1 (behind pelmet)", "Zoom #13–18"),
                            (gx0 + 195, 88, "LX2", "COB #23–28, 39 · Zoom #19–20 · PixBar #33–38")):
         c.setLineWidth(1.4)
         c.circle(x * mm, (gy0 + h) * mm, 1.8 * mm, fill=0, stroke=1)
@@ -424,7 +424,7 @@ def page2(c):
     cx0 = 205
     text(c, cx0, 128, "DATA ROUTE", 8, "Helvetica-Bold", anchor="l")
     lines = ["U1 (desk XLR): LX1 → LX2 → SR boom → SL boom → hazer · terminate",
-             "U2 (Art-Net/sACN): desk → switch → node 2.0.0.10 → FOH bar C42 #1–8 → LX1 #9–12 · terminate",
+             "U2 (Art-Net/sACN): desk → switch → node 2.0.0.10 → FOH bar C42 #1–12 · terminate",
              "Every fixture keeps its desk number and address wherever it hangs."]
     yy = 122
     for l in lines:

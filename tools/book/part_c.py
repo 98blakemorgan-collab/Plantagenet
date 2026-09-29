@@ -62,6 +62,11 @@ def build(path):
     for name, rows in MAPS.items():
         d.add(KeepTogether([P("**" + name + "**", "h3"), table(["Ch", "Function", "Home / rule"], [list(r) for r in rows],
                                                                [12 * mm, 50 * mm, 108 * mm])]))
+    d.add(box("verify", "FOH C42s RUN FROM DIMMERS — SET NON-DIM",
+              "All 12 C42s stay on the FOH bar (approved: the bar runs back to the dimmer setup). Set every dimmer "
+              "channel feeding them to non-dim / hard power at the rack before power-up, spread 4 C42 per 10 A "
+              "circuit (1,200 W each). If the rack also listens to DMX, its channels must never be faded: at 0 the "
+              "C42s lose power. Their brightness is set by their own intensity channel (ch 9), not by the dimmer."))
     d.add(box("verify", "KEEP CONTROL-TYPE CHANNELS AT 0", "Control, Strobe, Reset, Auto speed, Other, Default and Colour macro "
               "can trigger resets, strobing or built-in programs. Every cue in the R13.1 file keeps them at 0; lightning is done "
               "with intensity (R-04). The Zoom library name is spelled TOUR PR0 (zero) on the desk — cosmetic only."))
@@ -69,13 +74,13 @@ def build(path):
     d.add(H1("3 DMX runs, network and fader map"))
     d.add(table(["Line", "Route"], [
         ["Universe 1 (desk XLR)", "Desk → LX1 Zooms #13–18 → LX2 (#19–20, 23–28, 39, 33–38) → SR boom (#21, 29–30) → SL boom (#22, 31–32) → hazer #40 · terminate"],
-        ["Universe 2 (Ethernet)", "Desk → switch → node 2.0.0.10 → FOH bar C42 #1–8 → LX1 C42 #9–12 · terminate"]],
+        ["Universe 2 (Ethernet)", "Desk → switch → node 2.0.0.10 → FOH bar C42 #1–12 · terminate"]],
         [38 * mm, 132 * mm], bold_first=True))
     d.add(table(["Setting", "Desk (Mantra)", "Node for universe 2"], [
         ["IP address", "2.0.0.1 (static, DHCP off)", "2.0.0.10"], ["Subnet mask", "255.0.0.0", "255.0.0.0"],
         ["Protocols", "Art-Net on · sACN on — turn off the one the node doesn't use", "sACN universe 2, or Art-Net 0-0-1"]],
         [30 * mm, 80 * mm, 60 * mm]))
-    d.add(table(["Faders", "Fixtures"], [["Console 1–12", "C42 #1–8 FOH · #9–12 LX1"], ["Console 13–24", "Zoom #13–18 LX1 · #19–20 LX2 · #21 SR · #22 SL · COB #23–24 LX2"],
+    d.add(table(["Faders", "Fixtures"], [["Console 1–12", "C42 #1–12 FOH"], ["Console 13–24", "Zoom #13–18 LX1 · #19–20 LX2 · #21 SR · #22 SL · COB #23–24 LX2"],
                                          ["Wing 1 25–36", "COB #25–28 LX2 · #29–30 SR · #31–32 SL · PixBar #33–36"],
                                          ["Wing 2 37–48", "PixBar #37–38 · COB #39 · hazer #40 · pinspots #41–42 · 43–48 spare"]],
                 [30 * mm, 140 * mm], bold_first=True))
@@ -96,7 +101,9 @@ def build(path):
                                       "Set the node, connect it through the switch, run its DMX out to the FOH bar. Test C42 #1 at 50 %."]),
         ("7 Remote trigger for QLab (R13.1)", ["Tools › Setup › Remote Triggers › Add › OSC · Play Memory · port 8000. Save."]),
         ("8 Cable, power, terminate", ["One chain per universe in the order of section 3; label both ends; terminate the last fixture.",
-                                       "No more than about 1,840 W per 10 A circuit."]),
+                                       "No more than about 1,840 W per 10 A circuit.",
+                                       "FOH bar: the C42s are powered from the venue dimmers — set those dimmer channels to "
+                                       "NON-DIM (hard power) before switching on. Never dim an LED fixture."]),
         ("9 Rig check and save", ["Each fixture alone at 50 %, then 0 → 100 %, then each colour. Use the ROW memories (100–103) for each type.",
                                   "Confirm PixBar #38 and TourCOB #39 physically exist (R13.1 fix list). Save (T S), export to USB, tick the rig sheets."])]:
         d.add(KeepTogether([P("**" + title + "**", "h3")] + steps(items)))
@@ -110,7 +117,7 @@ def build(path):
 
     d.add(H1("6 Power, labels and troubleshooting"))
     d.add(table(["Position", "Fixtures", "Known load", "Suggested"], [
-        ["FOH", "8 × C42", "2,400 W (10.4 A)", "2 × 10 A"], ["LX1", "4 × C42 + 6 × Zoom", "~2,280 W (9.9 A)", "2 × 10 A"],
+        ["FOH", "12 × C42", "3,600 W (15.7 A)", "3 FOH dimmer circuits, NON-DIM, 4 C42 each"], ["LX1", "6 × Zoom", "~1,080 W (4.7 A)", "1 × 10 A"],
         ["LX2", "2 Zoom, 7 COB, 6 PixBar", "360 W + label ratings", "1 × 10 A"], ["SR / SL boom", "1 Zoom + 2 COB each", "180 W + labels", "1 × 10 A each"],
         ["Floor", "Hazer", "From label", "1 × 10 A"]], [30 * mm, 50 * mm, 50 * mm, 40 * mm]))
     d.add(table(["Symptom", "Likely cause", "Fix"], [

@@ -37,10 +37,10 @@ SONG_LANG = {"S1": "Aqua / hot pink / gold / deep blue / magenta / lime / white 
 
 SPECIALS = [("SP1", "Ariel", "#7 C42 (FOH)", "DSC mark; solo, duet, transformation, restore (57c)"),
             ("SP2", "Spirit", "#8 C42 (FOH)", "DS audience-left mark; every Spirit entrance"),
-            ("SP3", "Octavia", "#9 C42 (LX1)", "US audience-right; entrances, lair, wedding interruption"),
-            ("SP4", "Shell", "#10 C42 (LX1, shuttered tight)", "Plinth mark; brightest point in Scene Eight"),
-            ("V1", "Dame", "#11 C42 (LX1)", "Voice-transfer mark 1 (Q53)"),
-            ("V2", "Flanders", "#12 C42 (LX1)", "Voice-transfer mark 2 (Q54)"),
+            ("SP3", "Octavia", "#9 C42 (FOH)", "US audience-right; entrances, lair, wedding interruption"),
+            ("SP4", "Shell", "#10 C42 (FOH, shuttered tight)", "Plinth mark; brightest point in Scene Eight"),
+            ("V1", "Dame", "#11 C42 (FOH)", "Voice-transfer mark 1 (Q53)"),
+            ("V2", "Flanders", "#12 C42 (FOH)", "Voice-transfer mark 2 (Q54)"),
             ("V3", "Theodore", "#19 Zoom 13° + barn doors (LX2)", "Voice-transfer mark 3 (Q55)"),
             ("V4", "Marina", "#20 Zoom 13° + barn doors (LX2)", "Voice-transfer mark 4 (Q56)")]
 
@@ -52,10 +52,10 @@ FOCUS = [(1, "C42", "FOH", "U2:101", "Face zone 1 — DSR (from house left)"),
          (6, "C42", "FOH", "U2:156", "Face zone 3 — DSL (from house right)"),
          (7, "C42", "FOH", "U2:167", "SP1 Ariel — DSC mark, shuttered tight"),
          (8, "C42", "FOH", "U2:178", "SP2 Spirit — DS audience-left mark"),
-         (9, "C42", "LX1", "U2:189", "SP3 Octavia — US audience-right mark"),
-         (10, "C42", "LX1", "U2:200", "SP4 Shell — plinth mark, shuttered to the shell"),
-         (11, "C42", "LX1", "U2:211", "V1 Dame — voice-transfer mark 1"),
-         (12, "C42", "LX1", "U2:222", "V2 Flanders — voice-transfer mark 2")] + \
+         (9, "C42", "FOH", "U2:189", "SP3 Octavia — US audience-right mark"),
+         (10, "C42", "FOH", "U2:200", "SP4 Shell — plinth mark, shuttered to the shell"),
+         (11, "C42", "FOH", "U2:211", "V1 Dame — voice-transfer mark 1"),
+         (12, "C42", "FOH", "U2:222", "V2 Flanders — voice-transfer mark 2")] + \
     [(13 + i, "ZM", "LX1", "U1:%d" % (301 + 12 * i), "Top/front colour wash — " + a)
      for i, a in enumerate(["DSR", "DSC", "DSL", "CSR", "CSC", "CSL"])] + \
     [(19, "ZM", "LX2", "U1:373", "V3 Theodore — 13°, barn doors, steep top light"),
@@ -116,8 +116,7 @@ def build(path):
     d.add(H1("1 The installed rig"))
     d.add(table(["Fixture", "Qty", "Mantra #", "DMX", "What it is", "Job in the show"],
                 [list(r) for r in RIG], [30 * mm, 9 * mm, 17 * mm, 26 * mm, 42 * mm, 46 * mm], bold_first=True))
-    d.add(P("Positions: 8 × C42 on the FOH bar (#1–8), LX1 downstage bar (C42 #9–12, "
-            "Zoom #13–18), LX2 upstage bar (Zoom #19–20, COB #23–28, 39, PixBar #33–38), a floor boom in each "
+    d.add(P("Positions: all 12 × C42 on the FOH bar (#1–12), LX1 downstage bar (Zoom #13–18), LX2 upstage bar (Zoom #19–20, COB #23–28, 39, PixBar #33–38), a floor boom in each "
             "wing (SR #21, 29, 30 · SL #22, 31, 32) and the hazer upstage on the floor (#40). The projector hangs "
             "centre stage towards the back and throws upstage onto the painted back wall (R-11). The drawn plan with every "
             "fixture, mark and address is B2, the Stage Lighting Layout Plan (A3)."))
@@ -192,6 +191,9 @@ def build(path):
         "row. Fit the 26° or 36° lenses if the pools don't overlap.",
         "Specials: shutter each C42 tight to its glow-tape mark. The shell special (#10) is the brightest thing "
         "on stage in Scene Eight.",
+        "All 12 C42s stay on the FOH bar. #9–12 (Octavia, Shell, Dame, Flanders) now come from the front: a longer "
+        "throw and flatter angle than LX1, so the pool is bigger and spills further upstage — shutter the top edge "
+        "off the set and screen, and sharpen the edge with the lens barrel.",
         "LX1 Zooms: overlap by a third; barn doors cut the top edge so nothing reaches the screen.",
         "LX2: COB PARs down-and-forward to head height at the DS edge; PixBars tilted downstage, never onto the "
         "screen (R-25). The show runs the backlight hard, so check screen washout with BG-02 and BG-18 running.",

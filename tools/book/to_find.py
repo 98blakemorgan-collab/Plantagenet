@@ -21,6 +21,8 @@ ITEMS = [
     ("Show control", "Turn off Art-Net or sACN on the Mantra (whichever the node doesn't use)", "LX", "Tech"),
     ("Show control", "Who calls the 56 song-section GOs — DSM or QLab op to the music (R-31)", "SM / QLab op", "Before tech"),
     ("Lighting", "Confirm fixtures #38 (PixBar) and #39 (TourCOB) exist and are patched", "LX / venue", "Rig day"),
+    ("Lighting", "All 12 C42s on the FOH bar — APPROVED (runs back to the dimmer setup). Set the FOH dimmer channels feeding them to NON-DIM, 4 C42 per circuit", "LX / venue", "Rig day"),
+    ("Lighting", "Is the dimmer rack also on DMX? If so, which universe/addresses — it must never fade the C42 feeds", "Venue", "Site walk"),
     ("Lighting", "Check the colour-forward looks from the house: faces, screen washout, backlight (R-30)", "LX / director", "Focus"),
     ("Lighting", "Cue-to-cue: flash returns Q21/23/25/35/47/57b, the Q57 → Q57b HAYWIRE sequence, the Level=0 releases (run Q8 > S1 > Q9) and the six song fade-outs", "LX / QLab op", "Tech"),
     ("Lighting", "Pinspots #41–42 (P5 M7) only if the mirror ball is used", "LX", "Rig day"),

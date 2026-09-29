@@ -9,8 +9,8 @@ def card1():
             P("One FOH bar, two stage bars (LX1, LX2) and a floor boom in each wing. Projector centre stage towards the back, "
               "throwing upstage onto the screen.", "muted"),
             table(["Position", "Fixtures (desk numbers)", "Qty"], [
-                ["FOH bar", "8 × Lightsky C42 #1–8 (#1–6 faces, #7 SP1 Ariel, #8 SP2 Spirit)", "8"],
-                ["LX1 — downstage bar", "4 × C42 #9–12 (SP3 Octavia, SP4 Shell, V1 Dame, V2 Flanders) · 6 × Zoom #13–18 colour wash", "10"],
+                ["FOH bar", "12 × Lightsky C42 #1–12 (#1–6 faces, #7–10 SP1–SP4 specials, #11–12 V1–V2 voice marks)", "12"],
+                ["LX1 — downstage bar", "6 × Zoom #13–18 colour wash", "6"],
                 ["LX2 — upstage bar", "2 × Zoom #19–20 (V3 Theodore, V4 Marina) · 7 × TourCOB #23–28, 39 · 6 × PixBar #33–38", "15"],
                 ["SR floor boom", "Zoom #21 high · TourCOB #29 mid, #30 shin", "3"],
                 ["SL floor boom", "Zoom #22 high · TourCOB #31 mid, #32 shin", "3"],
@@ -47,7 +47,7 @@ def card3():
                   [12 * mm, 30 * mm, 128 * mm]),
             table(["Item", "Setting"], [["Desk", "2.0.0.1 / 255.0.0.0, DHCP off · Art-Net + sACN on (turn off the unused one)"],
                                         ["U1 route", "Desk XLR → LX1 → LX2 → SR boom → SL boom → hazer · terminate"],
-                                        ["U2 route", "Desk Ethernet → switch → node 2.0.0.10 → FOH C42 #1–8 → LX1 #9–12 · terminate"],
+                                        ["U2 route", "Desk Ethernet → switch → node 2.0.0.10 → FOH C42 #1–12 · terminate"],
                                         ["Node", "sACN universe 2, or Art-Net 0-0-1"],
                                         ["QLab → desk", "OSC Play Memory, UDP 2.0.0.1 port 8000 (add the trigger on the desk)"]],
                   [30 * mm, 140 * mm], bold_first=True),
@@ -64,8 +64,8 @@ def card4():
     return [P("4 Specials, looks and critical sequences", "h1"),
             table(["Special", "Character", "Fixture", "Mark"], [
                 ["SP1", "Ariel", "#7 C42 FOH", "DSC"], ["SP2", "Spirit", "#8 C42 FOH", "DS audience-left"],
-                ["SP3", "Octavia", "#9 C42 LX1", "US audience-right"], ["SP4", "Shell", "#10 C42 LX1", "Plinth"],
-                ["V1–V2", "Dame, Flanders", "#11–12 C42 LX1", "Voice marks 1–2"], ["V3–V4", "Theodore, Marina", "#19–20 Zoom 13° LX2", "Voice marks 3–4"]],
+                ["SP3", "Octavia", "#9 C42 FOH", "US audience-right"], ["SP4", "Shell", "#10 C42 FOH", "Plinth"],
+                ["V1–V2", "Dame, Flanders", "#11–12 C42 FOH", "Voice marks 1–2"], ["V3–V4", "Theodore, Marina", "#19–20 Zoom 13° LX2", "Voice marks 3–4"]],
                 [18 * mm, 34 * mm, 44 * mm, 74 * mm], bold_first=True),
             lt,
             table(["Sequence", "Cues", "Desk", "Note"], [

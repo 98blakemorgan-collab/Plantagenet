@@ -544,7 +544,7 @@ FIXTURES = [
 ] + [("", "")] * 6
 
 # Where each fixture hangs (fixture number -> position).
-HANG = {n: pos for ns, pos in [(range(1, 9), "FOH"), (range(9, 19), "LX1"), ((19, 20), "LX2"), ((21,), "SR boom"),
+HANG = {n: pos for ns, pos in [(range(1, 13), "FOH"), (range(13, 19), "LX1"), ((19, 20), "LX2"), ((21,), "SR boom"),
                                 ((22,), "SL boom"), (range(23, 29), "LX2"), ((29, 30), "SR boom"),
                                 ((31, 32), "SL boom"), (range(33, 40), "LX2"), ((40,), "floor US"),
                                 ((41,), "FOH SR"), ((42,), "FOH SL")] for n in ns}
@@ -583,7 +583,7 @@ def label_strip(cells, col_w, height, extra=()):
 
 KEY = ("<b>Key</b> · yellow Lightsky C42 (U2) · blue Tour Pro Zoom · orange TourCOB PAR · violet PixBar · "
        "grey hazer / pinspots. FACE 1 = DSR, 2 = DSC, 3 = DSL; L / R = lit from house left / right. "
-       "Hung: 1–8 FOH · 9–18 LX1 · 19–20, 23–28, 33–39 LX2 · 21, 29–30 SR boom · 22, 31–32 SL boom · "
+       "Hung: 1–12 FOH · 13–18 LX1 · 19–20, 23–28, 33–39 LX2 · 21, 29–30 SR boom · 22, 31–32 SL boom · "
        "40 floor US · 41–42 FOH (pinspots only if the mirror ball is used). 43–48 spare. "
        "Confirm #38 PIX 6 and #39 BACK C exist on the rig.")
 
