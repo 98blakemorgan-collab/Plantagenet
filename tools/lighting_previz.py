@@ -15,7 +15,7 @@ production/TLM_nov_2026_final/03_Lighting_Mantra/TLM_nov_2026_final_Lighting_Pre
 
 Usage: python3 tools/lighting_previz.py [--base] [image_dir]      (needs numpy, pillow, reportlab)
   --base   the venue base instead: the rig as installed with the venue's own looks (Plantagenet_Players_Base_2026_r1), written to
-           03_Lighting_Mantra/Plantagenet_Players_Base_2026_r1_Previz.pdf
+           03_Lighting_Mantra/Plantagenet_Players_Base_2026_r1_Preview.pdf
 """
 import json
 import math
@@ -39,7 +39,7 @@ THUMBS = os.path.join(ROOT, "production", "assets", "thumbs")
 OPEN_PHOTO = os.path.join(PHOTOS, "15_Stage_tabs_open_from_house.jpg")
 CLOSED_PHOTO = os.path.join(PHOTOS, "16_Stage_tabs_closed_from_house.jpg")
 PDF = os.path.join(ROOT, "production", "TLM_nov_2026_final", "03_Lighting_Mantra", "TLM_nov_2026_final_Lighting_Previz.pdf")
-BASE_PDF = os.path.join(ROOT, "production", "TLM_nov_2026_final", "03_Lighting_Mantra", "Plantagenet_Players_Base_2026_r1_Previz.pdf")
+BASE_PDF = os.path.join(ROOT, "production", "TLM_nov_2026_final", "03_Lighting_Mantra", "Plantagenet_Players_Base_2026_r1_Preview.pdf")
 
 W, H = 1288, 966            # output size (the photos are 2576 x 1932: every coordinate below is full-size / 2)
 LW, LH = 644, 483           # light maps are built at half the output size and scaled up
@@ -615,9 +615,9 @@ def build_pdf(outdir, index, rig="show"):
         return f
 
     base = rig == "base"
-    doc_title = "Venue Base Lighting Previz" if base else "Lighting Previz"
+    doc_title = "Venue Base Lighting Preview" if base else "Lighting Previz"
     c = canvas.Canvas(BASE_PDF if base else PDF, pagesize=(pw, ph))
-    c.setTitle("Plantagenet Hall Venue Base Lighting Previz" if base else "TLM R13.1 Lighting Previz")
+    c.setTitle("Plantagenet Hall Venue Base Lighting Preview" if base else "TLM R13.1 Lighting Previz")
     heads = ({"whole": "The installed rig and the venue looks", "look": "The installed rig and the venue looks",
               "sweep": "Rig ID sweeps — one fixture type at a time (QLab base I1–I4)",
               "fixture": "Each fixture on its own, as installed (QLab base T1–T40)"} if base else

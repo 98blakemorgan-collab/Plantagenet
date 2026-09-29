@@ -31,7 +31,7 @@ NAME = "Plantagenet_Players_Base_2026_r1"
 OUT = os.path.join(ROOT, "base", NAME)
 DOCS = os.path.join(OUT, "docs")
 ZIP = os.path.join(ROOT, "dist", NAME + ".zip")
-PREVIZ = os.path.join(ROOT, "production", "TLM_nov_2026_final", "03_Lighting_Mantra", "Plantagenet_Players_Base_2026_r1_Previz.pdf")
+PREVIZ = os.path.join(ROOT, "production", "TLM_nov_2026_final", "03_Lighting_Mantra", "Plantagenet_Players_Base_2026_r1_Preview.pdf")
 TYPES = {"CX 42 NEW": "Lightsky C42", "ZOOM 12 CHANNEL": "Tour Pro Zoom", "TOURCOB PAR": "TourCOB PAR",
          "PIXBAR 6CH": "PixBar", "HAZER 2CH": "Hazer"}
 MODE = {"CX 42 NEW": "11 ch", "ZOOM 12 CHANNEL": "12 ch", "TOURCOB PAR": "6 ch", "PIXBAR 6CH": "6 ch", "HAZER 2CH": "2 ch"}
@@ -61,7 +61,7 @@ FILES = [("00_READ_ME_FIRST.txt", "What this folder is and the first steps", "Ev
          ("docs/Plantagenet_Players_Base_2026_r1_Mantra_Labels.pdf", "Desk fader and playback labels for the base (venue names only)", "LX — print"),
          ("docs/Plantagenet_Players_Base_2026_r1_Rig_ID_Test.pdf", "Rig ID test: find every fixture, check type, position, address and mode; "
           "fault table and sign-off", "LX — rig day"),
-         ("docs/Plantagenet_Players_Base_2026_r1_Previz.pdf", "The base lighting drawn on photos of the stage: the whole rig, every "
+         ("docs/Plantagenet_Players_Base_2026_r1_Preview.pdf", "The base lighting drawn on photos of the stage: the whole rig, every "
           "venue look, the rig ID sweeps and each fixture on its own", "Everyone")]
 
 
@@ -154,10 +154,10 @@ def build_guide(path, mems, patch, qlab):
                  "After the last show: Import Plantagenet_Players_Base_2026_r1.mtr, check V1 STAGE WORK from the QLab base or the desk, save "
                  "and export to USB. The venue is back to its own rig and looks."]))
 
-    d.add(H1("6 Lighting previz"))
-    d.add(P("docs/Plantagenet_Players_Base_2026_r1_Previz.pdf draws the base on photos of the stage: the whole rig (tabs open and "
+    d.add(H1("6 Lighting preview"))
+    d.add(P("docs/Plantagenet_Players_Base_2026_r1_Preview.pdf draws the base on photos of the stage: the whole rig (tabs open and "
             "closed), every venue look, the rig ID sweeps and each fixture on its own, as installed. The same pictures are "
-            "on the interactive Venue Base Previz page."))
+            "on the interactive Venue Base Preview page."))
 
     d.add(H1("7 Checksums"))
     d.add(table(["File", "SHA-256"], [[f, sha(os.path.join(OUT, f))] for f in ("Plantagenet_Players_Base_2026_r1.mtr", "Plantagenet_Players_Base_2026_r1.qlab5")],
@@ -182,7 +182,7 @@ The venue's lighting rig on its own, separate from The Little Mermaid show.
                          Only use it with Plantagenet_Players_Base_2026_r1.mtr on the desk.
   BASE_METADATA.json     checksums of the two files
   docs/                  Venue Base Guide (start here), link map, desk
-                         labels, rig ID test, base lighting previz
+                         labels, rig ID test, base lighting preview
 
 FIRST
   1. Read docs/Plantagenet_Players_Base_2026_r1_Guide.pdf.

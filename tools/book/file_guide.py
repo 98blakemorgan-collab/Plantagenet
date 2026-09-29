@@ -76,7 +76,7 @@ DESCRIBE = {
     "base/Plantagenet_Players_Base_2026_r1/BASE_METADATA.json": ("Checksums of the two base files", "Checking a copy"),
     "base/Plantagenet_Players_Base_2026_r1/docs/Plantagenet_Players_Base_2026_r1_Guide.pdf": ("The base guide: rig as installed, addresses, "
                                                                           "venue looks, QLab base cues, how to", "LX / venue — start here"),
-    "base/Plantagenet_Players_Base_2026_r1/docs/Plantagenet_Players_Base_2026_r1_Previz.pdf": ("The base lighting drawn on photos of the stage",
+    "base/Plantagenet_Players_Base_2026_r1/docs/Plantagenet_Players_Base_2026_r1_Preview.pdf": ("The base lighting drawn on photos of the stage",
                                                                            "Everyone"),
     "base/Plantagenet_Players_Base_2026_r1/docs/Plantagenet_Players_Base_2026_r1_*.pdf": ("Base link map, desk labels and rig ID test", "LX — rig day"),
     # ---- production/ ------------------------------------------------------------------------------------------
@@ -132,7 +132,7 @@ DESCRIBE = {
     "production/TLM_nov_2026_final/03_Lighting_Mantra/TLM_nov_2026_final_Lighting_Previz.pdf": ("Show lighting previz: whole rig, "
                                                                                    "looks, each fixture, every cue and song",
                                                                                    "Everyone"),
-    "production/TLM_nov_2026_final/03_Lighting_Mantra/Plantagenet_Players_Base_2026_r1_Previz.pdf": ("Venue base lighting previz",
+    "production/TLM_nov_2026_final/03_Lighting_Mantra/Plantagenet_Players_Base_2026_r1_Preview.pdf": ("Venue base lighting preview",
                                                                                        "Everyone"),
     "production/TLM_nov_2026_final/06_Projection_Source/TLM_nov_2026_final_Backdrop_Sheets.pdf": ("Backdrop sheets (copy of Part I2)",
                                                                                      "Projection"),

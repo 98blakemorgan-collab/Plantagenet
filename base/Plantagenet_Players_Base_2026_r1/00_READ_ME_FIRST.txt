@@ -13,7 +13,7 @@ The venue's lighting rig on its own, separate from The Little Mermaid show.
                          Only use it with Plantagenet_Players_Base_2026_r1.mtr on the desk.
   BASE_METADATA.json     checksums of the two files
   docs/                  Venue Base Guide (start here), link map, desk
-                         labels, rig ID test, base lighting previz
+                         labels, rig ID test, base lighting preview
 
 FIRST
   1. Read docs/Plantagenet_Players_Base_2026_r1_Guide.pdf.

@@ -47,7 +47,7 @@ PASS 2 - THE SHOW (QLab <-> Mantra <-> media)
   [OK  ] 2.14 Venue base matches the show file (patch, fixtures, network, rig view, P1, 100–109)
          OK: Plantagenet_Players_Base_2026_r1.mtr matches TLM_nov_2026_final.mtr (38 sections: patch, fixtures, network, rig view, P1, memories 100-109) · OK: Plantagenet_Players_Base_2026_r1.qlab5 fires all 48 P1-P5 memories of Plantagenet_Players_Base_2026_r1.mtr and nothing else
   [OK  ] 2.15 The base is a separate package: complete on its own, and nothing of it in the show package
-         base/Plantagenet_Players_Base_2026_r1 complete (files, docs, guide, previz, checksums); nothing of it in the show package
+         base/Plantagenet_Players_Base_2026_r1 complete (files, docs, guide, preview, checksums); nothing of it in the show package
 
 PASS 3 - PAPERWORK
   [OK  ] 3.1 Rebuilding the book, printouts and base docs reproduces the committed files

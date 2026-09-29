@@ -650,7 +650,7 @@ def c_base_package():
     probs = []
     for f in ("Plantagenet_Players_Base_2026_r1.mtr", "Plantagenet_Players_Base_2026_r1.qlab5", "BASE_METADATA.json", "00_READ_ME_FIRST.txt",
               "docs/Plantagenet_Players_Base_2026_r1_Guide.pdf", "docs/Plantagenet_Players_Base_2026_r1_Link_Map.pdf", "docs/Plantagenet_Players_Base_2026_r1_Mantra_Labels.pdf",
-              "docs/Plantagenet_Players_Base_2026_r1_Rig_ID_Test.pdf", "docs/Plantagenet_Players_Base_2026_r1_Previz.pdf"):
+              "docs/Plantagenet_Players_Base_2026_r1_Rig_ID_Test.pdf", "docs/Plantagenet_Players_Base_2026_r1_Preview.pdf"):
         if not os.path.exists(os.path.join(BASE_DIR, f)):
             probs.append("missing base/%s" % f)
     for dp, _dn, fs in os.walk(PKG):
@@ -668,7 +668,7 @@ def c_base_package():
                 probs.append("the base zip has no %s" % f)
         if any(n.endswith(os.path.basename(F["mantra"])) for n in names):
             probs.append("the base zip contains the show file")
-    return verdict(probs, "base/Plantagenet_Players_Base_2026_r1 complete (files, docs, guide, previz, checksums); "
+    return verdict(probs, "base/Plantagenet_Players_Base_2026_r1 complete (files, docs, guide, preview, checksums); "
                           "nothing of it in the show package")
 
 
@@ -707,7 +707,7 @@ def c_rebuild():
                     b = os.path.join(dst, rel)
                     if "/media/" in rel or rel.endswith((".jpg", ".png", ".mov", ".mp4", ".mp3", ".wav")):
                         continue
-                    if "Previz" in rel or "Build_Check" in rel or "BUILD_CHECK" in rel or "File_Guide" in rel:
+                    if "Previz" in rel or "Preview" in rel or "Build_Check" in rel or "BUILD_CHECK" in rel or "File_Guide" in rel:
                         continue            # built by their own tools
                     if not os.path.exists(b):
                         continue

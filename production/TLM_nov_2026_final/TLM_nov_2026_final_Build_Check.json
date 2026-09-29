@@ -151,7 +151,7 @@
   "id": "2.15",
   "status": "OK",
   "title": "The base is a separate package: complete on its own, and nothing of it in the show package",
-  "detail": "base/Plantagenet_Players_Base_2026_r1 complete (files, docs, guide, previz, checksums); nothing of it in the show package"
+  "detail": "base/Plantagenet_Players_Base_2026_r1 complete (files, docs, guide, preview, checksums); nothing of it in the show package"
  },
  {
   "pass": 3,
