@@ -527,163 +527,150 @@ def build_cue_sheets(groups, by_pmc, mems):
 # Mantra labels
 # --------------------------------------------------------------------------
 
+# Short names, one per fader: big enough to read on the desk in show light.
+# (type, label). Fixture numbers are the Mantra fixture numbers.
 FIXTURES = [
-    ("C42", "FOH", "FACE 1 DSR·HL"), ("C42", "FOH", "FACE 1 DSR·HR"), ("C42", "FOH", "FACE 2 DSC·HL"),
-    ("C42", "FOH", "FACE 2 DSC·HR"), ("C42", "FOH", "FACE 3 DSL·HL"), ("C42", "FOH", "FACE 3 DSL·HR"),
-    ("C42", "FOH", "SP1 ARIEL"), ("C42", "FOH", "SP2 SPIRIT"), ("C42", "LX1", "SP3 OCTAVIA"),
-    ("C42", "LX1", "SP4 SHELL"), ("C42", "LX1", "V1 DAME"), ("C42", "LX1", "V2 FLANDERS"),
-    ("ZOOM", "LX1", "WASH DSR"), ("ZOOM", "LX1", "WASH DSC"), ("ZOOM", "LX1", "WASH DSL"),
-    ("ZOOM", "LX1", "WASH CSR"), ("ZOOM", "LX1", "WASH CSC"), ("ZOOM", "LX1", "WASH CSL"),
-    ("ZOOM", "LX2", "V3 THEODORE"), ("ZOOM", "LX2", "V4 MARINA"), ("ZOOM", "SR BOOM", "HIGH SIDE"),
-    ("ZOOM", "SL BOOM", "HIGH SIDE"), ("COB", "LX2", "BACK DSR"), ("COB", "LX2", "BACK DSC"),
-    ("COB", "LX2", "BACK DSL"), ("COB", "LX2", "BACK CSR"), ("COB", "LX2", "BACK CSC"),
-    ("COB", "LX2", "BACK CSL"), ("COB", "SR BOOM", "MID SIDE"), ("COB", "SR BOOM", "SHIN"),
-    ("COB", "SL BOOM", "MID SIDE"), ("COB", "SL BOOM", "SHIN"), ("PIX", "LX2", "PIXBAR 1"),
-    ("PIX", "LX2", "PIXBAR 2"), ("PIX", "LX2", "PIXBAR 3"), ("PIX", "LX2", "PIXBAR 4"),
-    ("PIX", "LX2", "PIXBAR 5"), ("PIX", "LX2", "PIXBAR 6"), ("COB", "LX2", "BACK CENTRE"),
-    ("HAZE", "FLOOR US", "HAZER"), ("PIN", "FOH SR", "PINSPOT (opt)"), ("PIN", "FOH SL", "PINSPOT (opt)"),
-] + [("", "", "spare")] * 6
+    ("C42", "FACE 1L"), ("C42", "FACE 1R"), ("C42", "FACE 2L"), ("C42", "FACE 2R"),
+    ("C42", "FACE 3L"), ("C42", "FACE 3R"), ("C42", "ARIEL"), ("C42", "SPIRIT"),
+    ("C42", "OCTAVIA"), ("C42", "SHELL"), ("C42", "DAME"), ("C42", "FLANDERS"),
+    ("ZOOM", "WASH DSR"), ("ZOOM", "WASH DSC"), ("ZOOM", "WASH DSL"),
+    ("ZOOM", "WASH CSR"), ("ZOOM", "WASH CSC"), ("ZOOM", "WASH CSL"),
+    ("ZOOM", "THEODORE"), ("ZOOM", "MARINA"), ("ZOOM", "SIDE SR"), ("ZOOM", "SIDE SL"),
+    ("COB", "BACK DSR"), ("COB", "BACK DSC"), ("COB", "BACK DSL"),
+    ("COB", "BACK CSR"), ("COB", "BACK CSC"), ("COB", "BACK CSL"),
+    ("COB", "MID SR"), ("COB", "SHIN SR"), ("COB", "MID SL"), ("COB", "SHIN SL"),
+    ("PIX", "PIX 1"), ("PIX", "PIX 2"), ("PIX", "PIX 3"), ("PIX", "PIX 4"), ("PIX", "PIX 5"), ("PIX", "PIX 6"),
+    ("COB", "BACK C"), ("HAZE", "HAZE"), ("PIN", "PIN SR"), ("PIN", "PIN SL"),
+] + [("", "")] * 6
 
 TYPE_COL = {"C42": "#f2c14e", "ZOOM": "#5fa8d3", "COB": "#e07a5f", "PIX": "#9b72cf",
             "HAZE": "#8d99ae", "PIN": "#8d99ae", "": "#ffffff"}
 
+GRID = colors.HexColor("#8a94a0")
 
-def label_row(cells, st, height=15 * mm, first_col=None):
-    widths = [27.7 * mm] * 10
-    t = Table([cells], colWidths=widths, rowHeights=[height])
-    cmds = [("GRID", (0, 0), (-1, -1), 0.5, colors.HexColor("#8a94a0")),
-            ("VALIGN", (0, 0), (-1, -1), "MIDDLE"), ("ALIGN", (0, 0), (-1, -1), "CENTER"),
-            ("LEFTPADDING", (0, 0), (-1, -1), 1.5), ("RIGHTPADDING", (0, 0), (-1, -1), 1.5)]
-    t.setStyle(TableStyle(cmds))
+
+def fit_label(text, width, big=15, small=9):
+    """Bold centred label: one line at up to `big` pt, else two lines, shrunk to fit `width`."""
+    def size_for(lines):
+        w = max(pdfmetrics.stringWidth(l, "Sans-Bold", 1) for l in lines)
+        return min(big, width / w)
+    lines = [text]
+    if " " in text and size_for(lines) < big * 0.95:
+        words = text.split()
+        splits = [[" ".join(words[:i]), " ".join(words[i:])] for i in range(1, len(words))]
+        two = max(splits, key=size_for)
+        if size_for(two) > size_for(lines):
+            lines = two
+    size = max(small, round(size_for(lines) * 4) / 4)
+    st = ParagraphStyle("fit", fontName="Sans-Bold", fontSize=size, leading=size * 1.1, alignment=1, textColor=INK)
+    return Paragraph("<br/>".join(esc(l) for l in lines), st)
+
+
+def label_strip(cells, col_w, height, extra=()):
+    t = Table([cells], colWidths=[col_w] * len(cells), rowHeights=[height])
+    t.setStyle(TableStyle([("GRID", (0, 0), (-1, -1), 0.6, GRID), ("VALIGN", (0, 0), (-1, -1), "MIDDLE"),
+                           ("LEFTPADDING", (0, 0), (-1, -1), 1.2), ("RIGHTPADDING", (0, 0), (-1, -1), 1.2),
+                           ("TOPPADDING", (0, 0), (-1, -1), 1), ("BOTTOMPADDING", (0, 0), (-1, -1), 1.5)]
+                          + list(extra)))
     return t
 
 
 def build_labels(mems):
     st = styles(7.5)
-    cst = ParagraphStyle("c", fontName="Sans-Bold", fontSize=7.6, leading=9, alignment=1, textColor=INK)
-    small = ParagraphStyle("cs", fontName="Sans", fontSize=5.8, leading=7, alignment=1, textColor=MUTED)
+    tag = ParagraphStyle("tag", fontName="Sans", fontSize=7.5, leading=9, alignment=1, textColor=INK)
+    num = ParagraphStyle("num", fontName="Sans-Bold", fontSize=9, leading=10.5, alignment=1, textColor=INK)
     footer = ("%s · LSC Mantra Lite + 2 wings · %s · labels %s · %s"
               % (SHOWNAME, os.path.basename(MTR), REV, DATE))
     path = os.path.join(OUT, "TLM_R13_1_Mantra_Labels.pdf")
     doc = Doc(path, "TLM R13.1 Mantra Labels", footer, landscape(A4))
     story = []
 
-    # fixture faders: 4 rows of 12 → two rows of 12 per table, cut lines
-    story += [P("Fixture fader labels — Mantra Lite 1–24 · Wing 1 25–36 · Wing 2 37–48", st["title"]),
-              P("The venue patch. Cut on the lines and stick one label above each "
-                "fixture fader. Numbers = Mantra fixture numbers. Colour bar = fixture type.", st["sub"]),
-              Spacer(0, 3 * mm)]
-    titles = ["CONSOLE · 1–12", "CONSOLE · 13–24", "WING 1 · 25–36", "WING 2 · 37–48"]
+    # fixture faders: 4 strips of 12
+    fx_w = 23.08 * mm
+    story += [P("Fixture fader labels", st["title"]),
+              P("Cut on the lines and stick one above each fixture fader. Number = Mantra fixture number. "
+                "Colour bar = fixture type.", st["sub"]), Spacer(0, 3 * mm)]
+    titles = ["CONSOLE 1–12", "CONSOLE 13–24", "WING 1  25–36", "WING 2  37–48"]
     for blk in range(4):
         cells, cmds = [], []
         for i in range(12):
             n = blk * 12 + i + 1
-            typ, pos, role = FIXTURES[n - 1]
-            cells.append([P("%d%s" % (n, (" · " + pos) if pos else ""), small),
-                          P(esc(role), cst), P(typ, small)])
-            cmds.append(("LINEABOVE", (i, 0), (i, 0), 3, colors.HexColor(TYPE_COL[typ])))
-        t = Table([cells], colWidths=[23.08 * mm] * 12, rowHeights=[15 * mm])
-        t.setStyle(TableStyle([("GRID", (0, 0), (-1, -1), 0.5, colors.HexColor("#8a94a0")),
-                               ("VALIGN", (0, 0), (-1, -1), "MIDDLE"),
-                               ("LEFTPADDING", (0, 0), (-1, -1), 1), ("RIGHTPADDING", (0, 0), (-1, -1), 1)] + cmds))
-        story += [P("<b>%s</b>" % titles[blk], st["m"]), t, Spacer(0, 3 * mm)]
-    story.append(P("Lightsky C42 (U2) = yellow · Tour Pro Zoom = blue · TourCOB PAR = orange · PixBar = violet · "
-                   "hazer / pinspots = grey. HL/HR = focused from house left / right. SP = character special, "
-                   "V = voice-transfer special. #41–42 pinspots only if the mirror ball is used; 43–48 spare. "
-                   "Confirm #38 PixBar 6 and #39 TourCOB back centre exist on the rig.", st["note"]))
+            typ, name = FIXTURES[n - 1]
+            cells.append([P(str(n), num), fit_label(name, fx_w - 2.6 * mm, big=13)] if name else [P(str(n), num)])
+            cmds.append(("LINEABOVE", (i, 0), (i, 0), 3.5, colors.HexColor(TYPE_COL[typ])))
+        story += [P("<b>%s</b>" % titles[blk], st["m"]), label_strip(cells, fx_w, 16 * mm, cmds), Spacer(0, 3 * mm)]
+    story.append(P("<b>Key</b> · yellow Lightsky C42 (U2) · blue Tour Pro Zoom · orange TourCOB PAR · violet PixBar · "
+                   "grey hazer / pinspots. FACE 1 = DSR, 2 = DSC, 3 = DSL; L / R = lit from house left / right. "
+                   "Hung: 1–8 FOH · 9–18 LX1 · 19–20, 23–28, 33–39 LX2 · 21, 29–30 SR boom · 22, 31–32 SL boom · "
+                   "40 floor US · 41–42 FOH (pinspots only if the mirror ball is used). 43–48 spare. "
+                   "Confirm #38 PIX 6 and #39 BACK C exist on the rig.", st["note"]))
     story.append(PageBreak())
 
-    # playback rows
-    def mem_name(i):
-        return mems.get(i, {}).get("name", "")
+    # playback faders: one strip per page. (memory, label, note under the label)
+    def look(i):  # "M03 UNDERWATER" -> "UNDERWATER"
+        return re.sub(r"^M\d+\s+", "", mems.get(i, {}).get("name", ""))
 
-    def cue_range(i):
-        n = mems.get(i, {}).get("steps", 1)
-        return n
-
-    pages = []
-    pages.append(("PAGE 1 – VENUE / RIG BASE", [
-        (0, "STAGE WORK"), (1, "FULL WHITE"), (2, "WARM STAGE"), (3, "COOL STAGE"), (4, "BLUE STAGE"),
-        (5, "RED STAGE"), (None, ""), (None, ""), (8, "PIXBAR WASH"), (9, "CURTAIN CALL")]))
-    act1 = [(10, "Q1–11 PRESHOW → ARIEL UPSET"), (11, "Q12–17 SINGING LESSON → BLACKOUT"),
-            (12, "Q18–27.5 SHIP · STORM"), (13, "Q28–30.5 SHORE · DUET"),
-            (14, "Q31–37 BAR · TRANSFORM · ACT 1 END"), (15, "Q38 INTERVAL"), (None, ""), (None, ""),
-            (18, "WORK / FOCUS"), (19, "SAFE LIGHT")]
-    pages.append(("PAGE 2 – ACT ONE · performance", act1))
-    act2 = [(20, "Q39–44 PALACE"), (21, "Q45–49 JELLYFISH"), (22, "Q50–58.5 LAIR · VOICE · HAYWIRE"),
-            (23, "Q59–59.7 DRY LAND"), (24, "Q60–63.5 WEDDING"), (25, "Q64–65 BOWS · END"),
-            (None, ""), (None, ""), (None, ""), (None, "")]
-    pages.append(("PAGE 3 – ACT TWO · performance", act2))
-    songs = ["S1 ROCK LOBSTER", "S2 FEELING GOOD", "S3 PART OF YOUR WORLD", "S4 WELLERMAN",
-             "S5 TIME OF MY LIFE", "S6 CRAB RAVE", "S7 JELLYFISH CHORUS", "S8 POOR UNFORTUNATE SOULS",
-             "S9 ABSOLUTELY EVERYBODY", "S10 HE'S A PIRATE"]
-    pages.append(("PAGE 4 – SONGS · performance", [(30 + i, s) for i, s in enumerate(songs)]))
-    fx = []
-    for i, lab in zip(range(40, 46), ["WARM CHASE", "COOL CHASE", "PARTY CHASE", "HAZE #40", "HAYWIRE chase", "JELLY PULSE"]):
-        m = mems.get(i, {})
-        sub = ("%d steps @%s BPM" % (m["steps"], m["bpm"])) if m.get("chase") else ""
-        fx.append((i, lab + ("|" + sub if sub else "")))
-    fx += [(None, "")] * 4
-    pages.append(("PAGE 5 – FX / CHASES", fx))
-    pages.append(("PAGE 6 – LOOK LIBRARY", [(50 + i, mem_name(50 + i)) for i in range(10)]))
-    pages.append(("PAGE 7 – LOOK LIBRARY", [(60 + i, mem_name(60 + i)) for i in range(7)] + [(None, "")] * 3))
-
-    story += [P("Playback labels — 10 playback faders, one row per page", st["title"]),
-              P("The show is split: <b>P2 Act One, P3 Act Two, P4 songs</b>. QLab picks the right memory; keep the "
-                "P2 row on the desk in Act One, swap to P3 at the interval, and keep P4 handy for song recovery. "
-                "Blank cells are empty memories.", st["sub"]), Spacer(0, 2 * mm)]
-    perf = ("PAGE 2", "PAGE 3", "PAGE 4")
-    p8 = ("PAGE 8 – FULL 153-STEP BACKUP · reference only",
-          [(70, "BACKUP SHOW|%d steps" % cue_range(70))] + [(None, "")] * 9)
-    for title, cells in pages + [p8]:
-        if title is p8[0]:
+    empty = (None, "", "")
+    pages = [
+        (1, "VENUE", [(0, "WORK", ""), (1, "WHITE", ""), (2, "WARM", ""), (3, "COOL", ""), (4, "BLUE", ""),
+                      (5, "RED", ""), empty, empty, (8, "PIXBAR", ""), (9, "CURTAIN CALL", "")]),
+        (2, "ACT ONE", [(10, "PRESHOW", "Q1–11"), (11, "LESSON", "Q12–17"), (12, "STORM", "Q18–27.5"),
+                        (13, "SHORE", "Q28–30.5"), (14, "TRANSFORM", "Q31–37"), (15, "INTERVAL", "Q38"),
+                        empty, empty, (18, "WORK", ""), (19, "SAFE", "")]),
+        (3, "ACT TWO", [(20, "PALACE", "Q39–44"), (21, "JELLYFISH", "Q45–49"), (22, "LAIR", "Q50–58.5"),
+                        (23, "DRY LAND", "Q59–59.7"), (24, "WEDDING", "Q60–63.5"), (25, "BOWS", "Q64–65")]
+                       + [empty] * 4),
+        (4, "SONGS", [(30 + i, s, "") for i, s in enumerate(
+            ["ROCK LOBSTER", "FEELING GOOD", "YOUR WORLD", "WELLERMAN", "TIME OF MY LIFE", "CRAB RAVE",
+             "JELLYFISH", "POOR SOULS", "EVERYBODY", "PIRATE"])]),
+        (5, "FX", [(40, "WARM CHASE", ""), (41, "COOL CHASE", ""), (42, "PARTY CHASE", ""), (43, "HAZE", ""),
+                   (44, "HAYWIRE", "Q57 on · Q57b off"), (45, "JELLY PULSE", "")] + [empty] * 4),
+        (6, "LOOKS", [(50 + i, look(50 + i), "") for i in range(10)]),
+        (7, "LOOKS", [(60 + i, look(60 + i), "") for i in range(7)] + [empty] * 3),
+    ]
+    pb_w = 27.7 * mm
+    story += [P("Playback labels — one strip per page", st["title"]),
+              P("QLab plays these memories. Keep the P2 strip on the desk in Act One, swap to P3 at the interval. "
+                "Songs are on P4. Blank = empty memory.", st["sub"]), Spacer(0, 2 * mm)]
+    for pn, pname, cells in pages + [(8, "BACKUP", [(70, "BACKUP", "reference only")] + [empty] * 9)]:
+        if pn == 8:
             story.append(PageBreak())
-        pn = int(re.search(r"PAGE (\d)", title).group(1))
         row = []
-        for k, (mid, text) in enumerate(cells):
-            main, _, sub = text.partition("|")
-            if mid is not None and pn in (2, 3, 4) and mid not in (18, 19):
-                sub = sub or "%d cues" % cue_range(mid)
-            if mid is None:
-                row.append([P("P%d · M%d" % (pn, k + 1), small)])
-            else:
-                row.append([P("P%d · M%d" % (pn, k + 1), small), P(esc(main), cst)] + ([P(esc(sub), small)] if sub else []))
-        t = Table([row], colWidths=[27.7 * mm] * 10, rowHeights=[16 * mm])
-        cmds = [("GRID", (0, 0), (-1, -1), 0.5, colors.HexColor("#8a94a0")), ("VALIGN", (0, 0), (-1, -1), "MIDDLE"),
-                ("LEFTPADDING", (0, 0), (-1, -1), 1), ("RIGHTPADDING", (0, 0), (-1, -1), 1)]
-        if title.startswith(perf):
-            cmds.append(("BOX", (0, 0), (-1, -1), 1.6, HEAD))
+        for k, (mid, name, note) in enumerate(cells):
+            head = P("P%d · M%d" % (pn, k + 1) + (" · <b>S%d</b>" % (k + 1) if pn == 4 else ""), tag)
+            row.append([head] if mid is None else
+                       [head, fit_label(name, pb_w - 2.4 * mm)] + ([P(esc(note), tag)] if note else []))
+        cmds = []
+        if pn in (2, 3, 4):
+            cmds.append(("BOX", (0, 0), (-1, -1), 2, HEAD))
         if pn == 2:
             cmds.append(("BACKGROUND", (9, 0), (9, 0), colors.HexColor("#d9f2d9")))
         if pn == 5:
             cmds.append(("BACKGROUND", (4, 0), (4, 0), TINT))
-        t.setStyle(TableStyle(cmds))
-        story.append(KeepTogether([P("<b>%s</b>" % esc(title), st["m"]), t, Spacer(0, 2.2 * mm)]))
+        story.append(KeepTogether([P("<b>PAGE %d · %s</b>" % (pn, pname), st["m"]),
+                                   label_strip(row, pb_w, 19 * mm, cmds), Spacer(0, 2.2 * mm)]))
 
-    # reminder strips, page tabs, wing blanks, spares (same page as the P8 row)
-    story += [Spacer(0, 2 * mm), P("Desk reminder strips, page tabs and spares", st["title"]),
-              P("Stick a strip along the top of the Mantra, above the screen or playbacks.", st["sub"]), Spacer(0, 3 * mm)]
-    rem1 = ("<b>QLab fires every cue · this desk is the backup</b> &nbsp;·&nbsp; <b>SAFE LIGHT = P2 · M10</b> &nbsp;·&nbsp; "
-            "P2 Act One · P3 Act Two · P4 songs · P5 FX &nbsp;·&nbsp; flash returns are automatic from QLab")
-    rem2 = ("If QLab fails: pick the scene memory on P2/P3 (song → P4) › Next Cue &nbsp;·&nbsp; press Next Cue again after each flash "
-            "&nbsp;·&nbsp; Q57 HAYWIRE = P5 M5 on, off at Q57b &nbsp;·&nbsp; O = All Cues Off · A L = Clear All · T S = Save")
-    for txt in (rem1, rem2, rem1, rem2):
-        t = Table([[P(txt, st["note"])]], colWidths=[277 * mm], rowHeights=[11 * mm])
-        t.setStyle(TableStyle([("BOX", (0, 0), (-1, -1), 0.8, HEAD), ("VALIGN", (0, 0), (-1, -1), "MIDDLE"),
+    # reminder strips, page tabs, write-in blanks
+    story += [Spacer(0, 2 * mm), P("Desk strips, page tabs and spares", st["title"]),
+              P("Stick the strips along the top of the Mantra.", st["sub"]), Spacer(0, 3 * mm)]
+    rem = ParagraphStyle("rem", fontName="Sans-Bold", fontSize=12, leading=14, textColor=INK)
+    for txt in ("QLab runs the show  ·  desk = backup  ·  SAFE = P2 M10",
+                "QLab down:  P2 / P3 scene (songs P4)  ›  Next Cue  ·  after a flash, Next Cue again",
+                "HAYWIRE P5 M5: on Q57, off Q57b  ·  O = all off  ·  A L = clear  ·  T S = save"):
+        t = Table([[P(esc(txt), rem)]], colWidths=[277 * mm], rowHeights=[11 * mm])
+        t.setStyle(TableStyle([("BOX", (0, 0), (-1, -1), 1, HEAD), ("VALIGN", (0, 0), (-1, -1), "MIDDLE"),
+                               ("LEFTPADDING", (0, 0), (-1, -1), 4 * mm),
                                ("BACKGROUND", (0, 0), (-1, -1), colors.HexColor("#f3f6f9"))]))
         story += [t, Spacer(0, 2.5 * mm)]
     story += [Spacer(0, 2 * mm), P("<b>PAGE TABS – stick beside the Page button</b>", st["m"])]
-    tabs = ["P1 VENUE", "P2 ACT ONE", "P3 ACT TWO", "P4 SONGS", "P5 FX / CHASE", "P6 LOOKS M01–M10",
-            "P7 LOOKS M11–M17", "P8 BACKUP 153", "P9–10 FREE"]
-    t = Table([[P(esc(x), cst) for x in tabs]], colWidths=[30.7 * mm] * 9, rowHeights=[11 * mm])
-    t.setStyle(TableStyle([("GRID", (0, 0), (-1, -1), 0.5, colors.HexColor("#8a94a0")), ("VALIGN", (0, 0), (-1, -1), "MIDDLE")]))
-    story += [t, Spacer(0, 4 * mm)]
+    tabs = ["P1 VENUE", "P2 ACT 1", "P3 ACT 2", "P4 SONGS", "P5 FX", "P6 LOOKS", "P7 LOOKS", "P8 BACKUP", "P9–10 FREE"]
+    tab_w = 30.7 * mm
+    story += [label_strip([fit_label(x, tab_w - 2.4 * mm, big=13) for x in tabs], tab_w, 11 * mm), Spacer(0, 4 * mm)]
     for w in ("WING 1 PLAYBACKS – write-in (unused in this show)", "WING 2 PLAYBACKS – write-in (unused in this show)",
               "SPARE BLANK LABELS – write in by hand"):
-        cells = [[P("M%d" % (i + 1), small)] if "WING" in w else "" for i in range(10)]
-        t = Table([cells], colWidths=[27.7 * mm] * 10, rowHeights=[14 * mm])
-        t.setStyle(TableStyle([("GRID", (0, 0), (-1, -1), 0.5, colors.HexColor("#8a94a0")), ("VALIGN", (0, 0), (-1, -1), "TOP")]))
-        story += [P("<b>%s</b>" % w, st["m"]), t, Spacer(0, 3 * mm)]
+        cells = [[P("M%d" % (i + 1), tag)] if "WING" in w else "" for i in range(10)]
+        story += [P("<b>%s</b>" % w, st["m"]), label_strip(cells, pb_w, 14 * mm, [("VALIGN", (0, 0), (-1, -1), "TOP")]),
+                  Spacer(0, 3 * mm)]
     doc.build(story)
     return path
 
