@@ -4,6 +4,10 @@ THE LITTLE MERMAID - R13.1 SHOW FILES (28 Sep 2026)
 OPEN THESE
   QLab 5 :  TLM_Show_R13_1.qlab5                      (edited - use this one)
   Mantra :  TLM_SHOW_2026_R13_FLASHY_SCENE_SPLIT.mtr  (footer fixed)
+  Base   :  BASE_SHOW_2026.mtr  clean venue base - same patch, custom
+            fixtures, network, rig view and P1 looks as the show file.
+            Keep it on the USB stick; import it only to put the desk
+            back to the venue base (it has none of the show cues).
   Read   :  docs/TLM_R13_1_Review_and_Fix_List.pdf
 
 ALREADY DONE IN R13.1 (no action needed)
@@ -56,6 +60,7 @@ STILL TO SUPPLY
 
 FILES
   TLM_Show_R13_1.qlab5 / TLM_SHOW_2026_R13_FLASHY_SCENE_SPLIT.mtr
+  BASE_SHOW_2026.mtr                venue base the show file is built on
   R13_MANTRA_SECTION_MAP.txt/.csv   which QLab cue fires each Mantra cue
   R13_MEDIA_MANIFEST.csv            80 media files used by R13.1
   R13_1_SFX_RETARGET_MAP.csv        new SFX -> cues
