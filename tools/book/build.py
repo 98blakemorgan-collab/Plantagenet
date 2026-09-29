@@ -58,7 +58,7 @@ ABOUT = {
     "01_Production_Book": "The R13.1 production book: the complete book, one PDF per part in Sections, the quick guide and the to-find list.",
     "01_Production_Book/Sections": "One PDF per part of the book (00 cover, A-L). Part J reproduces the licensed script: production use only.",
     "01_Production_Book/Cue_Sheets_Printed": "Scans or photos of the marked-up printed cue sheets from tech and each show.",
-    "02_QLab": "QLab: README, the R13.1 cue list as a spreadsheet. The show folder itself is package/TLM_R13_REBUILT_Show_Files.",
+    "02_QLab": "QLab: README, the R13.1 cue list as a spreadsheet. The show folder itself is package/TLM_R13_REBUILT_Show_Files (also holds BASE_SHOW_2026.qlab5, the QLab base for the Mantra venue base).",
     "03_Lighting_Mantra": "Mantra: memory map, section map, labels. The R13.1 show file and the venue base BASE_SHOW_2026.mtr are in package/TLM_R13_REBUILT_Show_Files.",
     "03_Lighting_Mantra/Backups": "Dated Mantra exports (Tools > Export Show) from the desk: YYYY-MM-DD_TLM_R13_1.mtr",
     "04_Sound_StudioLive": "StudioLive scene notes and template (TLM_StudioLive_SIII16_Show_Template.xlsx).",

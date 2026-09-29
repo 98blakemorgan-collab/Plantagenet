@@ -4,6 +4,7 @@
   "project_folder": "TLM_R13_REBUILT_Show_Files",
   "mantra": "TLM_SHOW_2026_R13_FLASHY_SCENE_SPLIT.mtr",
   "mantra_base": "BASE_SHOW_2026.mtr",
+  "qlab_base": "BASE_SHOW_2026.qlab5",
   "qlab": "TLM_Show_R13_1.qlab5",
   "scene_split": true,
   "positions": 153,
@@ -22,7 +23,8 @@
   "sha256": {
     "mantra": "95cf3c690c2cef573c58e761f27eb54491f3e102684a1ab3f597a232fcae24c2",
     "qlab": "5dca0842f16f9c12c096e4389d939a564bca6a3d874619dd3fa97eda1bcb86ab",
-    "mantra_base": "e273d54b71abb69bc9e2c6d5b431ebb5ceb09e22673f6b67d082fbfc66c63076"
+    "mantra_base": "e273d54b71abb69bc9e2c6d5b431ebb5ceb09e22673f6b67d082fbfc66c63076",
+    "qlab_base": "8850e88195582eaff5e70a37148757d9ab34d28fab4cda7bdd04540df2faff4b"
   },
   "sha256_r13_original": {
     "mantra": "743f2eedb8a8ba2fb0ebfc14321a2c51aafae9d11d1790500e447a01220eb3d8",
@@ -62,6 +64,7 @@
     "00_START_HERE.txt: manifest count corrected to 80; R11 step updated",
     "Fix list updated",
     "docs/TLM_R13_1_Operator_Cue_Sheets.pdf and docs/TLM_R13_1_Mantra_Labels.pdf rebuilt from the R13.1 QLab/Mantra files (replace the R8 printouts)",
-    "BASE_SHOW_2026.mtr (clean venue base) added; its patch, custom fixtures, network, rig view, P1 looks and memories 100-109 are identical to the R13.1 show file"
+    "BASE_SHOW_2026.mtr (clean venue base) added; its patch, custom fixtures, network, rig view, P1 looks and memories 100-109 are identical to the R13.1 show file",
+    "BASE_SHOW_2026.qlab5 added (tools/make_qlab_base.py): QLab base for the Mantra base - P1 looks V1-V10, rig test T1-T41 (P2-P5 TEST memories), E1-E3; settings and MANTRA patch as the R13.1 workspace"
   ]
 }
