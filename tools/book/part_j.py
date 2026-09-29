@@ -1,8 +1,8 @@
-"""Part J — Prompt Copy (PRIVATE).
+"""Part J — Prompt Copy.
 
-Built from the licensed script (production/private/, gitignored): each script page is reduced onto an A4 page with a
-cue margin (amber standbys, green GOs, blue song starts) taken from the calling script. The output contains the
-licensed text, so it is written to production/private only and must never be committed to this public repo.
+Built from the licensed script (production/script_source/): each script page is reduced onto an A4 page with a
+cue margin (amber standbys, green GOs, blue song starts) taken from the calling script. Licensed material: keep this
+repository private.
 """
 import os
 
@@ -13,10 +13,10 @@ import show as S_
 from core import REV, DATE
 
 HERE = os.path.dirname(os.path.abspath(__file__))
-SCRIPT = os.path.join(HERE, "..", "..", "production", "private", "TLM_Script_Revised_April_2026.pdf")
+SCRIPT = os.path.join(HERE, "..", "..", "production", "script_source", "TLM_Script_Revised_April_2026.pdf")
 FONT = "/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf"
 FONTB = "/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf"
-AMBER, GREEN, BLUE, NAVY, GREY = (0.93, 0.55, 0.05), (0.1, 0.55, 0.3), (0.15, 0.4, 0.75), (0.07, 0.16, 0.29), (0.45, 0.45, 0.5)
+AMBER, GREEN, BLUE, NAVY, GREY = (0.93, 0.55, 0.05), (0.1, 0.55, 0.3), (0.15, 0.4, 0.75), (0.07, 0.16, 0.29), (0.4, 0.4, 0.4)
 
 
 def margin_notes():
@@ -45,11 +45,11 @@ def build(path):
     pg = out.new_page(width=W, height=H)
     pg.insert_font("dj", fontfile=FONT)
     pg.insert_font("djb", fontfile=FONTB)
-    pg.draw_rect(pymupdf.Rect(0, 0, W, 190), color=None, fill=NAVY)
-    pg.insert_text((50, 90), "PART J", fontname="djb", fontsize=14, color=(1, 1, 1))
-    pg.insert_text((50, 130), "Prompt Copy — Licensed Script", fontname="djb", fontsize=24, color=(1, 1, 1))
-    pg.insert_text((50, 160), "The Little Mermaid · %s · %s" % (REV, DATE), fontname="dj", fontsize=11, color=(1, 1, 1))
-    body = ("The licensed script (Nick Lawrence Pantomimes, revised April 2026), %d pages, with every R13.1 cue in the margin.\n\n"
+    pg.draw_line((50, 190), (W - 50, 190), color=NAVY, width=1.2)
+    pg.insert_text((50, 90), "PART J", fontname="djb", fontsize=14, color=(0, 0, 0))
+    pg.insert_text((50, 130), "Prompt Copy — Licensed Script", fontname="djb", fontsize=24, color=(0, 0, 0))
+    pg.insert_text((50, 160), "The Little Mermaid · %s · %s" % (REV, DATE), fontname="dj", fontsize=11, color=GREY)
+    body = ("The licensed script (Nick Lawrence Pantomimes, revised April 2026), %d pages, with every cue in the margin.\n\n"
             "AMBER  SB = standby, on the line shown.\n"
             "GREEN  GO = the QLab GO; departments and what happens.\n"
             "BLUE   SONG = the song group fires straight after the GO; its section GOs follow the music.\n\n"
@@ -61,7 +61,7 @@ def build(path):
             "  • The character page names the sisters Persil, Lenor, Daz and Own Brand; the casting sheet has\n"
             "    Scarlotte, Paulette, Charlotte and Kandy.\n\n"
             "LICENSED MATERIAL — for this production's prompt desk only. Do not copy, share or upload publicly.") % src.page_count
-    pg.insert_textbox(pymupdf.Rect(50, 220, W - 50, H - 60), body, fontname="dj", fontsize=10.5, color=NAVY, lineheight=1.35)
+    pg.insert_textbox(pymupdf.Rect(50, 220, W - 50, H - 60), body, fontname="dj", fontsize=10.5, color=(0, 0, 0), lineheight=1.35)
 
     sx = 0.70
     for i in range(src.page_count):
@@ -75,18 +75,19 @@ def build(path):
         pg.show_pdf_page(r, src, i)
         x0 = r.x1 + 8
         pg.draw_line((x0 - 4, 30), (x0 - 4, H - 30), color=(0.8, 0.8, 0.85), width=0.5)
-        pg.insert_text((x0, 30), "CUES · p %d" % n, fontname="djb", fontsize=8, color=NAVY)
+        pg.insert_text((x0, 30), "CUES · p %d" % n, fontname="djb", fontsize=8, color=(0, 0, 0))
         y = 42
         for kind, q, depts, line, what in notes.get(n, []):
             col = {"SB": AMBER, "GO": GREEN, "SONG": BLUE}[kind]
             head = "%s %s%s" % (kind, "Q" if kind != "SONG" else "", q)
-            pg.draw_rect(pymupdf.Rect(x0, y, W - 12, y + 11), color=None, fill=col)
-            pg.insert_text((x0 + 3, y + 8.3), head, fontname="djb", fontsize=7.5, color=(1, 1, 1))
-            pg.insert_text((x0 + 58, y + 8.3), depts[:22], fontname="dj", fontsize=6, color=(1, 1, 1))
+            pg.draw_rect(pymupdf.Rect(x0, y, W - 12, y + 11), color=col, width=0.6)
+            pg.draw_rect(pymupdf.Rect(x0, y, x0 + 2.5, y + 11), color=None, fill=col)
+            pg.insert_text((x0 + 5, y + 8.3), head, fontname="djb", fontsize=7.5, color=(0, 0, 0))
+            pg.insert_text((x0 + 58, y + 8.3), depts[:22], fontname="dj", fontsize=6, color=GREY)
             y += 13
             txt = line + ("\n" + what if what else "")
             box = pymupdf.Rect(x0, y, W - 12, y + 80)
-            rc = pg.insert_textbox(box, txt, fontname="dj", fontsize=6.4, color=(0.15, 0.15, 0.2), lineheight=1.2)
+            rc = pg.insert_textbox(box, txt, fontname="dj", fontsize=6.4, color=(0, 0, 0), lineheight=1.2)
             used = 80 - rc if rc >= 0 else 80
             y += used + 5
             if y > H - 40:

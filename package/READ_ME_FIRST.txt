@@ -21,7 +21,8 @@ STEPS (on the show Mac)
         bash ~/Downloads/TLM_R13_1_Package/ASSEMBLE_R13_1.command
  4. It builds OUTPUT/TLM_R13_REBUILT_Show_Files and checks:
       - all 80 media files QLab uses are at the exact paths it expects
-      - the QLab and Mantra files match the checked R13.1 checksums
+      - the QLab and Mantra files (show + base) match the checked
+        R13.1 checksums
       - whether an old TLM_R11_FLASHY_Show_Files folder is still around
     Results go in OUTPUT/ASSEMBLY_REPORT.txt.
  5. Move OUTPUT/TLM_R13_REBUILT_Show_Files to the Desktop (keep that exact
@@ -33,10 +34,13 @@ FINAL FOLDER LAYOUT
    00_START_HERE.txt
    TLM_Show_R13_1.qlab5                       <- open this
    TLM_SHOW_2026_R13_FLASHY_SCENE_SPLIT.mtr   <- import on Mantra
+   BASE_SHOW_2026.mtr                         <- clean venue base (restore point)
+   BASE_SHOW_2026.qlab5                       <- QLab base for it (rig check)
    BUILD_METADATA.json
    R13_MEDIA_MANIFEST.csv   R13_MANTRA_SECTION_MAP.csv/.txt
    R13_1_SFX_RETARGET_MAP.csv   R13_1_QLAB_AND_DESK_FIX_LIST.csv
    docs/            review PDF, R13.1 cue sheets + Mantra labels, FOH notice,
+                    base show link map + labels,
                     R13 guide & book, R9 book, archive_R13_original
    media/
      audio/

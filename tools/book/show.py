@@ -134,12 +134,12 @@ _t = open(mp.MTR, encoding="latin-1").read()
 _secs = re.split(r"^\[([^\]]+)\]\s*$", _t, flags=re.M)
 _D = {_secs[i]: _secs[i + 1] for i in range(1, len(_secs), 2)}
 
-GROUPS = [("FOH", "Face (FOH C42 #1–6)", list(range(1, 7))),
+GROUPS = [("FOH", "Face (FOH C42 #1, 4, 5, 8, 9, 12)", [1, 4, 5, 8, 9, 12]),
           ("LX1", "Colour top (LX1 Zoom #13–18)", list(range(13, 19))),
           ("SIDE", "Side booms (#21–22, 29–32)", [21, 22, 29, 30, 31, 32]),
           ("BACK", "Backlight (LX2 COB #23–28, 39)", [23, 24, 25, 26, 27, 28, 39]),
           ("PIX", "PixBars (#33–38)", list(range(33, 39))),
-          ("SPC", "Specials (#7–12, 19–20)", [7, 8, 9, 10, 11, 12, 19, 20])]
+          ("SPC", "Specials (#2, 3, 6, 7, 10, 11, 19, 20)", [2, 3, 6, 7, 10, 11, 19, 20])]
 
 
 def mtr_cue(mem_id, k):

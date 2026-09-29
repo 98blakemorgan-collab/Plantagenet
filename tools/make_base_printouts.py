@@ -1,0 +1,466 @@
+#!/usr/bin/env python3
+"""Build the BASE_SHOW_2026 printouts: the link map and the Mantra label sheet.
+
+Everything is read from the base show files, so the printouts show what they
+actually do:
+  - BASE_SHOW_2026.qlab5   which QLab cue sends which OSC to which page/memory
+  - BASE_SHOW_2026.mtr     memory names, which fixtures each memory lights, patch
+
+Usage:  python3 tools/make_base_printouts.py            (needs reportlab)
+Output: package/TLM_R13_REBUILT_Show_Files/docs/BASE_SHOW_2026_Link_Map.pdf
+        package/TLM_R13_REBUILT_Show_Files/docs/BASE_SHOW_2026_Mantra_Labels.pdf
+        package/TLM_R13_REBUILT_Show_Files/docs/BASE_SHOW_2026_Rig_ID_Test.pdf
+        (both also copied to production/TLM_Show_R13_1/03_Lighting_Mantra)
+"""
+import os
+import plistlib
+import re
+import shutil
+
+import make_printouts as mp
+from make_printouts import P, esc, mm, colors, landscape, A4, Spacer, PageBreak, Table, TableStyle, ParagraphStyle
+
+ROOT = mp.ROOT
+QLAB = os.path.join(mp.SHOW, "BASE_SHOW_2026.qlab5")
+MTR = os.path.join(mp.SHOW, "BASE_SHOW_2026.mtr")
+PROD = os.path.join(ROOT, "production", "TLM_Show_R13_1", "03_Lighting_Mantra")
+FOOTER = "Plantagenet Hall · venue base · BASE_SHOW_2026.mtr + BASE_SHOW_2026.qlab5 · %s" % mp.DATE
+
+# Neutral venue names: fixture type (desk model) + where it hangs. No show names.
+TYPE_OF = {"CX 42 NEW": "C42", "ZOOM 12 CHANNEL": "ZOOM", "TOURCOB PAR": "COB", "PIXBAR 6CH": "PIX",
+           "HAZER 2CH": "HAZE"}
+BASE_KEY = ("<b>Key</b> · yellow Lightsky C42 (U2) · blue Tour Pro Zoom · orange TourCOB PAR · violet PixBar · "
+            "grey hazer. Label = fixture type and where it hangs. Fixtures 1–40 are the venue patch; faders 41–48 "
+            "are free.")
+
+
+def base_fixtures(patch):
+    """[(type, label)] for faders 1-48 from the base patch."""
+    out = []
+    for n in range(1, 49):
+        pt = patch.get(n)
+        if not pt:
+            out.append(("", ""))
+            continue
+        typ = TYPE_OF.get(pt["model"], "")
+        hang = mp.INSTALLED.get(n, "").replace(" boom", "").replace("floor ", "")
+        out.append((typ, "%s %s" % (typ or pt["model"], hang)))
+    return out
+
+
+# Mantra network (not stored in the QLab file)
+UNIVERSE_ROUTE = {1: "desk DMX XLR out", 2: "Art-Net / sACN → node 2.0.0.10 → FOH bar"}
+SHORT = {"STAGE WORK": "WORK", "FULL STAGE WHITE": "WHITE", "WARM STAGE": "WARM", "COOL STAGE": "COOL",
+         "BLUE STAGE": "BLUE", "RED STAGE": "RED", "PIXBAR WASH": "PIXBAR", "CURTAIN CALL": "CURTAIN CALL"}
+OSC = re.compile(r"/PlayMemory/Page=(\d+)/Memory=(\d+)/Cue=(\d+)/Level=(\d+)/Fade=(\d+)")
+
+
+# --------------------------------------------------------------------------
+# Read the base files
+# --------------------------------------------------------------------------
+
+def load_mtr():
+    t = open(MTR, encoding="latin-1").read()
+    secs = re.split(r"^\[([^\]]+)\]\s*$", t, flags=re.M)
+    d = {secs[i]: secs[i + 1] for i in range(1, len(secs), 2)}
+
+    def kv(sec):
+        return dict(l.split("=", 1) for l in d.get(sec, "").splitlines() if "=" in l)
+
+    mems = {}
+    for k in d:
+        m = re.fullmatch(r"Memory(\d+)-Cue0", k)
+        if m:
+            c = kv(k)
+            lit = {int(x.group(1)): int(v) for key, v in c.items()
+                   for x in [re.fullmatch(r"Channel(\d+)_Level", key)] if x and int(v) > 0}
+            mems[int(m.group(1))] = {"name": c.get("Name", ""), "lit": lit}
+    patch, p = {}, kv("Patch")
+    for i in range(int(p.get("NumPatchItems", 0))):
+        start, end = int(p["Item%d_StartDmx" % i]), int(p["Item%d_EndDmx" % i])
+        patch[int(p["Item%d_Channel" % i]) + 1] = {
+            "model": p["Item%d_Model" % i], "u": start // 512 + 1, "a": start % 512 + 1, "b": end % 512 + 1}
+    return mems, patch
+
+
+def load_qlab():
+    ws = mp._unarchive(plistlib.load(open(QLAB, "rb")))
+    main = mp._unarchive(plistlib.loads(ws["cueLists"]))["cues"][0]
+    net = {n["data"]["uniqueID"]: n["data"] for n in ws["settings"]["Network"]["networkPatches"]}
+    cues = []
+    for c in main["cues"]:
+        if not c.get("cues"):
+            continue  # memos
+        fires, releases, patches = [], [], set()
+        for k in c["cues"]:
+            m = OSC.search(k.get("oscString") or "")
+            if not m:
+                continue
+            patches.add(k.get("networkPatchID"))
+            p, mem, _, level, fade = map(int, m.groups())
+            (fires if level else releases).append((p, mem, level, fade))
+        cues.append({"num": c["number"], "name": c["name"], "fires": fires, "releases": releases,
+                     "script": any("source" in k for k in c["cues"]), "patches": patches})
+    return ws["workspaceName"], net, cues
+
+
+def idx(p, m):
+    return (p - 1) * 10 + (m - 1)
+
+
+def ranges(ns):
+    ns, out = sorted(ns), []
+    for n in ns:
+        if out and n == out[-1][1] + 1:
+            out[-1][1] = n
+        else:
+            out.append([n, n])
+    return ", ".join(str(a) if a == b else "%d–%d" % (a, b) for a, b in out)
+
+
+def lit_text(mem, names):
+    lit = mem["lit"]
+    if not lit:
+        return "nothing (all at 0)"
+    levels = sorted({round(v * 100 / 65535) for v in lit.values()})
+    lv = "%d %%" % levels[0] if len(levels) == 1 else "%d–%d %%" % (levels[0], levels[-1])
+    one = " " + names[next(iter(lit)) - 1][1] if len(lit) == 1 else ""
+    return "#%s%s at %s" % (ranges(lit), one, lv)
+
+
+def pages_text(fires):
+    """[(page, memory, ...)] -> "P2 M1–10, P3 M1–2"."""
+    by_page = {}
+    for p, m, _, _ in fires:
+        by_page.setdefault(p, []).append(m)
+    return ", ".join("P%d M%s" % (p, ranges(ms)) for p, ms in sorted(by_page.items()))
+
+
+def first_cue(cues):
+    """Memory index -> the first QLab cue that fires it (V/T before the E emergency cues)."""
+    out = {}
+    for c in cues:
+        for p, m, _, _ in c["fires"]:
+            out.setdefault(idx(p, m), c["num"])
+    return out
+
+
+def fader(n):
+    return "Console %d" % n if n <= 24 else ("Wing 1 · %d" % n if n <= 36 else "Wing 2 · %d" % n)
+
+
+# --------------------------------------------------------------------------
+# Link map
+# --------------------------------------------------------------------------
+
+def build_link_map(mems, patch, qlab):
+    wsname, net, cues = qlab
+    fixnames = base_fixtures(patch)
+    st = mp.styles(7.0)
+    path = os.path.join(mp.OUT, "BASE_SHOW_2026_Link_Map.pdf")
+    doc = mp.Doc(path, "BASE_SHOW_2026 Link Map", FOOTER, landscape(A4))
+    story = [P("BASE_SHOW_2026 — what is linked to what, and where", st["title"]),
+             P("Read from %s and BASE_SHOW_2026.mtr. Use the two together: QLab base on the Mac, base show on the "
+               "Mantra. Fader number = fixture number." % os.path.basename(QLAB), st["sub"]), Spacer(0, 3 * mm)]
+
+    # 1 the chain
+    osc_patch = [n for n in net.values() if n["name"] == "MANTRA"][0]
+    cs = osc_patch["clientStates"][0]
+    story.append(P("1  The link, end to end", st["title"]))
+    chain = [["QLab cue", "QLab network patch", "Mantra (desk)", "Memory → fixtures", "DMX out"],
+             ["%s: V1–V10, T1–T41, E1–E3 (a group per GO)" % wsname,
+              "%s · OSC over %s to %s port %d. Message: /PlayMemory/Page=P/Memory=M/Cue=1/Level=L/Fade=ms "
+              "(L 100 = play, 0 = release)" % (osc_patch["name"], "TCP" if cs["useTcp"] else "UDP", cs["host"], cs["port"]),
+              "IP 2.0.0.1 · Tools › Setup › Remote Triggers: OSC · Play Memory · port 8000 (set on the desk)",
+              "Page P, memory M of BASE_SHOW_2026.mtr lights the fixtures listed in section 2",
+              "U1: %s · U2: %s" % (UNIVERSE_ROUTE[1], UNIVERSE_ROUTE[2])]]
+    story += [mp.make_table(chain[0], [chain[1]], [52 * mm, 70 * mm, 55 * mm, 50 * mm, 50 * mm], st), Spacer(0, 3 * mm)]
+
+    # page map
+    fired = first_cue(cues)
+    rows = []
+    for pg in range(1, 11):
+        used = [i for i in range(idx(pg, 1), idx(pg, 10) + 1) if mems.get(i, {}).get("name")]
+        if not used:
+            rows.append(["P%d" % pg, "empty", "—", "—"])
+            continue
+        what = "Venue looks" if pg == 1 else "Rig test: one fixture per memory"
+        mm_list = "M" + ranges([i % 10 + 1 for i in used])
+        qc = ", ".join(fired.get(i, "not linked") for i in used)
+        rows.append(["P%d" % pg, "%s · %s" % (what, mm_list), qc,
+                     "labels page 2, strip P%d" % pg])
+    story += [P("Mantra pages in the base show", st["h"]),
+              mp.make_table(["Page", "What is on it", "QLab cues that fire it (M1 → M10)", "Label"], rows,
+                            [14 * mm, 80 * mm, 130 * mm, 53 * mm], st), Spacer(0, 2 * mm)]
+    extra = [i for i in sorted(mems) if i >= 100]
+    story.append(P("<b>Not linked to QLab:</b> P1 M7–M8 (empty) and the area memories stored under internal IDs "
+                   "%s — %s. They are not on a playback page, so no OSC message reaches them; use them from the "
+                   "desk only." % (ranges(extra), ", ".join(mems[i]["name"] for i in extra)), st["note"]))
+    story.append(PageBreak())
+
+    # 2 every QLab cue
+    story.append(P("2  Every QLab cue → Mantra page / memory → fixtures", st["title"]))
+    rows, styles_ = [], []
+    for c in cues:
+        if c["script"]:
+            rows.append(["<b>%s</b>" % esc(c["num"]), esc(c["name"]), "—", "—", "nothing: QLab only (panics every QLab cue)", "—"])
+            styles_.append((len(rows) - 1, "crit"))
+            continue
+        fires = ["P%d M%d · %d %% · %.1f s" % (p, m, lv, f / 1000) for p, m, lv, f in c["fires"]]
+        names = [mems[idx(p, m)]["name"] for p, m, _, _ in c["fires"]]
+        lights = [lit_text(mems[idx(p, m)], fixnames) for p, m, _, _ in c["fires"]]
+        if len(c["fires"]) > 2:  # rig ID sweep: summarise the memories and fixtures together
+            _, _, lv, f = c["fires"][0]
+            fires = ["%d memories: %s · %d %% · %.1f s" % (len(c["fires"]), pages_text(c["fires"]), lv, f / 1000)]
+            names = ["%d TEST memories" % len(c["fires"])]
+            union = {"lit": {k: v for p, m, _, _ in c["fires"] for k, v in mems[idx(p, m)]["lit"].items()}}
+            lights = [lit_text(union, fixnames)]
+        rel = c["releases"]
+        if rel:
+            rel_txt = "P%d M%s" % (rel[0][0], ranges([m for _, m, _, _ in rel])) if len({p for p, _, _, _ in rel}) == 1 \
+                else "%d memories (P%s)" % (len(rel), ranges({p for p, _, _, _ in rel}))
+        else:
+            rel_txt = "—"
+        rows.append(["<b>%s</b>" % esc(c["num"]), esc(c["name"]), "<br/>".join(fires) or "—",
+                     "<br/>".join(esc(n) for n in names) or "—", "<br/>".join(lights) or "—", rel_txt])
+        if c["num"].startswith("E"):
+            styles_.append((len(rows) - 1, "crit"))
+    story.append(mp.make_table(["Cue", "QLab name", "Fires (page · memory · level · fade)", "Mantra memory",
+                                "Lights (fixture # at level)", "Also releases"], rows,
+                               [13 * mm, 45 * mm, 50 * mm, 42 * mm, 72 * mm, 55 * mm], st, styles_))
+    story.append(PageBreak())
+
+    # 3 every fixture
+    story.append(P("3  Every fixture: where it is and what brings it up", st["title"]))
+    looks = [c for c in cues if c["num"].startswith("V")]
+    test_of = {}
+    for c in cues:
+        for p, m, _, _ in c["fires"]:
+            lit = mems[idx(p, m)]["lit"]
+            if c["num"].startswith("T") and len(lit) == 1:
+                test_of[next(iter(lit))] = (c["num"], p, m)
+    rows = []
+    for n in sorted(patch):
+        typ, label = fixnames[n - 1]
+        pt = patch[n]
+        dmx = "U%d : %d–%d" % (pt["u"], pt["a"], pt["b"])
+        model = pt["model"]
+        t = test_of.get(n)
+        in_looks = [c["num"] for c in looks if any(n in mems[idx(p, m)]["lit"] for p, m, _, _ in c["fires"])]
+        rows.append(["<b>%d</b>" % n, "<b>%s</b>" % esc(label), esc(model), mp.INSTALLED.get(n, ""), fader(n), dmx,
+                     "P%d M%d" % (t[1], t[2]) if t else "—", t[0] if t else "—",
+                     " ".join(in_looks) or "—"])
+    table = mp.make_table(["#", "Label", "Desk fixture", "Hung", "Fader", "DMX universe : address",
+                           "Test memory", "QLab test", "Also in venue looks"], rows,
+                          [9 * mm, 24 * mm, 36 * mm, 18 * mm, 22 * mm, 34 * mm, 22 * mm, 18 * mm, 94 * mm], st)
+    table.setStyle(TableStyle([("TOPPADDING", (0, 1), (-1, -1), 1.1), ("BOTTOMPADDING", (0, 1), (-1, -1), 1.1)]))
+    story.append(table)
+    story.append(Spacer(0, 2 * mm))
+    story.append(P("Universe 1 = %s. Universe 2 = %s." % (UNIVERSE_ROUTE[1], UNIVERSE_ROUTE[2]), st["note"]))
+    doc.build(story)
+    return path
+
+
+# --------------------------------------------------------------------------
+# Label sheet
+# --------------------------------------------------------------------------
+
+def build_labels(mems, patch, qlab):
+    _, _, cues = qlab
+    names = base_fixtures(patch)
+    st = mp.styles(7.5)
+    path = os.path.join(mp.OUT, "BASE_SHOW_2026_Mantra_Labels.pdf")
+    doc = mp.Doc(path, "BASE_SHOW_2026 Mantra Labels", FOOTER, landscape(A4))
+    story = mp.fixture_labels(st, names, BASE_KEY) + [PageBreak()]
+
+    cue_of = first_cue(cues)
+    story += [P("Playback labels — BASE_SHOW_2026", st["title"]),
+              P("P1 = venue looks. P2–P5 = rig test, one fixture per memory. Header = page · memory · QLab cue.",
+                st["sub"]), Spacer(0, 2 * mm)]
+    for pg, pname in [(1, "VENUE LOOKS"), (2, "TEST 1–10"), (3, "TEST 11–20"), (4, "TEST 21–30"), (5, "TEST 31–40")]:
+        cells, heads, cmds = [], [], []
+        for k in range(10):
+            i = idx(pg, k + 1)
+            mem = mems.get(i)
+            if not mem or not mem["name"]:
+                cells.append((None, "", ""))
+                heads.append("")
+                continue
+            if pg == 1:
+                cells.append((i, SHORT.get(mem["name"], mem["name"]), ""))
+            else:
+                n = next(iter(mem["lit"]))
+                typ, label = names[n - 1]
+                cells.append((i, label, "fixture %d" % n))
+                cmds.append(("LINEABOVE", (k, 0), (k, 0), 3.5, colors.HexColor(mp.TYPE_COL[typ])))
+            heads.append(cue_of.get(i, ""))
+        if pg == 1:
+            cmds.append(("BACKGROUND", (0, 0), (0, 0), colors.HexColor("#d9f2d9")))
+        story.append(mp.playback_strip(pg, pname, cells, st, heads, cmds))
+
+    story += [Spacer(0, 2 * mm), P("<b>PAGE TABS – stick beside the Page button</b>", st["m"])]
+    tabs = ["P1 VENUE", "P2 TEST 1–10", "P3 TEST 11–20", "P4 TEST 21–30", "P5 TEST 31–40", "P6–10 EMPTY"]
+    tab_w = 277 * mm / len(tabs)
+    story += [mp.label_strip([mp.fit_label(x, tab_w - 2.4 * mm, big=13) for x in tabs], tab_w, 11 * mm),
+              Spacer(0, 3 * mm)]
+    rem = ParagraphStyle("rem", fontName="Sans-Bold", fontSize=12, leading=14, textColor=mp.INK)
+    for txt in ("BASE SHOW  ·  desk: BASE_SHOW_2026.mtr  ·  QLab: BASE_SHOW_2026.qlab5",
+                "V = venue look (one at a time)  ·  T = one fixture  ·  E2 = all off  ·  E3 = work light"):
+        t = Table([[P(esc(txt), rem)]], colWidths=[277 * mm], rowHeights=[10 * mm])
+        t.setStyle(TableStyle([("BOX", (0, 0), (-1, -1), 1, mp.HEAD), ("VALIGN", (0, 0), (-1, -1), "MIDDLE"),
+                               ("LEFTPADDING", (0, 0), (-1, -1), 4 * mm),
+                               ("BACKGROUND", (0, 0), (-1, -1), colors.HexColor("#f3f6f9"))]))
+        story += [t, Spacer(0, 2 * mm)]
+    doc.build(story)
+    return path
+
+
+# --------------------------------------------------------------------------
+# Rig ID test
+# --------------------------------------------------------------------------
+
+RECOGNISE = {
+    "C42": "Lightsky 8800-C42 LED profile: long body, lens barrel and shutters. Hard-edged beam you can shape.",
+    "ZOOM": "Tour Pro Zoom wash: lens with a zoom, usually barn doors. Soft beam that changes width with zoom.",
+    "COB": "TourCOB PAR: short round can with one big LED chip on the front. Wide soft beam, no zoom.",
+    "PIX": "PixBar: long thin batten with a row of LED cells.",
+    "HAZE": "Hazer on the floor upstage. Its test runs it at 50 % - haze, not light.",
+}
+MODES = {"C42": "11 ch", "ZOOM": "12 ch", "COB": "6 ch", "PIX": "6 ch", "HAZE": "2 ch"}
+
+
+def build_rig_test(mems, patch, qlab):
+    _, _, cues = qlab
+    names = base_fixtures(patch)
+    st = mp.styles(7.4)
+    path = os.path.join(mp.OUT, "BASE_SHOW_2026_Rig_ID_Test.pdf")
+    doc = mp.Doc(path, "BASE_SHOW_2026 Rig ID Test", FOOTER, landscape(A4))
+    tick = "☐"
+    test_of = {}
+    for c in cues:
+        if c["num"].startswith("T"):
+            for p, m, _, _ in c["fires"]:
+                lit = mems[idx(p, m)]["lit"]
+                if len(lit) == 1:
+                    test_of[next(iter(lit))] = c["num"]
+    sweeps = [c for c in cues if re.fullmatch(r"I\d+", c["num"]) and c["fires"]]
+    sweep_end = [c["num"] for c in cues if re.fullmatch(r"I\d+", c["num"]) and not c["fires"]]
+    last_t = max((c["num"] for c in cues if re.fullmatch(r"T\d+", c["num"])), key=lambda x: int(x[1:]))
+
+    story = [P("Rig ID test — which light is which", st["title"]),
+             P("Finds every fixture on the rig, confirms its type, position and DMX address, and catches missing or "
+               "mis-addressed units. About 30 minutes, two people: one at the Mac (QLab) and desk, one on stage "
+               "with this sheet.", st["sub"]), Spacer(0, 3 * mm)]
+    setup = [["<b>Set up</b>",
+              "Mantra: import BASE_SHOW_2026.mtr (Home › Tools › Import Show). QLab: open BASE_SHOW_2026.qlab5 and "
+              "check the MANTRA network patch reaches the desk. House and work lights off. GO <b>E2</b> (all off)."],
+             ["<b>Part 1 · types</b>",
+              "GO %s one at a time. Every fixture of that type comes on together. On stage: count them, check "
+              "where they are and that they look like the description. GO %s to clear."
+              % ("–".join([sweeps[0]["num"], sweeps[-1]["num"]]), ", ".join(sweep_end) or "E2")],
+             ["<b>Part 2 · one by one</b>",
+              "GO T1 to %s. Each GO lights one fixture and turns off the one before. Call the cue number; on stage "
+              "tick the three boxes or write what happened. %s turns the last one off." % (
+                  "T%d" % max(int(k[1:]) for k in test_of.values()), last_t)],
+             ["<b>Anything wrong</b>",
+              "Write it in Notes, carry on, then fix from the fault table on the last page and repeat that cue."]]
+    t = Table([[P(a, st["b"]), P(b, st["b"])] for a, b in setup], colWidths=[32 * mm, 245 * mm])
+    t.setStyle(TableStyle([("VALIGN", (0, 0), (-1, -1), "TOP"), ("LINEBELOW", (0, 0), (-1, -1), 0.3, mp.RULE),
+                           ("LINEABOVE", (0, 0), (-1, 0), 0.8, mp.INK),
+                           ("TOPPADDING", (0, 0), (-1, -1), 2.2), ("BOTTOMPADDING", (0, 0), (-1, -1), 2.2)]))
+    story += [t, Spacer(0, 4 * mm)]
+
+    # part 1: type sweep
+    rows = []
+    for c in sweeps:
+        fx = sorted({k for p, m, _, _ in c["fires"] for k in mems[idx(p, m)]["lit"]})
+        typ = names[fx[0] - 1][0]
+        where = {}
+        for n in fx:
+            where.setdefault(re.sub(r" \d+$", "", mp.INSTALLED.get(n, "?")), []).append(n)
+        rows.append(["<b>%s</b>" % c["num"], "<b>%s</b>" % typ, RECOGNISE.get(typ, ""), "<b>%d</b>" % len(fx),
+                     "<br/>".join("%s: #%s" % (h, ranges(ns)) for h, ns in where.items()), "", tick])
+    story += [P("Part 1 · find each type", st["h"]), Spacer(0, 1 * mm)]
+    tbl = mp.make_table(["GO", "Type", "How to recognise it", "Expect", "Where they hang now", "Counted", "OK"],
+                        rows, [12 * mm, 16 * mm, 110 * mm, 14 * mm, 76 * mm, 30 * mm, 12 * mm], st)
+    tbl.setStyle(TableStyle([("TOPPADDING", (0, 1), (-1, -1), 3.5), ("BOTTOMPADDING", (0, 1), (-1, -1), 3.5),
+                             ("BOX", (5, 1), (5, -1), 1.1, mp.INK)]))
+    story.append(tbl)
+    haze = [n for n in patch if names[n - 1][0] == "HAZE"]
+    story.append(Spacer(0, 2 * mm))
+    story.append(P("The hazer (#%s) is not in the sweep: %s. %s. Confirm #38 (PIX) and #39 (COB) are on the rig — "
+                   "if a count is one short, it is probably one of these."
+                   % (ranges(haze), "test it on its own with " + " / ".join(test_of[n] for n in haze if n in test_of),
+                      RECOGNISE["HAZE"].rstrip(".")), st["note"]))
+    story += [Spacer(0, 4 * mm), P("Reading Part 2 (next page)", st["h"]),
+              P("<b>Line</b>: U1 = %s; U2 = %s. <b>Address on fixture</b>: the start address the fixture's own "
+                "display should show, on its line. <b>Mode</b>: the DMX channel mode the fixture must be set to. "
+                "<b>Lit alone</b>: only this one came on. <b>Right place</b>: it hangs where 'Hangs' says (as installed; C42s are fixed on the FOH bar, #1 at the stage-right end). "
+                "<b>Right type</b>: it matches the description above." % (UNIVERSE_ROUTE[1], UNIVERSE_ROUTE[2]),
+                st["note"])]
+    story.append(PageBreak())
+
+    # part 2: one by one
+    rows = []
+    for n in sorted(patch):
+        typ, label = names[n - 1]
+        pt = patch[n]
+        rows.append(["<b>%s</b>" % test_of.get(n, "—"), "<b>%d</b>" % n, typ, mp.INSTALLED.get(n, ""), fader(n),
+                     "U%d" % pt["u"], "<b>A%03d</b>" % pt["a"], MODES.get(typ, ""), tick, tick, tick, ""])
+    story += [P("Part 2 · one fixture at a time", st["h"]), Spacer(0, 1 * mm)]
+    tbl = mp.make_table(["GO", "#", "Type", "Hangs", "Fader", "Line", "Address on fixture", "Mode",
+                         "Lit alone", "Right place", "Right type", "Notes"],
+                        rows, [12 * mm, 9 * mm, 14 * mm, 20 * mm, 22 * mm, 11 * mm, 24 * mm, 13 * mm, 15 * mm,
+                               17 * mm, 16 * mm, 104 * mm], st)
+    tbl.setStyle(TableStyle([("TOPPADDING", (0, 1), (-1, -1), 1.3), ("BOTTOMPADDING", (0, 1), (-1, -1), 1.3)]))
+    story.append(tbl)
+    story.append(PageBreak())
+
+    # faults
+    faults = [
+        ["Nothing lights", "No power; no DMX on that line; wrong address or mode; desk output cleared or blacked out",
+         "Check the fixture has power and shows an address. Check the DMX cable into it. For U2 check the node "
+         "(2.0.0.10) and that the desk sends the protocol it uses (Art-Net or sACN). On the desk: A L, then GO again."],
+        ["A different fixture lights", "That fixture is set to this fixture's address",
+         "Note which one lit. Set each fixture's display to the address in Part 2."],
+        ["Two fixtures light", "Two fixtures share one address",
+         "Find the one that is not at 'Hangs' and give it its own address from Part 2."],
+        ["Right fixture, wrong colour, flicker, strobe or movement", "Wrong DMX mode on the fixture",
+         "Set the mode in Part 2 (C42 11 ch · Zoom 12 ch · COB 6 ch · PixBar 6 ch · hazer 2 ch)."],
+        ["Everything after one fixture is dead", "Broken DMX cable, bad through-port or missing terminator",
+         "Swap the cable after the last working fixture; terminate the last fixture on the line."],
+        ["A sweep count is short", "A fixture is missing, off, or on the wrong address",
+         "Run that type's fixtures in Part 2 to find which number doesn't light."],
+        ["Lit, but in the wrong place", "Fixture hung in a different position",
+         "Note it. C42s cannot be moved: give the unit at each FOH position the address for that position in Part 2. "
+         "Other types: move it, or note it — the fader label and link map go by fixture number, not position."],
+    ]
+    story += [P("Fault finding", st["title"]), Spacer(0, 2 * mm),
+              mp.make_table(["What you see", "Likely cause", "Fix"], faults, [52 * mm, 75 * mm, 150 * mm], st),
+              Spacer(0, 4 * mm),
+              P("Sign-off", st["h"]), Spacer(0, 1 * mm)]
+    sign = Table([[P("Tested by", st["b"]), "", P("Date", st["b"]), "", P("All %d fixtures OK" % len(patch), st["b"]),
+                   P(tick, st["b"])]], colWidths=[22 * mm, 80 * mm, 14 * mm, 50 * mm, 36 * mm, 12 * mm],
+                 rowHeights=[10 * mm])
+    sign.setStyle(TableStyle([("LINEBELOW", (1, 0), (1, 0), 0.6, mp.INK), ("LINEBELOW", (3, 0), (3, 0), 0.6, mp.INK),
+                              ("VALIGN", (0, 0), (-1, -1), "BOTTOM"), ("LEFTPADDING", (0, 0), (0, 0), 0)]))
+    story.append(sign)
+    doc.build(story)
+    return path
+
+
+def main():
+    mems, patch = load_mtr()
+    qlab = load_qlab()
+    bad = [c["num"] for c in qlab[2] for p, m, _, _ in c["fires"] + c["releases"] if idx(p, m) not in mems]
+    if bad:
+        raise SystemExit("QLab base fires memories that are not in BASE_SHOW_2026.mtr: %s" % bad)
+    os.makedirs(mp.OUT, exist_ok=True)
+    for path in (build_link_map(mems, patch, qlab), build_labels(mems, patch, qlab),
+                 build_rig_test(mems, patch, qlab)):
+        shutil.copy(path, os.path.join(PROD, os.path.basename(path)))
+        print(os.path.relpath(path, ROOT))
+
+
+if __name__ == "__main__":
+    main()

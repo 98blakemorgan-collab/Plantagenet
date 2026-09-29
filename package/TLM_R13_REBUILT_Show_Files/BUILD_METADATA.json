@@ -3,6 +3,8 @@
   "based_on": "R13 REBUILT",
   "project_folder": "TLM_R13_REBUILT_Show_Files",
   "mantra": "TLM_SHOW_2026_R13_FLASHY_SCENE_SPLIT.mtr",
+  "mantra_base": "BASE_SHOW_2026.mtr",
+  "qlab_base": "BASE_SHOW_2026.qlab5",
   "qlab": "TLM_Show_R13_1.qlab5",
   "scene_split": true,
   "positions": 153,
@@ -19,8 +21,10 @@
     "sfx_pack_originals": 40
   },
   "sha256": {
-    "mantra": "9301c0f9375e4483a6f0e819f23f2a2466e027e322dcf32a5a12f69522619a1b",
-    "qlab": "8cfcd76e83f9884d251ea36053825801bd0ab8269f15eba69664fa8d3208f6fa"
+    "mantra": "9f1900285313f4da98713534c3f1f21806e906fdda4693fba8fd7f6463beab12",
+    "qlab": "8cfcd76e83f9884d251ea36053825801bd0ab8269f15eba69664fa8d3208f6fa",
+    "mantra_base": "e273d54b71abb69bc9e2c6d5b431ebb5ceb09e22673f6b67d082fbfc66c63076",
+    "qlab_base": "f11ccc032baae0658bb17c2de9b71c58203156269b3656bbf00353c2aea3d2ec"
   },
   "sha256_r13_original": {
     "mantra": "743f2eedb8a8ba2fb0ebfc14321a2c51aafae9d11d1790500e447a01220eb3d8",
@@ -59,7 +63,12 @@
     "docs/FOH_Flashing_Lights_and_Haze_Notice.pdf added",
     "00_START_HERE.txt: manifest count corrected to 80; R11 step updated",
     "Fix list updated",
-    "docs/TLM_R13_1_Operator_Cue_Sheets.pdf and docs/TLM_R13_1_Mantra_Labels.pdf rebuilt from the R13.1 QLab/Mantra files (replace the R8 printouts)"
+    "docs/TLM_R13_1_Operator_Cue_Sheets.pdf and docs/TLM_R13_1_Mantra_Labels.pdf rebuilt from the R13.1 QLab/Mantra files (replace the R8 printouts)",
+    "BASE_SHOW_2026.mtr (clean venue base) added; its patch, custom fixtures, network, rig view, P1 looks and memories 100-109 are identical to the R13.1 show file",
+    "BASE_SHOW_2026.qlab5 added (tools/make_qlab_base.py): QLab base for the Mantra base - P1 looks V1-V10, rig test T1-T41 (P2-P5 TEST memories), E1-E3; settings and MANTRA patch as the R13.1 workspace",
+    "docs/BASE_SHOW_2026_Link_Map.pdf and docs/BASE_SHOW_2026_Mantra_Labels.pdf added (tools/make_base_printouts.py); venue names only",
+    "docs/TLM_R13_1_Zoom_Adjustment.pdf added (tools/make_zoom_sheet.py)",
+    "BASE_SHOW_2026.qlab5: rig ID sweep I1-I5 added (all C42 / ZOOM / COB / PIX at once); docs/BASE_SHOW_2026_Rig_ID_Test.pdf added"
   ],
   "sha256_before_lx_sound_edits": {
     "mantra": "95cf3c690c2cef573c58e761f27eb54491f3e102684a1ab3f597a232fcae24c2",
@@ -75,5 +84,12 @@
     "QLab: storm - Q22 fades out Q20 (3 s); Q26 fades out Q25 and takes Q22 to -21 dB (4 s); Q27 fade-outs 2.5 s (fade cues moved from Q27, total cue count unchanged)",
     "QLab: Q19 wind/rain bed disarmed; Q19/Q19.2 notes updated",
     "QLab: Q1/Q2/Q37/Q38/Q65 music set to loop"
+  ],
+  "sha256_before_fixed_foh_jobs": {
+    "mantra": "9301c0f9375e4483a6f0e819f23f2a2466e027e322dcf32a5a12f69522619a1b"
+  },
+  "r13_1_fixed_foh_jobs": [
+    "C42 #1-12 are fixed on the FOH bar in number order (#1 stage-right end); jobs reassigned by position: faces DSR #1+#4, DSC #5+#8, DSL #9+#12; SP2 Spirit #2, V1 Dame #3, SP1 Ariel #6, V2 Flanders #7, SP4 Shell #10, SP3 Octavia #11",
+    "Mantra show memories 10-70: each job's programming moved to its new desk number (296 cue sections); patch, fixtures, network, rig view, live scene, P1 and memories 100-109 unchanged"
   ]
 }

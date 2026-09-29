@@ -21,7 +21,9 @@ REPORT="$HERE/OUTPUT/ASSEMBLY_REPORT.txt"
 ZIPS="TLM_R13_1.zip TLM_R13_1_SFX.zip TLM_Backdrops_R10.zip"
 
 QLAB_SHA="8cfcd76e83f9884d251ea36053825801bd0ab8269f15eba69664fa8d3208f6fa"
-MTR_SHA="9301c0f9375e4483a6f0e819f23f2a2466e027e322dcf32a5a12f69522619a1b"
+MTR_SHA="9f1900285313f4da98713534c3f1f21806e906fdda4693fba8fd7f6463beab12"
+BASE_SHA="e273d54b71abb69bc9e2c6d5b431ebb5ceb09e22673f6b67d082fbfc66c63076"
+QBASE_SHA="f11ccc032baae0658bb17c2de9b71c58203156269b3656bbf00353c2aea3d2ec"
 
 say() { echo "$*" | tee -a "$REPORT"; }
 sha() { if command -v shasum >/dev/null 2>&1; then shasum -a 256 "$1" | cut -d' ' -f1; else sha256sum "$1" | cut -d' ' -f1; fi; }
@@ -159,6 +161,10 @@ say ""
 q="$(sha "$OUT/TLM_Show_R13_1.qlab5")"; m="$(sha "$OUT/TLM_SHOW_2026_R13_FLASHY_SCENE_SPLIT.mtr")"
 if [ "$q" = "$QLAB_SHA" ]; then say "QLab   TLM_Show_R13_1.qlab5 - checksum OK"; else say "QLab   checksum MISMATCH ($q)"; missing=$((missing+1)); fi
 if [ "$m" = "$MTR_SHA" ];  then say "Mantra .mtr - checksum OK"; else say "Mantra checksum MISMATCH ($m)"; missing=$((missing+1)); fi
+b="$(sha "$OUT/BASE_SHOW_2026.mtr")"
+if [ "$b" = "$BASE_SHA" ]; then say "Mantra venue base BASE_SHOW_2026.mtr - checksum OK"; else say "Mantra base checksum MISMATCH ($b)"; missing=$((missing+1)); fi
+qb="$(sha "$OUT/BASE_SHOW_2026.qlab5")"
+if [ "$qb" = "$QBASE_SHA" ]; then say "QLab   base BASE_SHOW_2026.qlab5 - checksum OK"; else say "QLab base checksum MISMATCH ($qb)"; missing=$((missing+1)); fi
 
 # 7. Warn about the old R11 folder (old aliases in the workspace can find it).
 for d in "$HOME/Desktop/TLM_R11_FLASHY_Show_Files" "$HOME/TLM_R11_FLASHY_Show_Files"; do

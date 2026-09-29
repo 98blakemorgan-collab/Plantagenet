@@ -8,7 +8,7 @@ RIG = [("Lightsky 8800-C42", "12", "#1–12", "U2 · 11 ch · 101–232",
        ("Tour Pro Zoom", "10", "#13–22", "U1 · 12 ch · 301–420",
         "RGBW COB zoom wash 13–45°, barn doors", "Colour top wash (LX1), voice-transfer pools, high side"),
        ("Tour Pro TourCOB PAR", "11", "#23–32, 39", "U1 · 6 ch · 421–486",
-        "RGBW COB PAR, fixed beam", "Backlight and side light; the main colour energy of R13"),
+        "RGBW COB PAR, fixed beam", "Backlight and side light; the main colour energy of the show"),
        ("Tour Pro PixBar", "6", "#33–38", "U1 · 6 ch · 1–36",
         "Linear bar, whole-bar colour in this mode", "Effect row: storm, magic, jellyfish, song impacts"),
        ("Hazer", "1", "#40", "U1 · 2 ch · 487–488", "Output + fan", "Selective haze, P5 M4 (50 % / fan 50 %)")]
@@ -35,27 +35,41 @@ SONG_LANG = {"S1": "Aqua / hot pink / gold / deep blue / magenta / lime / white 
              "S9": "Concert style: cyan / magenta / gold / blue / lime / hot pink",
              "S10": "Deep blue / amber / cyan / red / gold / bright white finale"}
 
-SPECIALS = [("SP1", "Ariel", "#7 C42 (FOH)", "DSC mark; solo, duet, transformation, restore (57c)"),
-            ("SP2", "Spirit", "#8 C42 (FOH)", "DS audience-left mark; every Spirit entrance"),
-            ("SP3", "Octavia", "#9 C42 (LX1)", "US audience-right; entrances, lair, wedding interruption"),
-            ("SP4", "Shell", "#10 C42 (LX1, shuttered tight)", "Plinth mark; brightest point in Scene Eight"),
-            ("V1", "Dame", "#11 C42 (LX1)", "Voice-transfer mark 1 (Q53)"),
-            ("V2", "Flanders", "#12 C42 (LX1)", "Voice-transfer mark 2 (Q54)"),
+# The rig as installed (venue photos, 29 Sep 2026) and what the plan does with each position.
+# COB and PixBar numbers per position are assumed until the rig ID test (docs/BASE_SHOW_2026_Rig_ID_Test.pdf).
+INSTALLED = [("FOH bar (house ceiling)", "C42 #1–12 in number order, #1 at the stage-right end",
+              "FIXED — cannot be moved. Jobs are given by position (faces #1+4, #5+8, #9+12; specials #2, 3, 6, 7, 10, 11)."),
+             ("Pelmet, in front of the main curtain", "3 PixBars; speakers at each end",
+              "Plan: move to LX2 with the other three. Or keep as a front-of-tabs wash for Scenes Two, Four and Nine — "
+              "decide at the site walk."),
+             ("LX1, beam behind the pelmet", "10 Zooms #13–22, 4 COB PARs (#29–32, confirm), projector at the centre",
+              "Keep #13–18 (top wash). #19–20 to LX2 (V3/V4 steep top light); #21–22 and the 4 COBs to the SR/SL booms "
+              "(side light). Projector stays."),
+             ("LX2, upstage beam", "6 COB PARs (#23–28, confirm) with PixBars between them",
+              "Stays as the backlight row; add #19–20 and the pelmet PixBars."),
+             ("Side wall by LX2 (back right)", "1 COB PAR (#39, confirm)", "Stays: extra backlight / side.")]
+
+SPECIALS = [("SP1", "Ariel", "#6 C42 (FOH)", "DSC mark; solo, duet, transformation, restore (57c)"),
+            ("SP2", "Spirit", "#2 C42 (FOH)", "DS audience-left mark; every Spirit entrance"),
+            ("SP3", "Octavia", "#11 C42 (FOH)", "US audience-right; entrances, lair, wedding interruption"),
+            ("SP4", "Shell", "#10 C42 (FOH, shuttered tight)", "Plinth mark; brightest point in Scene Eight"),
+            ("V1", "Dame", "#3 C42 (FOH)", "Voice-transfer mark 1 (Q53)"),
+            ("V2", "Flanders", "#7 C42 (FOH)", "Voice-transfer mark 2 (Q54)"),
             ("V3", "Theodore", "#19 Zoom 13° + barn doors (LX2)", "Voice-transfer mark 3 (Q55)"),
             ("V4", "Marina", "#20 Zoom 13° + barn doors (LX2)", "Voice-transfer mark 4 (Q56)")]
 
-FOCUS = [(1, "C42", "FOH", "U2:101", "Face zone 1 — DSR (from house left)"),
-         (2, "C42", "FOH", "U2:112", "Face zone 1 — DSR (from house right)"),
-         (3, "C42", "FOH", "U2:123", "Face zone 2 — DSC (from house left)"),
-         (4, "C42", "FOH", "U2:134", "Face zone 2 — DSC (from house right)"),
-         (5, "C42", "FOH", "U2:145", "Face zone 3 — DSL (from house left)"),
-         (6, "C42", "FOH", "U2:156", "Face zone 3 — DSL (from house right)"),
-         (7, "C42", "FOH", "U2:167", "SP1 Ariel — DSC mark, shuttered tight"),
-         (8, "C42", "FOH", "U2:178", "SP2 Spirit — DS audience-left mark"),
-         (9, "C42", "LX1", "U2:189", "SP3 Octavia — US audience-right mark"),
-         (10, "C42", "LX1", "U2:200", "SP4 Shell — plinth mark, shuttered to the shell"),
-         (11, "C42", "LX1", "U2:211", "V1 Dame — voice-transfer mark 1"),
-         (12, "C42", "LX1", "U2:222", "V2 Flanders — voice-transfer mark 2")] + \
+FOCUS = [(1, "C42", "FOH 1", "U2:101", "Face DSR — from house left (outer)"),
+         (2, "C42", "FOH 2", "U2:112", "SP2 Spirit — DS audience-left mark"),
+         (3, "C42", "FOH 3", "U2:123", "V1 Dame — voice-transfer mark 1"),
+         (4, "C42", "FOH 4", "U2:134", "Face DSR — from house right (inner)"),
+         (5, "C42", "FOH 5", "U2:145", "Face DSC — from house left"),
+         (6, "C42", "FOH 6", "U2:156", "SP1 Ariel — DSC mark, shuttered tight"),
+         (7, "C42", "FOH 7", "U2:167", "V2 Flanders — voice-transfer mark 2"),
+         (8, "C42", "FOH 8", "U2:178", "Face DSC — from house right"),
+         (9, "C42", "FOH 9", "U2:189", "Face DSL — from house left (inner)"),
+         (10, "C42", "FOH 10", "U2:200", "SP4 Shell — plinth mark, shuttered to the shell"),
+         (11, "C42", "FOH 11", "U2:211", "SP3 Octavia — US audience-right mark"),
+         (12, "C42", "FOH 12", "U2:222", "Face DSL — from house right (outer)")] + \
     [(13 + i, "ZM", "LX1", "U1:%d" % (301 + 12 * i), "Top/front colour wash — " + a)
      for i, a in enumerate(["DSR", "DSC", "DSL", "CSR", "CSC", "CSL"])] + \
     [(19, "ZM", "LX2", "U1:373", "V3 Theodore — 13°, barn doors, steep top light"),
@@ -68,9 +82,9 @@ FOCUS = [(1, "C42", "FOH", "U2:101", "Face zone 1 — DSR (from house left)"),
      (30, "COB", "SR boom", "U1:463", "Low side (shin) — boom arm ~0.4 m"),
      (31, "COB", "SL boom", "U1:469", "Mid side — boom arm ~1.2 m, knee to hip"),
      (32, "COB", "SL boom", "U1:475", "Low side (shin) — boom arm ~0.4 m")] + \
-    [(33 + i, "PIX", "LX2", "U1:%d" % (1 + 6 * i), "Effect row, tilted downstage off the screen (R-25)")
+    [(33 + i, "PIX", "LX2", "U1:%d" % (1 + 6 * i), "Effect row, tilted downstage off the back wall (R-25)")
      for i in range(6)] + \
-    [(39, "COB", "LX2", "U1:481", "Extra backlight — centre (confirm it exists, R13.1 fix list)"),
+    [(39, "COB", "LX2", "U1:481", "Extra backlight — centre (confirm fitted)"),
      (40, "HAZE", "Floor, US", "U1:487", "Atmosphere — P5 M4 HAZE (50 %, fan 50 %)"),
      (41, "PIN", "FOH SR end", "U1:37", "Mirror ball (optional, not patched)"),
      (42, "PIN", "FOH SL end", "U1:38", "Mirror ball (optional, not patched)")]
@@ -99,35 +113,43 @@ def song_table():
 
 def build(path):
     d = PartDoc(path, "B", "Lighting Design",
-                "The R13 colour-forward design on the venue's installed 39-fixture rig: rig, layers, "
+                "The colour-forward design on the venue's installed 39-fixture rig: rig, layers, "
                 "specials, the look library and song colour as programmed, fixture schedule and focus plan.")
     d.add(title_block("PART B · %s · %s" % (REV, DATE), "Lighting Design",
-                      "R13 FLASHY SCENE SPLIT — readable faces in neutral FOH light, with the energy coming "
+                      "Readable faces in neutral FOH light, with the energy coming "
                       "from changing LX1 colour, side-light contrast, LX2 backlight and animated PixBars."))
     d.add(stats([("39", "lighting fixtures + hazer, 4 types"), ("153", "programmed cue positions"),
                  ("17", "looks M01–M17 (P6–P7)"), ("10", "song memories (P4)"), ("0", "strobe values stored")]))
-    d.add(box("new", "WHAT CHANGED FROM R8",
-              ["R8 lit the show from one 87-step list on Page 2 Memory 1 with mostly naturalistic looks. R13 keeps "
-               "the rig, patch and focus but rebuilds the programming: **stronger LX1 colour, side light, LX2 "
-               "backlight and PixBar movement**, fast colour snaps on musical impacts, slower crossfades for "
-               "emotional and dialogue moments, and every song has its own colour-driven memory.",
+    d.add(box("rule", "THE DESIGN IN BRIEF",
+              ["**Strong LX1 colour, side light, LX2 backlight and PixBar movement** over neutral faces, fast colour "
+               "snaps on musical impacts, slower crossfades for emotional and dialogue moments, and every song has "
+               "its own colour-driven memory.",
                "The show is split across pages: **P2 Act One, P3 Act Two, P4 songs, P5 FX/chases, P6–P7 look "
-               "library, P8 full 153-step backup**. QLab fires every cue; R13.1 adds automatic flash returns and "
+               "library, P8 full 153-step backup**. QLab fires every cue, including automatic flash returns and "
                "memory releases (Part D)."]))
     d.add(H1("1 The installed rig"))
-    d.add(table(["Fixture", "Qty", "Mantra #", "DMX", "What it is", "Job in R13"],
+    d.add(table(["Fixture", "Qty", "Mantra #", "DMX", "What it is", "Job in the show"],
                 [list(r) for r in RIG], [30 * mm, 9 * mm, 17 * mm, 26 * mm, 42 * mm, 46 * mm], bold_first=True))
-    d.add(P("Positions are unchanged from R8: 8 × C42 on the FOH truss (#1–8), LX1 downstage bar (C42 #9–12, "
-            "Zoom #13–18), LX2 upstage bar (Zoom #19–20, COB #23–28, 39, PixBar #33–38), a floor boom in each "
+    d.add(box("rule", "THE 12 C42s CANNOT BE MOVED", "The Lightsky C42s are fixed on the FOH bar in number order, "
+              "**#1 at the stage-right (house-left) end to #12 at the stage-left end** (venue photos; the venue base "
+              "STAGE RIGHT / CENTRE / STAGE LEFT looks use #1–4 / #5–8 / #9–12). Each job is given to the unit that "
+              "suits it: a cross pair per face zone (**DSR #1 + #4 · DSC #5 + #8 · DSL #9 + #12**) and the specials on "
+              "the units nearest their marks (**SP2 #2 · V1 #3 · SP1 #6 · V2 #7 · SP4 #10 · SP3 #11**). The show "
+              "file's programming moved with the jobs; only focus is set on the bar."))
+    d.add(P("Positions for the show: all 12 × C42 on the FOH bar (#1–12, fixed), LX1 downstage bar (Zoom #13–18), LX2 upstage bar (Zoom #19–20, COB #23–28, 39, PixBar #33–38), a floor boom in each "
             "wing (SR #21, 29, 30 · SL #22, 31, 32) and the hazer upstage on the floor (#40). The projector hangs "
-            "centre stage towards the back and throws upstage (R-11)."))
-    d.add(box("rule", "DESIGN RULE", "FOH #1–6 keep faces readable in every look. The flashier colour movement "
+            "at the centre of LX1 (venue photos) and throws upstage onto the painted back wall (R-11). The drawn plan with every "
+            "fixture, mark and address is B2, the Stage Lighting Layout Plan (A3)."))
+    d.add(H2("As installed, and the moves for the show"))
+    d.add(table(["Position", "Installed now (venue photos)", "Plan"], [list(r) for r in INSTALLED],
+                [36 * mm, 58 * mm, 76 * mm], bold_first=True))
+    d.add(box("rule", "DESIGN RULE", "The FOH face pairs (#1 + #4, #5 + #8, #9 + #12) keep faces readable in every look. The flashier colour movement "
               "comes from the LX1 Zooms, side booms, LX2 backlight and PixBars. Never aim high-intensity "
               "backlight or PixBars at the projection screen (R-25)."))
 
     d.add(H1("2 Design layers"))
-    d.add(table(["Layer", "How it is set in R13", "What it does"], [
-        ["Face (FOH C42 #1–6)", "Near-white: cool white under water, warm white on land (about 30–100 %)",
+    d.add(table(["Layer", "How it is set", "What it does"], [
+        ["Face (FOH C42 #1, 4, 5, 8, 9, 12)", "Near-white: cool white under water, warm white on land (about 30–100 %)",
          "Every scene with dialogue stays readable"],
         ["Colour top (LX1 Zoom #13–18)", "Saturated scene colour: cyan, hot pink, gold, blue, violet",
          "Sets the scene colour; snaps on musical impacts"],
@@ -137,11 +159,11 @@ def build(path):
          "Depth, haze beams, the storm and lair energy"],
         ["Effects (PixBar #33–38)", "Two-colour splits in storm, magic, jellyfish and every song",
          "Movement and impact without strobe"],
-        ["Specials (C42 #7–12, Zoom #19–20)", "Hard pools on marks, added per cue",
+        ["Specials (C42 #2, 3, 6, 7, 10, 11, Zoom #19–20)", "Hard pools on marks, added per cue",
          "Character entrances, shell, voice transfer"]],
         [44 * mm, 70 * mm, 56 * mm], bold_first=True))
     d.add(H2("Colour language by scene family"))
-    d.add(table(["Scene family", "R13 colour language", "Looks · cues"], [list(r) for r in FAMILY],
+    d.add(table(["Scene family", "Colour language", "Looks · cues"], [list(r) for r in FAMILY],
                 [34 * mm, 84 * mm, 52 * mm], bold_first=True))
     d.add(box("verify", "NO STROBE", "No strobe is programmed: Strobe, Control, Reset, Auto speed, Other, Default "
               "and Colour macro are 0 in every cue. Lightning and magic are single white hits (Q21, Q23, Q25, "
@@ -157,7 +179,7 @@ def build(path):
             "Performances run the scene memories on P2/P3 and the song memories on P4, which were built from "
             "these looks. Values below are read from the R13.1 show file."))
     d.add(swatch_legend(), look_table())
-    d.add(box("verify", "CHECK IN THE VENUE", "Some R13 backlight choices are deliberately bold (for example "
+    d.add(box("verify", "CHECK IN THE VENUE", "Some backlight choices are deliberately bold (for example "
               "the coral-red backlight under M03 UNDERWATER and the teal backlight in M08 STORM). Look at every "
               "look from the house with performers at the focus session, and record any change in Manual "
               "Appendix B before saving the desk."))
@@ -188,15 +210,20 @@ def build(path):
                 [9 * mm, 12 * mm, 20 * mm, 17 * mm, 104 * mm, 8 * mm]))
     d.add(H2("Focus notes"))
     d.add(bullets([
-        "FOH C42s: cross-light each zone from both sides; shutter off the screen, the proscenium and the front "
-        "row. Fit the 26° or 36° lenses if the pools don't overlap.",
+        "FOH C42s: fixed in place, so focus only. Each face zone has a cross pair — DSR #1 (outer) + #4, DSC "
+        "#5 + #8, DSL #9 + #12 (outer); shutter off the screen, the proscenium and the front row. Fit the 26° or "
+        "36° lenses if the pools don't overlap.",
         "Specials: shutter each C42 tight to its glow-tape mark. The shell special (#10) is the brightest thing "
         "on stage in Scene Eight.",
+        "All the specials come from the FOH bar: a long throw and flat angle, so the pool is bigger and spills "
+        "further upstage — shutter the top edge off the set and screen, and sharpen the edge with the lens barrel. "
+        "V2 Flanders (#7) crosses from just stage-left of centre to a mark stage-right of centre; tape the mark "
+        "where the pool lands cleanly.",
         "LX1 Zooms: overlap by a third; barn doors cut the top edge so nothing reaches the screen.",
         "LX2: COB PARs down-and-forward to head height at the DS edge; PixBars tilted downstage, never onto the "
-        "screen (R-25). R13 runs the backlight hard, so check screen washout with BG-02 and BG-18 running.",
+        "screen (R-25). The show runs the backlight hard, so check screen washout with BG-02 and BG-18 running.",
         "Side booms: Zoom high at head height across the stage; COB mid and low for bodies and dance.",
-        "Voice transfer: Zooms #19–20 at 13° with barn doors match Dame and Flanders (#11–12); match the four "
+        "Voice transfer: Zooms #19–20 at 13° with barn doors match Dame and Flanders (#3, #7); match the four "
         "levels by eye."]))
     d.add(notes_area("Designer / focus notes", 8))
     return d.build()

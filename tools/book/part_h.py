@@ -1,4 +1,4 @@
-"""Part H — Props List & Preset Sheets (R13.1: re-paged to the April 2026 script)."""
+"""Part H — Props List & Preset Sheets."""
 from core import *  # noqa: F401,F403
 
 # id, prop, type, qty, scenes, script pp, used by, preset, notes
@@ -116,15 +116,14 @@ def preset(title, ids):
 
 def build(path):
     d = PartDoc(path, "H", "Props List & Preset Sheets",
-                "Every prop the script calls for, re-paged to the April 2026 script: tracking chart, preset sheets for each side, "
+                "Every prop the script calls for: tracking chart, preset sheets for each side, "
                 "running plot, cue-card list and resets.")
     d.add(title_block("PART H · %s · %s" % (REV, DATE), "Props List & Preset Sheets",
                       "Every prop the script calls for, where it lives and who handles it"))
     d.add(stats([("26", "props and prop-costumes"), ("2", "water effects (R-23)"), ("8", "cue cards + spares"),
                  ("11", "scenes with props")]))
-    d.add(box("new", "R13.1", "Re-paged to the licensed script revised April 2026 (page numbers move by one from Scene Six onwards). "
-              "Every prop was checked against the new text: all are still called for except P26, which is optional dressing. "
-              "The props themselves are unchanged from R8."))
+    d.add(box("verify", "SCRIPT PAGES", "Pages are from the licensed script revised April 2026. Every prop is called for in the "
+              "text except P26, which is optional dressing."))
     d.add(box("rule", "CONTINUITY TRAPS", "1 Card 3 (the weird fish) is passed off in Scene Six and goes back on with Dame at the top "
               "of Scene Seven (p 40). 2 The shell travels: SL shelf → Octavia (Scene Five) → Octavia (Scene Six) → plinth (Scene "
               "Eight). 3 Willis needs a second, battered fish for p 22. 4 The salt boxes spill just before the storm and the water "

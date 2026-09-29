@@ -1,4 +1,4 @@
-"""Part I — Projection Backgrounds (R13.1: the R10 backdrops as wired into the R13.1 workspace)."""
+"""Part I — Projection Backgrounds."""
 import glob
 import os
 
@@ -31,15 +31,14 @@ BACKDROPS = {  # id: (title, image prompt, motion prompt or None, note)
               "gathering magic.", "The whirlpool slowly turns and tightens, purple light pulses gently.",
               "Plays under 'the lighting churns' (Q16.5); out on the Q17 blackout."),
     "BG-05": ("Ship — calm sea",
-              "A blue sunny day on a gentle ocean, soft white clouds, distant horizon (R10: ship deck removed to "
-              "match the script, p 19).", "Gentle swell, clouds drift, sun glints move on the water.",
+              "A blue sunny day on a gentle ocean, soft white clouds, distant horizon.", "Gentle swell, clouds drift, sun glints move on the water.",
               "Keep the rocking tiny — strong motion on a big screen makes audiences queasy."),
     "BG-06": ("Weather report — 'sunny'",
               "An absurdly perfect sunny sky, a big bright sun, perfect blue sky, fluffy clouds, over a calm sea.",
               None, "Comic snap for the weather gag (Q19)."),
     "BG-07": ("The storm",
               "A violent storm at sea, towering dark waves, driving rain, low black clouds lit from inside, deep "
-              "blue and steel grey (R10: deck removed).", "Rain falls, waves heave, clouds churn. No lightning.",
+              "blue and steel grey.", "Rain falls, waves heave, clouds churn. No lightning.",
               "Lightning comes from the Mantra (Q21, Q23, Q25) — never flashes in the video (R-04)."),
     "BG-08": ("The shore",
               "A quiet sandy cove at sunrise just after a storm, soft peach and pale gold sky, small waves, "
@@ -54,7 +53,7 @@ BACKDROPS = {  # id: (title, image prompt, motion prompt or None, note)
     "BG-10": ("Royal palace — great hall",
               "The grand hall of a seaside palace, tall arched windows over the sea, marble columns, red and gold "
               "drapes, warm afternoon sun.", "Curtains stir, sunlight shifts, sea sparkles.",
-              "Spare — replaced by BG-18 in R10."),
+              "Spare — BG-18 is used for the palace."),
     "BG-11": ("Jellyfish search",
               "A playful bright underwater scene, coral and kelp framing the edges, soft pink and cyan jellyfish "
               "drifting far in the background, bubbles, cheerful light.",
@@ -62,7 +61,7 @@ BACKDROPS = {  # id: (title, image prompt, motion prompt or None, note)
               "The real jellyfish is a performer — the video ones stay small and distant."),
     "BG-12": ("Octavia's lair (first version)",
               "A dark sea-witch's cave, jagged rock arches, eerie green glow from cracks, deep purple shadows.",
-              "Green glow pulses slowly, dark particles drift.", "Spare — replaced by BG-19 in R10."),
+              "Green glow pulses slowly, dark particles drift.", "Spare — BG-19 is used for the lair."),
     "BG-13": ("Back on dry land — palace terrace",
               "A sunny palace terrace above the sea, stone balustrade, potted flowers, bright blue sea and sky.",
               None, "Still. Comic armbands scene (Q59)."),
@@ -94,8 +93,7 @@ BACKDROPS = {  # id: (title, image prompt, motion prompt or None, note)
               "garlands, the blue sea beyond, soft golden light.",
               "Petals drift down slowly, garlands flutter, the sea sparkles.", "Scene Ten (script p 51)."),
     "BG-21": ("After the storm — clearing sky",
-              "Storm clouds breaking apart to a calm blue sky and a rainbow, the sea settling (R10: built from the "
-              "real BG-07 clouds clearing to the BG-05 sky).",
+              "Storm clouds breaking apart to a calm blue sky and a rainbow, the sea settling.",
               "Clouds drift apart, sunlight widens, the rainbow brightens slowly.",
               "Q27 — 'the cyclorama reverts to calm seas' (script p 22)."),
     "BG-22": ("Rock Lobster beach party",
@@ -111,7 +109,7 @@ BACKDROPS = {  # id: (title, image prompt, motion prompt or None, note)
     "BG-24": ("Potion storm",
               "Inside the sea-witch's cave, a swirling vortex of green and purple potion smoke rising from a "
               "cauldron, glowing jars on the shelves.", "Smoke swirls slowly upward, glow brightens and fades.",
-              "Spare — optional for the S8 build and climax (not in the R13.1 workspace)."),
+              "Spare — optional for the S8 build and climax (not in the workspace)."),
     "BG-25": ("Celebration — confetti and rainbow",
               "The palace gardens in full celebration, rainbow ribbons, confetti drifting, soft rainbow light, the "
               "sea glowing gold.", "Confetti falls slowly, ribbons wave, rainbow light shimmers.",
@@ -153,28 +151,26 @@ def cue_plan():
 
 def build(path):
     d = PartDoc(path, "I", "Projection Backgrounds",
-                "The 26 R10 backdrops, the R13.1 projection cue plan as wired into the workspace, the matching "
+                "The 26 backdrops, the projection cue plan as wired into the workspace, the matching "
                 "lighting for each picture, and the prompts behind them.")
     plan = cue_plan()
     used = sorted({os.path.basename(f).split("_")[0] for _, a, f in plan if f})
     d.add(title_block("PART I · %s · %s" % (REV, DATE), "Projection Backgrounds",
-                      "Backdrops R10, matched to the cyclorama calls in the April 2026 script and wired into "
+                      "The backdrops, matched to the cyclorama calls in the April 2026 script and wired into "
                       "TLM_Show_R13_1.qlab5."))
-    d.add(stats([(str(len(used)), "backdrops in the R13.1 cue plan"), ("26", "backdrop designs BG-01…BG-26"),
+    d.add(stats([(str(len(used)), "backdrops in the cue plan"), ("26", "backdrop designs BG-01…BG-26"),
                  (str(len([p for p in plan if p[1] == "in"])), "picture changes"),
                  (str(len([p for p in plan if p[1] == "black"])), "fades to black"),
                  ("15–16 s", "seamless loops, 1920×1080 HEVC")]))
-    d.add(box("new", "WHAT CHANGED SINCE R8",
-              ["R8 used 16 backgrounds under generic names (VID-01 … VID-08). R9–R10 made ten new backdrops "
-               "(BG-17 to BG-26), matched the ship scenes to the script (deck and rigging removed from BG-05 and "
-               "BG-07; BG-21 clears from the storm to calm seas) and rebuilt every loop as a seamless 15–16 s "
-               "HEVC file.",
-               "R13.1 plays them from the workspace itself: every picture change is a Video cue plus a 2-second "
+    d.add(box("rule", "HOW THE BACKDROPS PLAY",
+              ["26 backdrops (BG-01 to BG-26), matched to the script's cyclorama calls; every loop is a seamless "
+               "15–16 s HEVC file. BG-21 clears from the storm to calm seas.",
+               "They play from the workspace itself: every picture change is a Video cue plus a 2-second "
                "fade in/out inside the numbered cue group, so the picture always changes with the light and "
                "sound on the same GO. The files live in `media/video` and `media/stills` inside "
-               "TLM_R13_REBUILT_Show_Files and are found by relative path (R13.1 cleared the old R11 aliases)."]))
+               "TLM_R13_REBUILT_Show_Files and are found by relative path."]))
 
-    d.add(H1("1 Projection cue plan — R13.1"))
+    d.add(H1("1 Projection cue plan"))
     d.add(P("What is on the screen from cue to cue, read from the workspace. Each change is a 2 s crossfade; "
             "**black** fades the picture out and leaves the screen black (use the projector's AV-mute too). "
             "Loops run on infinite loop. The swatch shows the lighting QLab fires on the same GO."))
@@ -200,10 +196,10 @@ def build(path):
                          strip, light])
     d.add(table(["Cue", "Picture", "Media", "Moment", "Light", "Mantra look"], rows,
                 [12 * mm, 36 * mm, 46 * mm, 30 * mm, 26 * mm, 20 * mm]))
-    d.add(box("rule", "PROJECTION RULES IN R13",
+    d.add(box("rule", "PROJECTION RULES",
               ["No flashing is in any video: lightning and magic hits come from the Mantra (R-04). BG-09 runs "
                "under both the transformation (Q33) and the voice transfer (Q52).",
-               "R13 backlight and PixBars run hard. Keep them tilted downstage so the screen only sees the "
+               "The backlight and PixBars run hard. Keep them tilted downstage so the screen only sees the "
                "projector (R-25), and check washout with BG-02, BG-18 and BG-20 running.",
                "Emergency: QLab **E2 VID-99 BLACK** puts a black frame on the stage; the projector's AV-mute is "
                "the backup. If a video file fails, the matching still in `media/stills` is the fallback."]))
@@ -229,7 +225,7 @@ def build(path):
 
     d.add(H1("3 Script cyclorama calls — April 2026 script pages"))
     calls = [("p 8", "Busy coral reef with fish and sea creatures", "Q9", "BG-17 (after BG-22 for Rock Lobster at Q8)"),
-             ("p 19", "Blue sunny day on a gentle ocean", "Q18", "BG-05 (deck removed in R10)"),
+             ("p 19", "Blue sunny day on a gentle ocean", "Q18", "BG-05"),
              ("p 21", "Dark and stormy with lightning", "Q20", "BG-07; lightning from the Mantra"),
              ("p 22", "Cyclorama reverts to calm seas", "Q27", "BG-21 clearing sky"),
              ("p 27", "Underwater scene", "Q31", "BG-02 loop B"),
@@ -237,7 +233,7 @@ def build(path):
              ("p 41", "Under the sea (curtains slowly open)", "Q45–45.5", "BG-11 jellyfish"),
              ("p 43", "Dark dingy cave, fish bones and weird jars", "Q50", "BG-19; BG-09 magic at Q52"),
              ("p 51", "Outdoors at the royal palace, wedding flowers", "Q60", "BG-20; BG-25 confetti at Q63")]
-    d.add(table(["Page", "Script calls for", "Cue", "R13.1 media"], [list(c) for c in calls],
+    d.add(table(["Page", "Script calls for", "Cue", "Media"], [list(c) for c in calls],
                 [14 * mm, 70 * mm, 20 * mm, 66 * mm]))
     d.add(P("Scenes Two, Four and Nine are played in front of the tabs: their pictures (BG-03, BG-08, BG-13) are "
             "only seen if the tabs are open or a gauze is used — decide at the tech (To Find & Confirm)."))
@@ -248,8 +244,8 @@ def build(path):
         "Pick the best version; upscale to at least 1920×1080 (the Epson's native resolution — check the label).",
         "For loops: load the approved still into an image-to-video tool with the motion prompt; make 5–10 s clips.",
         "Make it loop: join clips and cross-dissolve the end into the start (or ping-pong water and particles). "
-        "R10 loops are 15–16 s.",
-        "Export 1920×1080, 24–30 fps, no audio, H.264/HEVC. **Keep the same file name** so the R13.1 cue picks it up.",
+        "The show loops are 15–16 s.",
+        "Export 1920×1080, 24–30 fps, no audio, H.264/HEVC. **Keep the same file name** so its cue picks it up.",
         "Copy it into `TLM_R13_REBUILT_Show_Files/media/video` (or `stills`), replacing the old file, then test on "
         "the real projector with the stage lights on."]))
     d.add(box("rule", "RULES FOR EVERY BACKGROUND",

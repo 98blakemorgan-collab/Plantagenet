@@ -22,18 +22,19 @@ DATE = "28 September 2026"
 SHORTDATE = "28 Sep 2026"
 BOOK = "THE LITTLE MERMAID · PRODUCTION BOOK " + REV
 
-INK = colors.HexColor("#1b2430")
-MUTED = colors.HexColor("#5b6675")
+INK = colors.black  # all text prints from black ink only
+MUTED = colors.HexColor("#555555")
 RULE = colors.HexColor("#b9c2cc")
 NAVY = colors.HexColor("#123a5a")
 TEAL = colors.HexColor("#0f6e68")
 CORAL = colors.HexColor("#b4441c")
-TINT = colors.HexColor("#fde7d9")
-SONG = colors.HexColor("#e6f0fa")
-AUTO = colors.HexColor("#eef5e8")
-PALE = colors.HexColor("#f3f6f9")
+# print-friendly: row tints are pale enough to cost little ink; headers, boxes and tiles are rules, not fills
+TINT = colors.HexColor("#fdf1ea")
+SONG = colors.HexColor("#f0f6fc")
+AUTO = colors.HexColor("#f4f9f0")
+PALE = colors.HexColor("#f7f9fb")
 BOXFILL = {"rec": colors.HexColor("#e7f4f2"), "verify": colors.HexColor("#fbece5"),
-           "rule": colors.HexColor("#e9eef4"), "new": colors.HexColor("#fff6d6")}
+           "rule": colors.HexColor("#e9eef4"), "new": colors.HexColor("#fffbea")}
 BOXLINE = {"rec": TEAL, "verify": CORAL, "rule": NAVY, "new": colors.HexColor("#b08900")}
 
 # --------------------------------------------------------------------------
@@ -81,20 +82,20 @@ S = {
     "small": _ps("small", fontSize=7.6, leading=9.6),
     "cell": _ps("cell", fontSize=7.8, leading=9.8),
     "cellb": _ps("cellb", fontSize=7.8, leading=9.8, fontName="Helvetica-Bold"),
-    "head": _ps("head", fontSize=7.8, leading=9.8, fontName="Helvetica-Bold", textColor=colors.white),
+    "head": _ps("head", fontSize=7.8, leading=9.8, fontName="Helvetica-Bold", textColor=INK),
     "muted": _ps("muted", fontSize=8, leading=10.5, textColor=MUTED),
-    "h1": _ps("h1", fontName="Helvetica-Bold", fontSize=15, leading=19, textColor=NAVY,
+    "h1": _ps("h1", fontName="Helvetica-Bold", fontSize=15, leading=19, textColor=INK,
               spaceBefore=4, spaceAfter=6),
-    "h2": _ps("h2", fontName="Helvetica-Bold", fontSize=11, leading=14, textColor=NAVY,
+    "h2": _ps("h2", fontName="Helvetica-Bold", fontSize=11, leading=14, textColor=INK,
               spaceBefore=8, spaceAfter=4),
     "h3": _ps("h3", fontName="Helvetica-Bold", fontSize=9.5, leading=12, textColor=INK,
               spaceBefore=6, spaceAfter=2),
-    "title": _ps("title", fontName="Helvetica-Bold", fontSize=24, leading=29, textColor=NAVY),
+    "title": _ps("title", fontName="Helvetica-Bold", fontSize=24, leading=29, textColor=INK),
     "sub": _ps("sub", fontSize=11, leading=15, textColor=MUTED),
     "boxt": _ps("boxt", fontName="Helvetica-Bold", fontSize=8.4, leading=11),
     "boxb": _ps("boxb", fontSize=8.4, leading=11),
     "divletter": _ps("divletter", fontName="Helvetica-Bold", fontSize=120, leading=130,
-                     textColor=NAVY, alignment=TA_CENTER),
+                     textColor=colors.HexColor("#c9d3de"), alignment=TA_CENTER),
     "divtitle": _ps("divtitle", fontName="Helvetica-Bold", fontSize=22, leading=28,
                     textColor=INK, alignment=TA_CENTER),
     "divsub": _ps("divsub", fontSize=11, leading=15, textColor=MUTED, alignment=TA_CENTER),
@@ -157,7 +158,7 @@ def table(header, rows, widths, tints=(), bold_first=False, total=170 * mm, repe
             ("TOPPADDING", (0, 0), (-1, -1), 1.8), ("BOTTOMPADDING", (0, 0), (-1, -1), 1.8),
             ("LEFTPADDING", (0, 0), (-1, -1), 3), ("RIGHTPADDING", (0, 0), (-1, -1), 3)]
     if header:
-        cmds.append(("BACKGROUND", (0, 0), (-1, 0), NAVY))
+        cmds += [("LINEABOVE", (0, 0), (-1, 0), 0.8, INK), ("LINEBELOW", (0, 0), (-1, 0), 1.0, INK)]
     for i, kind in tints:
         c = {"crit": TINT, "song": SONG, "auto": AUTO, "pale": PALE, "new": BOXFILL["new"]}[kind]
         cmds.append(("BACKGROUND", (0, i + off), (-1, i + off), c))
@@ -167,13 +168,13 @@ def table(header, rows, widths, tints=(), bold_first=False, total=170 * mm, repe
 
 def box(kind, title, text, width=170 * mm):
     """kind: rec (teal recommendation), verify (coral safety/verify), rule (navy
-    operating rule), new (yellow: changed in R13.1)."""
-    body = [Paragraph(md(title), ParagraphStyle("bt", parent=S["boxt"], textColor=BOXLINE[kind]))]
+    operating rule), new (yellow: action needed)."""
+    body = [Paragraph(md(title), ParagraphStyle("bt", parent=S["boxt"], textColor=INK))]
     for para in (text if isinstance(text, list) else [text]):
         body.append(Paragraph(md(para), S["boxb"]))
     t = Table([[body]], colWidths=[width])
-    t.setStyle(TableStyle([("BACKGROUND", (0, 0), (-1, -1), BOXFILL[kind]),
-                           ("LINEBEFORE", (0, 0), (0, -1), 3, BOXLINE[kind]),
+    t.setStyle(TableStyle([("BOX", (0, 0), (-1, -1), 0.4, BOXLINE[kind]),
+                           ("LINEBEFORE", (0, 0), (0, -1), 2.5, BOXLINE[kind]),
                            ("LEFTPADDING", (0, 0), (-1, -1), 7), ("RIGHTPADDING", (0, 0), (-1, -1), 6),
                            ("TOPPADDING", (0, 0), (-1, -1), 4), ("BOTTOMPADDING", (0, 0), (-1, -1), 5)]))
     return KeepTogether([Spacer(0, 2), t, Spacer(0, 4)])
@@ -191,11 +192,11 @@ def stats(items, width=170 * mm):
     """Row of big-number tiles: [(value, label), ...]."""
     n = len(items)
     cells = [[Paragraph('<font size="17"><b>%s</b></font>' % esc(v), ParagraphStyle(
-        "sv", parent=S["body"], textColor=NAVY, leading=20)),
+        "sv", parent=S["body"], textColor=INK, leading=20)),
         Paragraph(md(l), S["small"])] for v, l in items]
     t = Table([cells], colWidths=[width / n] * n)
-    t.setStyle(TableStyle([("BACKGROUND", (0, 0), (-1, -1), PALE),
-                           ("LINEAFTER", (0, 0), (-2, -1), 2, colors.white),
+    t.setStyle(TableStyle([("LINEABOVE", (0, 0), (-1, 0), 1.2, NAVY),
+                           ("LINEAFTER", (0, 0), (-2, -1), 0.4, RULE),
                            ("VALIGN", (0, 0), (-1, -1), "TOP"),
                            ("TOPPADDING", (0, 0), (-1, -1), 5), ("BOTTOMPADDING", (0, 0), (-1, -1), 6)]))
     return KeepTogether([t, Spacer(0, 6)])
@@ -242,7 +243,7 @@ class PartDoc:
         canv.setLineWidth(0.6)
         canv.line(20 * mm, h - 13 * mm, w - 20 * mm, h - 13 * mm)
         canv.setFont("Helvetica-Bold", 7)
-        canv.setFillColor(NAVY)
+        canv.setFillColor(INK)
         canv.drawString(20 * mm, h - 11.5 * mm, self.header_left)
         canv.setFont("Helvetica", 7)
         right = ("PART %s · %s" % (self.letter, self.title)) if self.letter else self.title
@@ -268,7 +269,7 @@ class PartDoc:
 
 
 def title_block(kicker, title, sub):
-    return [Paragraph(md(kicker), ParagraphStyle("k", parent=S["muted"], textColor=TEAL,
+    return [Paragraph(md(kicker), ParagraphStyle("k", parent=S["muted"], textColor=INK,
                                                    fontName="Helvetica-Bold")),
             Spacer(0, 2), Paragraph(md(title), S["title"]), Spacer(0, 3),
             Paragraph(md(sub), S["sub"]), Spacer(0, 8)]
@@ -288,14 +289,14 @@ GROUP_SHORT = {"FOH": "Face", "LX1": "Top", "SIDE": "Side", "BACK": "Back", "PIX
 
 
 def _hexcol(h, level):
-    """Colour shown at its level: darker for lower intensity (black = off)."""
+    """Colour shown at its level, printer-friendly: paler for lower intensity (blank = off)."""
     r, g, b = (int(h[i:i + 2], 16) / 255 for i in (0, 2, 4))
-    k = 0.25 + 0.75 * level / 100
-    return colors.Color(r * k, g * k, b * k)
+    k = 0.3 + 0.55 * level / 100
+    return colors.Color(1 - k + r * k, 1 - k + g * k, 1 - k + b * k)
 
 
 def swatch_strip(summary, cell=9 * mm, h=5.2 * mm, labels=False):
-    """One small block per layer: colour at its level; black = off."""
+    """One small block per layer: colour at its level; outlined blank = off."""
     n = len(GROUP_ORDER)
     d = Drawing(cell * n, h + (7 if labels else 0))
     for i, g in enumerate(GROUP_ORDER):
@@ -307,7 +308,7 @@ def swatch_strip(summary, cell=9 * mm, h=5.2 * mm, labels=False):
             for j, (hx, _) in enumerate(parts):
                 d.add(Rect(x + j * w, 0, w, h, fillColor=_hexcol(hx, lv), strokeColor=None))
         else:
-            d.add(Rect(x, 0, cell - 1, h, fillColor=colors.black, strokeColor=None))
+            d.add(Rect(x + 0.3, 0.3, cell - 1.6, h - 0.6, fillColor=None, strokeColor=RULE, strokeWidth=0.5))
         if labels:
             d.add(String(x + (cell - 1) / 2, h + 1.5, GROUP_SHORT[g], fontName="Helvetica",
                          fontSize=5.5, fillColor=MUTED, textAnchor="middle"))
@@ -315,9 +316,9 @@ def swatch_strip(summary, cell=9 * mm, h=5.2 * mm, labels=False):
 
 
 def swatch_legend():
-    return P("Swatch order: **Face** (FOH #1–6) · **Top** (LX1 #13–18) · **Side** (booms) · **Back** "
-             "(LX2 COB) · **Pix** (PixBars) · **Spec** (specials). Colour as programmed in the R13.1 show "
-             "file, darker = lower level, black = off.", "muted")
+    return P("Swatch order: **Face** (FOH #1, 4, 5, 8, 9, 12) · **Top** (LX1 #13–18) · **Side** (booms) · **Back** "
+             "(LX2 COB) · **Pix** (PixBars) · **Spec** (specials). Colour as programmed in the show "
+             "file, paler = lower level, blank outline = off.", "muted")
 
 
 def picture(path, width, height=None):
@@ -347,8 +348,10 @@ def section_strip(summaries, width, h=4.2 * mm):
     for summ in summaries:
         for g in GROUP_ORDER:
             lv, cols = summ.get(g, (0, []))
-            col = _hexcol(cols[0][0], lv) if (lv and cols) else colors.black
-            d.add(Rect(x, 0, cell, h, fillColor=col, strokeColor=None))
+            if lv and cols:
+                d.add(Rect(x, 0, cell, h, fillColor=_hexcol(cols[0][0], lv), strokeColor=None))
+            else:
+                d.add(Rect(x + 0.2, 0.2, cell - 0.4, h - 0.4, fillColor=None, strokeColor=RULE, strokeWidth=0.3))
             x += cell
         x += gap
     return d

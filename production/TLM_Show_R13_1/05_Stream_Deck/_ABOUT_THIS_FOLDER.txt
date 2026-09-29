@@ -1,1 +1,1 @@
-TLM QLab Show.streamDeckProfile - unchanged in R13.1. Hotkeys: see Part L.
+TLM QLab Show.streamDeckProfile. Hotkeys: see Part L.

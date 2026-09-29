@@ -1,4 +1,4 @@
-"""DSM calls placed on the licensed script (from Part G R8, script-locked), updated for R13.1.
+"""DSM calls placed on the licensed script.
 
 Each scene: (title, pages, [(cue, standby page, standby line, GO page, GO line, depts, what happens, note)])
 """
@@ -94,7 +94,7 @@ SCENES = [
         ("55", "44", "“Oh no, you're not getting the voice either.”", "44", "THEO: “…Her Majesty's Most Loyal Hermit…”", "QLAB", "Spot moves to THEODORE", ""),
         ("56", "44", "“Now you've got Ariel's voice!”", "44", "“…I didn't mean to get it.”", "QLAB", "Spot moves to MARINA", "Marina gets a man's voice (offstage)"),
         ("57", "44", "“Whose voice is it?”", "45", "THEO: “Give it to me!”", "QLAB FX", "Lights go haywire (HAYWIRE chase); magic sequence; HZ-09", ""),
-        ("57b", "45", "with Q57", "45", "ARIEL enters — voice restored (visual)", "QLAB", "Restore hit, HAYWIRE off, SP1 on Ariel; restore SFX", "NEW in R13.1"),
+        ("57b", "45", "with Q57", "45", "ARIEL enters — voice restored (visual)", "QLAB", "Restore hit, HAYWIRE off, SP1 on Ariel; restore SFX", ""),
         ("58", "46", "“No, but this lot will!”", "46", "DAME: “Run!”", "QLAB FX", "Water-pistol cross-fire; chase music; everyone exits", "See R-23"),
         ("58.5", "46", "with Q58", "46", "Stage clear (visual)", "LX QLAB DECK", "TABS CLOSE — end Scene Eight", ""),
     ]),
@@ -119,13 +119,13 @@ SCENES = [
 
 
 # --------------------------------------------------------------------------
-# Page numbers from the licensed script as supplied (production/private, not in git)
+# Page numbers from the licensed script as supplied (production/script_source)
 # --------------------------------------------------------------------------
 import os as _os
 import re as _re
 import json as _json
 
-_SCRIPT = _os.path.join(_os.path.dirname(_os.path.abspath(__file__)), "..", "..", "production", "private",
+_SCRIPT = _os.path.join(_os.path.dirname(_os.path.abspath(__file__)), "..", "..", "production", "script_source",
                         "script_pages.txt")
 SCRIPT_PAGES = {}
 if _os.path.exists(_SCRIPT):
@@ -176,7 +176,7 @@ def _resolve():
 
 
 # Resolved (standby page, GO page) per cue. Page numbers only, so it is safe to commit; rebuilt from the
-# private script render when that is present, otherwise read back so the public repo builds the same pages.
+# script render when that is present, otherwise read back so a checkout without it builds the same pages.
 _FROZEN = _os.path.join(_os.path.dirname(__file__), "script_page_numbers.json")
 if SCRIPT_PAGES:
     SCENES = _resolve()

@@ -6,17 +6,18 @@ from part_d import PAGEMAP
 
 def card1():
     return [P("1 Rig layout", "h1"),
-            P("One FOH truss, two stage bars (LX1, LX2) and a floor boom in each wing. Projector centre stage towards the back, "
+            P("One FOH bar (C42s fixed), two stage bars (LX1, LX2) and a floor boom in each wing. Projector at LX1 centre, "
               "throwing upstage onto the screen.", "muted"),
             table(["Position", "Fixtures (desk numbers)", "Qty"], [
-                ["FOH truss", "8 × Lightsky C42 #1–8 (#1–6 faces, #7 SP1 Ariel, #8 SP2 Spirit)", "8"],
-                ["LX1 — downstage bar", "4 × C42 #9–12 (SP3 Octavia, SP4 Shell, V1 Dame, V2 Flanders) · 6 × Zoom #13–18 colour wash", "10"],
+                ["FOH bar (fixed)", "12 × Lightsky C42 #1–12 in number order from the SR end, cannot be moved · faces #1+4, "
+                 "#5+8, #9+12 · SP2 #2, V1 #3, SP1 #6, V2 #7, SP4 #10, SP3 #11", "12"],
+                ["LX1 — downstage bar", "6 × Zoom #13–18 colour wash", "6"],
                 ["LX2 — upstage bar", "2 × Zoom #19–20 (V3 Theodore, V4 Marina) · 7 × TourCOB #23–28, 39 · 6 × PixBar #33–38", "15"],
                 ["SR floor boom", "Zoom #21 high · TourCOB #29 mid, #30 shin", "3"],
                 ["SL floor boom", "Zoom #22 high · TourCOB #31 mid, #32 shin", "3"],
-                ["Floor, upstage", "Hazer #40", "1"], ["Optional", "Pinspots #41–42 on the FOH truss ends (mirror ball only)", "(2)"]],
+                ["Floor, upstage", "Hazer #40", "1"], ["Optional", "Pinspots #41–42 on the FOH bar ends (mirror ball only)", "(2)"]],
                 [36 * mm, 120 * mm, 14 * mm], bold_first=True),
-            box("rule", "THE RULES", "Faces come from FOH (C42 #1–6). LX1 = colour top wash. LX2 = backlight + PixBars, focused "
+            box("rule", "THE RULES", "Faces come from FOH (C42 cross pairs #1+4, #5+8, #9+12; the C42s are fixed, focus only). LX1 = colour top wash. LX2 = backlight + PixBars, focused "
                 "downstage and never onto the screen (R-25). Booms = side colour across the stage (R-26). Every fixture keeps its "
                 "desk number and address wherever it hangs. Proposed wet zone mid-stage audience-left — confirm at the site walk.")]
 
@@ -34,7 +35,7 @@ def card2():
                 ["P5 M5 HAYWIRE", "QLab starts it at Q57 and stops it at Q57b"],
                 ["P5 M6 JELLY PULSE", "Bump for extra Q47 repeats"],
                 ["O · A then L · T then S", "All Cues Off · Clear All · Save"]], [52 * mm, 118 * mm], bold_first=True),
-            box("new", "NO LINK TIMES", "R8 needed six link times typed into P2 M1. R13.1 needs none: QLab fires every flash return "
+            box("rule", "NO LINK TIMES", "No link times are set on the desk: QLab fires every flash return "
                 "(Q21, Q23, Q25 +0.2 s · Q35 +0.3 s · Q47 +1 s · Q57b +0.3 s) and releases each memory as it leaves it.")]
 
 
@@ -47,7 +48,7 @@ def card3():
                   [12 * mm, 30 * mm, 128 * mm]),
             table(["Item", "Setting"], [["Desk", "2.0.0.1 / 255.0.0.0, DHCP off · Art-Net + sACN on (turn off the unused one)"],
                                         ["U1 route", "Desk XLR → LX1 → LX2 → SR boom → SL boom → hazer · terminate"],
-                                        ["U2 route", "Desk Ethernet → switch → node 2.0.0.10 → FOH C42 #1–8 → LX1 #9–12 · terminate"],
+                                        ["U2 route", "Desk Ethernet → switch → node 2.0.0.10 → FOH C42 #1–12 · terminate"],
                                         ["Node", "sACN universe 2, or Art-Net 0-0-1"],
                                         ["QLab → desk", "OSC Play Memory, UDP 2.0.0.1 port 8000 (add the trigger on the desk)"]],
                   [30 * mm, 140 * mm], bold_first=True),
@@ -63,9 +64,9 @@ def card4():
     lt.setStyle(TableStyle([("VALIGN", (0, 0), (-1, -1), "TOP"), ("LEFTPADDING", (0, 0), (-1, -1), 0)]))
     return [P("4 Specials, looks and critical sequences", "h1"),
             table(["Special", "Character", "Fixture", "Mark"], [
-                ["SP1", "Ariel", "#7 C42 FOH", "DSC"], ["SP2", "Spirit", "#8 C42 FOH", "DS audience-left"],
-                ["SP3", "Octavia", "#9 C42 LX1", "US audience-right"], ["SP4", "Shell", "#10 C42 LX1", "Plinth"],
-                ["V1–V2", "Dame, Flanders", "#11–12 C42 LX1", "Voice marks 1–2"], ["V3–V4", "Theodore, Marina", "#19–20 Zoom 13° LX2", "Voice marks 3–4"]],
+                ["SP1", "Ariel", "#6 C42 FOH", "DSC"], ["SP2", "Spirit", "#2 C42 FOH", "DS audience-left"],
+                ["SP3", "Octavia", "#11 C42 FOH", "US audience-right"], ["SP4", "Shell", "#10 C42 FOH", "Plinth"],
+                ["V1–V2", "Dame, Flanders", "#3, #7 C42 FOH", "Voice marks 1–2"], ["V3–V4", "Theodore, Marina", "#19–20 Zoom 13° LX2", "Voice marks 3–4"]],
                 [18 * mm, 34 * mm, 44 * mm, 74 * mm], bold_first=True),
             lt,
             table(["Sequence", "Cues", "Desk", "Note"], [
@@ -103,7 +104,7 @@ def card6():
             P("**3 Mantra**"), *steps(["Tools › Export Show (venue backup).",
                                       "Tools › Import Show › %s. Check P2 Act One, P3 Act Two, P4 songs, P5 FX, P8 backup." % S_.MTR_NAME,
                                       "Tools › Setup › Remote Triggers › Add › OSC · Play Memory · port 8000. Turn off Art-Net or sACN (whichever the node doesn't use).",
-                                      "Save (T S) and set as Default Show. **No link times needed in R13.1.**"]),
+                                      "Save (T S) and set as Default Show. **No link times needed.**"]),
             P("**4 QLab Mac**"), *steps(["Harden the Mac (R-07); install QLab 5 and the licence.",
                                         "Put %s on the Desktop (exact name). Open %s." % (S_.FOLDER, S_.QLAB_NAME),
                                         "Workspace Settings: Audio → StudioLive USB · Video Stage 1 → projector · Network MANTRA → Ethernet interface. Save.",
@@ -140,7 +141,7 @@ CARDS = [card1, card2, card3, card4, card5, card6, card7]
 def build(path):
     d = PartDoc(path, "K", "Quick Reference Cards",
                 "Seven one-page cards: rig layout, desk layout, DMX and network, specials and looks, system connections, "
-                "first-time setup, and session start-up and shut-down — for R13.1.")
+                "first-time setup, and session start-up and shut-down.")
     for i, c in enumerate(CARDS):
         d.add(c())
         if i < len(CARDS) - 1:

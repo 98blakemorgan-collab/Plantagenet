@@ -4,7 +4,7 @@ THE SHOW FOLDER: package/TLM_R13_REBUILT_Show_Files  (copy it to the show Mac's 
   TLM_Show_R13_1.qlab5   479 cues: 83 master cue groups, songs S1-S10 (66 section GOs), E1-E3 emergency
   media/audio, media/video, media/stills   80 files listed in R13_MEDIA_MANIFEST.csv
   R13_MANTRA_SECTION_MAP.csv              every Mantra target QLab fires
-  R13_1_QLAB_AND_DESK_FIX_LIST.csv        what R13.1 changed, what is still to do
+  R13_1_QLAB_AND_DESK_FIX_LIST.csv        show-control fixes, what is still to do
 
 STEPS (Part E and the Quick Guide, card 6)
 1. Run package/ASSEMBLE_R13_1.command on the Mac - it unpacks the Drive zips into the show folder.
@@ -18,5 +18,4 @@ STEPS (Part E and the Quick Guide, card 6)
 
 TLM_QLab_cue_list.csv   the 83 master cues and 10 songs as a spreadsheet, with script pages (April 2026 script)
 
-The R8/R11 AppleScripts (Build_TLM_QLab_Workspace, Tech_Test_Run, Relink_Media) were written for the old single-list
-workspace and are not needed for R13.1 - the workspace is already built. See Part L for the R13.1 tech test run.
+The workspace is already built - no scripts are needed. See Part L for the tech test run.

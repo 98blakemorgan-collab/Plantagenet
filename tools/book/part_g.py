@@ -3,13 +3,13 @@ from core import *  # noqa: F401,F403
 import show as S_
 from calls import SCENES
 
-STBY = colors.HexColor("#fff3d6")
-GO = colors.HexColor("#e3f3e3")
+STBY = colors.HexColor("#fff9ec")
+GO = colors.HexColor("#f1f9f1")
 
 
 def scene_table(cues):
     data = [[Paragraph(md(h), S["head"]) for h in ("Q", "Page", "Standby at / GO on", "DSM calls", "Depts", "What happens")]]
-    cmds = [("BACKGROUND", (0, 0), (-1, 0), NAVY), ("VALIGN", (0, 0), (-1, -1), "TOP"),
+    cmds = [("LINEABOVE", (0, 0), (-1, 0), 0.8, INK), ("LINEBELOW", (0, 0), (-1, 0), 1.0, INK), ("VALIGN", (0, 0), (-1, -1), "TOP"),
             ("LINEBELOW", (0, 0), (-1, -1), 0.3, RULE), ("TOPPADDING", (0, 0), (-1, -1), 1.6),
             ("BOTTOMPADDING", (0, 0), (-1, -1), 1.6), ("LEFTPADDING", (0, 0), (-1, -1), 3)]
     for q, sp, sl, gp, gl, depts, what, note in cues:
@@ -54,14 +54,14 @@ def build(path):
         ["Coral edge", "Critical cue: flash, storm, water or transformation."],
         ["Pages", "Pages of the licensed script as supplied (Nick Lawrence Pantomimes, revised April 2026, 55 pp, “Page N of 55” footer). If your printed copy paginates differently, call on the words."]],
         [24 * mm, 146 * mm], bold_first=True))
-    d.add(box("new", "R13.1 CHANGES TO THE CALLS",
-              ["**New cue Q57b** — restore Ariel: called on Ariel's entrance after the haywire (Q57). It fires the white "
+    d.add(box("rule", "CALLS TO KNOW",
+              ["**Q57b** — restore Ariel: called on Ariel's entrance after the haywire (Q57). It fires the white "
                "restore hit, stops the HAYWIRE chase and puts SP1 on Ariel.",
                "**Flash returns are automatic** (Q21, Q23, Q25, Q35, Q47, Q57b): call one GO per flash; the light comes "
                "back by itself.",
                "**Songs** each have section GOs (S1.2, S1.3 …). Agree at the paper tech whether the DSM calls them or "
                "the QLab operator takes them to the music.",
-               "**Fades:** songs now fade and stop on the next scene cue (Q9, Q15, Q15.5, Q19, Q41, Q52) — no separate call."]))
+               "**Fades:** songs fade and stop on the next scene cue (Q9, Q15, Q15.5, Q19, Q41, Q52) — no separate call."]))
     d.add(box("rule", "ONE OPERATOR", "Call “Standby QLab 20” … “QLab 20 — GO” to the show operator, who presses GO; "
               "QLab fires the Mantra cue with the sound and video. If QLab fails the operator runs lighting from the "
               "matching Mantra scene memory (P2 Act One / P3 Act Two / P4 songs)."))
@@ -111,7 +111,7 @@ def build(path):
         ["Water or haze unsafe", "“FX, stop.” Continue the dry version."]],
         [40 * mm, 130 * mm], bold_first=True))
 
-    d.add(H1("4 Script findings (kept from R8)"))
+    d.add(H1("4 Script findings"))
     d.add(bullets(["The contents page lists “Scene Eleven: On the Shore” but there is no Scene Eleven in the text: Scene Ten (pp 51–54) runs straight to Scene Twelve (p 55).",
                    "The contents list a Scene Five song (p 33) that isn’t in the text.",
                    "Octavia's palace entrance (p 36) comes before the cue cards (p 37), so cues 42 and 43 stay swapped.",

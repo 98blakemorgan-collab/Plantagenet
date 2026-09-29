@@ -3,8 +3,8 @@
 Writes production/TLM_Show_R13_1/, mirroring the TLM_Show 2 folder on Drive (00_START_HERE, 01_Production_Book with
 Sections, 02_QLab ... 99_Show_Backups), and refreshes the printouts in package/TLM_R13_REBUILT_Show_Files/docs.
 
-Part J (prompt copy) contains the licensed script. It is built only when production/private/ holds the script render,
-and it is written to production/private/ — never into the public tree.
+Part J (prompt copy) is built from the licensed script render in production/script_source/. Licensed material: keep
+this repository private.
 """
 import csv
 import os
@@ -22,11 +22,12 @@ import calls  # noqa: E402
 import show as S_  # noqa: E402
 from core import REV, DATE  # noqa: E402
 import make_printouts as mp  # noqa: E402  (tools/ is on sys.path via show)
+import lighting_plot  # noqa: E402
+import backdrop_sheets  # noqa: E402
 import part_00, part_a, part_b, part_c, part_d, part_e, part_g, part_h, part_i, part_j, part_k, part_l  # noqa: E402
 import to_find  # noqa: E402
 
 OUT = os.path.join(ROOT, "production", "TLM_Show_R13_1")
-PRIVATE = os.path.join(ROOT, "production", "private")
 PKG = os.path.join(ROOT, "package", "TLM_R13_REBUILT_Show_Files")
 BOOK = os.path.join(OUT, "01_Production_Book")
 SECT = os.path.join(BOOK, "Sections")
@@ -35,6 +36,7 @@ TAG = "TLM_R13_1"
 PARTS = [  # letter, title, file stem
     ("A", "Master Technical Production Manual", "A_Master_Technical_Production_Manual"),
     ("B", "Lighting Design", "B_Lighting_Design"),
+    ("B2", "Stage Lighting Layout Plan (A3)", "B2_Stage_Lighting_Layout_Plan"),
     ("C", "DMX Patch and Step-by-Step Guide", "C_DMX_Patch_and_Step_by_Step_Guide"),
     ("D", "Mantra Editor on Mac Programming Guide", "D_Mantra_Editor_on_Mac_Programming_Guide"),
     ("E", "QLab 5 Programming Guide", "E_QLab_5_Programming_Guide"),
@@ -42,29 +44,32 @@ PARTS = [  # letter, title, file stem
     ("G", "DSM Calling Script", "G_DSM_Calling_Script"),
     ("H", "Props List and Preset Sheets", "H_Props_List_and_Preset_Sheets"),
     ("I", "Projection Backgrounds", "I_Projection_Backgrounds"),
+    ("I2", "Backdrop Sheets (one page per backdrop)", "I2_Backdrop_Sheets"),
     ("J", "Prompt Copy (Licensed Script)", "J_Prompt_Copy_Licensed_Script"),
     ("K", "Quick Reference Cards", "K_Quick_Reference_Cards"),
     ("L", "Stream Deck and Tech Test Run", "L_Stream_Deck_and_Tech_Test_Run"),
 ]
-BUILDERS = {"A": part_a.build, "B": part_b.build, "C": part_c.build, "D": part_d.build, "E": part_e.build,
+# Parts kept out of the merged book to save printer ink (image-heavy); they stay as their own PDFs in Sections.
+SEPARATE = {"I2"}
+BUILDERS = {"A": part_a.build, "B": part_b.build, "B2": lighting_plot.build, "I2": backdrop_sheets.build, "C": part_c.build, "D": part_d.build, "E": part_e.build,
             "G": part_g.build, "H": part_h.build, "I": part_i.build, "K": part_k.build, "L": part_l.build}
 
 ABOUT = {
     "01_Production_Book": "The R13.1 production book: the complete book, one PDF per part in Sections, the quick guide and the to-find list.",
-    "01_Production_Book/Sections": "One PDF per part of the book (00 cover, A-L). Part J reproduces the licensed script: keep it private (it is left out of the public repository copy).",
+    "01_Production_Book/Sections": "One PDF per part of the book (00 cover, A-L). Part J reproduces the licensed script: production use only.",
     "01_Production_Book/Cue_Sheets_Printed": "Scans or photos of the marked-up printed cue sheets from tech and each show.",
-    "02_QLab": "QLab: README, the R13.1 cue list as a spreadsheet. The show folder itself is package/TLM_R13_REBUILT_Show_Files.",
-    "03_Lighting_Mantra": "Mantra: memory map, section map, labels. The R13.1 show file is in package/TLM_R13_REBUILT_Show_Files.",
+    "02_QLab": "QLab: README, the R13.1 cue list as a spreadsheet. The show folder itself is package/TLM_R13_REBUILT_Show_Files (also holds BASE_SHOW_2026.qlab5, the QLab base for the Mantra venue base).",
+    "03_Lighting_Mantra": "Mantra: memory map, section map, labels (show + base), base link map. The R13.1 show file and the venue base BASE_SHOW_2026.mtr are in package/TLM_R13_REBUILT_Show_Files.",
     "03_Lighting_Mantra/Backups": "Dated Mantra exports (Tools > Export Show) from the desk: YYYY-MM-DD_TLM_R13_1.mtr",
-    "04_Sound_StudioLive": "StudioLive scene notes and template (TLM_StudioLive_SIII16_Show_Template.xlsx, unchanged from R8).",
+    "04_Sound_StudioLive": "StudioLive scene notes and template (TLM_StudioLive_SIII16_Show_Template.xlsx).",
     "04_Sound_StudioLive/Backups": "StudioLive scene backups.",
-    "05_Stream_Deck": "TLM QLab Show.streamDeckProfile - unchanged in R13.1. Hotkeys: see Part L.",
+    "05_Stream_Deck": "TLM QLab Show.streamDeckProfile. Hotkeys: see Part L.",
     "06_Projection_Source": "Projection source material: originals, rejects and the rights/prompt log. Not used in the show.",
-    "06_Projection_Source/Generated_Originals": "Full-resolution AI originals of the R10 backdrops before export.",
+    "06_Projection_Source/Generated_Originals": "Full-resolution AI originals of the backdrops before export.",
     "06_Projection_Source/Rejects": "Rejected generations.",
-    "06_Projection_Source/Rights_Log": "How each backdrop was made: R10_Backdrop_Prompt_Log.csv (tool, prompts, date).",
+    "06_Projection_Source/Rights_Log": "How each backdrop was made: Backdrop_Prompt_Log.csv (tool, prompts, date).",
     "07_Rehearsal_and_Tech_Notes": "Rehearsal reports, tech notes, show reports (Part A appendices).",
-    "08_Venue_and_Rig": "Venue plans, rig photos, site-walk notes, power and rigging confirmations.",
+    "08_Venue_and_Rig": "Venue plans, rig photos, site-walk notes, power and rigging confirmations. The stage lighting layout plan is here and in Sections (B2).",
     "99_Show_Backups": "Whole-folder backups: copy the show folder here after each session, dated.",
 }
 
@@ -89,18 +94,6 @@ def cue_sheets(out_dir):
     mems = mp.load_mtr()
     _, by_pmc = mp.load_map()
     return mp.build_cue_sheets(groups, by_pmc, mems), mp.build_labels(mems)
-
-
-def j_placeholder(path):
-    doc = pymupdf.open()
-    pg = doc.new_page(width=595, height=842)
-    pg.insert_textbox(pymupdf.Rect(60, 300, 535, 600),
-                      "PART J · PROMPT COPY (LICENSED SCRIPT)\n\nThis part reproduces the licensed script, so it is not "
-                      "included in this copy of the book. The production copy is held privately with the show's Drive "
-                      "folder (01_Production_Book/Sections/%s_J_Prompt_Copy_Licensed_Script.pdf).\n\nThe cues and page "
-                      "numbers it carries are the same as Part G, the DSM calling script." % TAG,
-                      fontname="helv", fontsize=12, align=0)
-    doc.save(path)
 
 
 def merge(files, path):
@@ -145,21 +138,21 @@ START_HERE = """THE LITTLE MERMAID - Plantagenet Hall - show folder - {rev} ({da
                          package/ASSEMBLE_R13_1.command from the Drive zips
 03_Lighting_Mantra     {mtr} + memory map, section map, labels
 04_Sound_StudioLive    mixer template + backups
-05_Stream_Deck         exported profile (unchanged)
+05_Stream_Deck         exported profile
 06_Projection_Source   originals, rejects, rights/prompt log (not used in the show)
 07_Rehearsal_and_Tech_Notes
 08_Venue_and_Rig
 99_Show_Backups
 
-WHAT CHANGED FROM R8
+THE SHOW
 - The Mantra show is split by scene: P2 Act One, P3 Act Two, P4 the ten songs, P5 FX, P6-P7 looks, P8 backup.
   QLab fires every cue by page/memory/cue and releases each memory as it leaves it (31 releases).
 - Flash returns are QLab pre-waits - no link times to type into the desk.
 - Songs are QLab groups S1-S10 with {nsec} section GOs.
-- The book is re-paged to the licensed script revised April 2026, with the 28 Sep 2026 casting.
+- The book is paged to the licensed script revised April 2026, with the 28 Sep 2026 casting.
 
 BOOK: 01_Production_Book/The_Little_Mermaid_Complete_Production_Book_{rev}.pdf
-      (Part J, the prompt copy, contains the licensed script and is kept privately - not in the public repo.)
+      (Includes Part J, the prompt copy with the licensed script - production use only.)
 FIRST: 01_Production_Book/TLM_To_Find_and_Confirm_R13_1.pdf - what is still to supply or decide.
 SET-UP: 01_Production_Book/TLM_Setup_and_Startup_Quick_Guide_R13_1.pdf (cards 6-7).
 
@@ -172,7 +165,7 @@ THE SHOW FOLDER: package/TLM_R13_REBUILT_Show_Files  (copy it to the show Mac's 
   {qlab}   {ncues} cues: {nmaster} master cue groups, songs S1-S10 ({nsec} section GOs), E1-E3 emergency
   media/audio, media/video, media/stills   80 files listed in R13_MEDIA_MANIFEST.csv
   R13_MANTRA_SECTION_MAP.csv              every Mantra target QLab fires
-  R13_1_QLAB_AND_DESK_FIX_LIST.csv        what R13.1 changed, what is still to do
+  R13_1_QLAB_AND_DESK_FIX_LIST.csv        show-control fixes, what is still to do
 
 STEPS (Part E and the Quick Guide, card 6)
 1. Run package/ASSEMBLE_R13_1.command on the Mac - it unpacks the Drive zips into the show folder.
@@ -186,12 +179,11 @@ STEPS (Part E and the Quick Guide, card 6)
 
 TLM_QLab_cue_list.csv   the {nmaster} master cues and 10 songs as a spreadsheet, with script pages (April 2026 script)
 
-The R8/R11 AppleScripts (Build_TLM_QLab_Workspace, Tech_Test_Run, Relink_Media) were written for the old single-list
-workspace and are not needed for R13.1 - the workspace is already built. See Part L for the R13.1 tech test run.
+The workspace is already built - no scripts are needed. See Part L for the tech test run.
 """
 
 MEMORY_MAP = """{mtr} - memory map ({rev}, {date})
-Patch, custom fixtures, rig view and network unchanged from BASE_SHOW_2026 / R8. Desk opens on Page 2.
+Patch, custom fixtures, rig view and network as BASE_SHOW_2026 (venue base). Desk opens on Page 2.
 QLab fires /PlayMemory/Page=P/Memory=M/Cue=C/Level=100/Fade=ms  and releases with Level=0.
 
 {pages}
@@ -210,7 +202,6 @@ No strobe anywhere; lightning = single flash cues. HAYWIRE (P5 M5) starts at Q57
 
 
 def main():
-    private_ok = os.path.exists(part_j.SCRIPT)
     os.makedirs(SECT, exist_ok=True)
     fmt = dict(rev=REV, date=DATE, tag=TAG, qlab=S_.QLAB_NAME, mtr=S_.MTR_NAME, ncues=S_.TOTAL_QLAB_CUES,
                nmaster=S_.N_MASTER, nsec=S_.N_SONG_SECTIONS)
@@ -224,10 +215,7 @@ def main():
             os.replace(sheets, path)
             os.remove(labels)  # the labels go in 03_Lighting_Mantra (below)
         elif L == "J":
-            path = os.path.join(SECT, "_Part_J_is_private.pdf")
-            j_placeholder(path)
-            if private_ok:
-                built["J_private"] = part_j.build(os.path.join(PRIVATE, "%s_%s.pdf" % (TAG, stem)))
+            part_j.build(path)
         else:
             BUILDERS[L](path)
         built[L] = path
@@ -240,17 +228,17 @@ def main():
         start, rows = ncover + 1, []
         for L, title, _s in PARTS:
             n = pages(built[L])
-            rows.append((L, title + (" — held privately" if L == "J" else ""), n, start))
+            if L in SEPARATE:
+                rows.append((L, title + " — separate file (full-colour images)", n, "—"))
+                continue
+            rows.append((L, title, n, start))
             start += n
         part_00.build(cover, [("00", "Cover and Contents", ncover, 1)] + rows)
         ncover = pages(cover)
     print("00 %3d pages" % ncover)
 
-    order = [("00 Cover and Contents", cover)] + [("%s %s" % (L, t), built[L]) for L, t, _s in PARTS]
+    order = [("00 Cover and Contents", cover)] + [("%s %s" % (L, t), built[L]) for L, t, _s in PARTS if L not in SEPARATE]
     merge(order, os.path.join(BOOK, "The_Little_Mermaid_Complete_Production_Book_%s.pdf" % REV))
-    if private_ok:
-        merge([(t, built["J_private"] if t.startswith("J ") else f) for t, f in order],
-              os.path.join(PRIVATE, "The_Little_Mermaid_Complete_Production_Book_%s_with_J.pdf" % REV))
     part_k.build_quick_guide(os.path.join(BOOK, "TLM_Setup_and_Startup_Quick_Guide_R13_1.pdf"))
     to_find.build(os.path.join(BOOK, "TLM_To_Find_and_Confirm_R13_1.pdf"))
 
@@ -268,13 +256,22 @@ def main():
     for f in ("R13_MANTRA_SECTION_MAP.csv", "R13_MANTRA_SECTION_MAP.txt"):
         shutil.copy(os.path.join(PKG, f), os.path.join(OUT, "03_Lighting_Mantra", f))
     shutil.copy(os.path.join(PKG, "R13_MEDIA_MANIFEST.csv"), os.path.join(OUT, "02_QLab", "R13_MEDIA_MANIFEST.csv"))
-    backdrop_log(os.path.join(OUT, "06_Projection_Source", "Rights_Log", "R10_Backdrop_Prompt_Log.csv"))
+    backdrop_log(os.path.join(OUT, "06_Projection_Source", "Rights_Log", "Backdrop_Prompt_Log.csv"))
+
+    # lighting plan copy and venue photos for 08_Venue_and_Rig
+    shutil.copy(built["I2"], os.path.join(OUT, "06_Projection_Source", "%s_Backdrop_Sheets.pdf" % TAG))
+    shutil.copy(built["B2"], os.path.join(OUT, "08_Venue_and_Rig", "%s_Stage_Lighting_Layout_Plan.pdf" % TAG))
+    photos = os.path.join(ROOT, "production", "assets", "venue_photos")
+    if os.path.isdir(photos):
+        dst = os.path.join(OUT, "08_Venue_and_Rig", "Photos")
+        os.makedirs(dst, exist_ok=True)
+        for f in sorted(os.listdir(photos)):
+            shutil.copy(os.path.join(photos, f), os.path.join(dst, f))
 
     # labels and the package printouts (same content, package names)
     sheets, labels = cue_sheets(os.path.join(PKG, "docs"))
     shutil.copy(labels, os.path.join(OUT, "03_Lighting_Mantra", "%s_Mantra_Labels.pdf" % TAG))
     print("package docs:", os.path.relpath(sheets, ROOT), os.path.relpath(labels, ROOT))
-    print("J private:", built.get("J_private", "not built (no private script render)"))
 
 
 if __name__ == "__main__":

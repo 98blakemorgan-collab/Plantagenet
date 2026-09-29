@@ -39,10 +39,8 @@ def build(path):
                       "LSC Mantra Lite programming guide for %s" % S_.MTR_NAME))
     d.add(stats([("8", "pages in use (P1–P8)"), (str(S_.N_POSITIONS), "cue positions"),
                  ("0", "desk link times needed"), ("2.0.0.1:8000", "OSC Play Memory"), ("153", "P8 backup steps")]))
-    d.add(box("new", "WHAT CHANGED FROM R8",
-              ["**R8:** one cue-list of 87 steps on Page 2 Memory 1, QLab fired positions in it, and six link times "
-               "had to be typed in by hand after loading.",
-               "**R13.1:** the show is split into scene memories (P2 Act One, P3 Act Two) and song memories (P4); "
+    d.add(box("rule", "HOW THE SHOW FILE WORKS",
+              ["The show is split into scene memories (P2 Act One, P3 Act Two) and song memories (P4); "
                "QLab plays the exact memory and cue for every step. The six flash returns are **fired by QLab** "
                "(timed pre-waits), so no link times are set on the desk. Each time QLab moves to a new memory it "
                "also sends **Level=0 to the memory it is leaving** (31 release messages), so looks can't stack. "
@@ -92,7 +90,7 @@ def build(path):
             "position."))
 
     d.add(H1("3 Patch"))
-    d.add(P("Unchanged from R8 — the venue base patch travels in the show file: C42 #1–12 at U2:101–232 (11 ch), "
+    d.add(P("The venue base patch travels in the show file: C42 #1–12 at U2:101–232 (11 ch), "
             "Zooms #13–22 at U1:301–420 (12 ch), TourCOB #23–32 and #39 at U1:421–486 (6 ch), PixBars #33–38 at "
             "U1:1–36 (6 ch), hazer #40 at U1:487–488. Pinspots #41–42 (U1:37–38) only if the mirror ball is used. "
             "Full table and procedure: Part C. Network in the file: **2.0.0.1 / 255.0.0.0, Art-Net and sACN both on, "
@@ -116,7 +114,7 @@ def build(path):
         d.add(table(["Cue", "Name on desk", "Layers", "Fade", "Fired by QLab", "P8"], rows,
                     [10 * mm, 42 * mm, 27 * mm, 11 * mm, 70 * mm, 10 * mm], tints=tints))
     d.add(H2("P2 M9 WORK / FOCUS · P2 M10 SAFE LIGHT"))
-    d.add(P("Open white work light and the recovery look (FOH #1–6 at about 70 % white, no colour). QLab **E3** "
+    d.add(P("Open white work light and the recovery look (FOH faces #1, 4, 5, 8, 9, 12 at about 70 % white, no colour). QLab **E3** "
             "plays P2 M10 over 2 s; the operator can also press it on the desk."))
 
     d.add(H1("6 Song memories (P4)"))
@@ -182,7 +180,7 @@ def build(path):
 
     d.add(H1("9 The built show file"))
     d.add(table(["Page · memory", "What it is"], [
-        ["P1, P2 M9–M10", "Venue base looks, WORK/FOCUS, SAFE LIGHT (unchanged)"],
+        ["P1, P2 M9–M10", "Venue base looks, WORK/FOCUS, SAFE LIGHT"],
         ["P2 M1–M6, P3 M1–M6", "The 87 scene cues split into 12 scene memories (names carry the master cue number)"],
         ["P4 M1–M10", "The 66 song-section cues, one memory per song"],
         ["P5 M1–M6", "Chases (150/144/168 BPM), HAZE #40 50 %/fan 50 %, HAYWIRE (5 steps, 120 BPM), JELLY PULSE"],
