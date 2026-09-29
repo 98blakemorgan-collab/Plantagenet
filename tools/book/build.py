@@ -23,6 +23,7 @@ import show as S_  # noqa: E402
 from core import REV, DATE  # noqa: E402
 import make_printouts as mp  # noqa: E402  (tools/ is on sys.path via show)
 import lighting_plot  # noqa: E402
+import backdrop_sheets  # noqa: E402
 import part_00, part_a, part_b, part_c, part_d, part_e, part_g, part_h, part_i, part_j, part_k, part_l  # noqa: E402
 import to_find  # noqa: E402
 
@@ -43,11 +44,12 @@ PARTS = [  # letter, title, file stem
     ("G", "DSM Calling Script", "G_DSM_Calling_Script"),
     ("H", "Props List and Preset Sheets", "H_Props_List_and_Preset_Sheets"),
     ("I", "Projection Backgrounds", "I_Projection_Backgrounds"),
+    ("I2", "Backdrop Sheets (one page per backdrop)", "I2_Backdrop_Sheets"),
     ("J", "Prompt Copy (Licensed Script)", "J_Prompt_Copy_Licensed_Script"),
     ("K", "Quick Reference Cards", "K_Quick_Reference_Cards"),
     ("L", "Stream Deck and Tech Test Run", "L_Stream_Deck_and_Tech_Test_Run"),
 ]
-BUILDERS = {"A": part_a.build, "B": part_b.build, "B2": lighting_plot.build, "C": part_c.build, "D": part_d.build, "E": part_e.build,
+BUILDERS = {"A": part_a.build, "B": part_b.build, "B2": lighting_plot.build, "I2": backdrop_sheets.build, "C": part_c.build, "D": part_d.build, "E": part_e.build,
             "G": part_g.build, "H": part_h.build, "I": part_i.build, "K": part_k.build, "L": part_l.build}
 
 ABOUT = {
@@ -252,6 +254,7 @@ def main():
     backdrop_log(os.path.join(OUT, "06_Projection_Source", "Rights_Log", "Backdrop_Prompt_Log.csv"))
 
     # lighting plan copy and venue photos for 08_Venue_and_Rig
+    shutil.copy(built["I2"], os.path.join(OUT, "06_Projection_Source", "%s_Backdrop_Sheets.pdf" % TAG))
     shutil.copy(built["B2"], os.path.join(OUT, "08_Venue_and_Rig", "%s_Stage_Lighting_Layout_Plan.pdf" % TAG))
     photos = os.path.join(ROOT, "production", "assets", "venue_photos")
     if os.path.isdir(photos):
