@@ -173,7 +173,7 @@ def plan(c):
     c.setDash(3, 1.2)
     c.line(*P(PX0 + 1, Y_TABS), *P(PX1 - 1, Y_TABS))
     c.setDash()
-    text(c, PX0 + 2, Y_TABS + 1.4, "3 PixBars on the pelmet front now → LX2, or keep as a tabs wash (sheet 2)", 4.4,
+    text(c, PX0 + 2, Y_TABS + 1.4, "3 PixBars on the pelmet front — FIXED, stay: tabs / apron wash", 4.4,
          color=MUTED, anchor="l")
     text(c, PX1 - 2, Y_TABS + 1.4, "RED PELMET + HOUSE TABS (Scenes Two, Four, Nine play in front)", 4.6, color=RED, anchor="r")
     c.setStrokeColor(INK)
@@ -241,17 +241,25 @@ def plan(c):
          "Helvetica-Bold", RED)
     # LX1
     bar(c, Y_LX1, PX0, PX1, "LX1", "beam behind the pelmet")
-    text(c, PX0 - 2, Y_LX1 - 5, "now: 10 Zooms, 4 COBs, proj.", 4.4, color=MUTED, anchor="r")
+    text(c, PX0 - 2, Y_LX1 - 5, "now: 10 Zooms, 4 COBs, proj. (moves: B3)", 4.4, color=MUTED, anchor="r")
     for n, x in spread([13, 16, 14, 17, 15, 18], PX0 + 5, PX1 - 5):
         unit(c, n, x, Y_LX1)
     # LX2 + PixBar row
     bar(c, Y_LX2, PX0, PX1, "LX2", "upstage beam")
-    for n, x in spread([23, 26, 19, 24, 39, 27, 20, 25, 28], PX0 + 5, PX1 - 5):
+    for n, x in spread([23, 26, 19, 24, 27, 20, 25, 28], PX0 + 5, PX1 - 5):
         unit(c, n, x, Y_LX2, label_above=False)
-    for n, x in spread([33, 34, 35, 36, 37, 38], PX0 + 12, PX1 - 12):
+    # COB #39 stays on its wall bracket by LX2 (venue photo 9)
+    unit(c, 39, PX1 + 8, Y_LX2, label_above=False)
+    text(c, PX1 + 8, Y_LX2 - 9.6, "wall bracket", 4.2, color=MUTED)
+    text(c, PX1 + 8, Y_LX2 - 12, "stays · side TBC", 4.2, color=MUTED)
+    for x in (PX0 + 40, CX, PX1 - 40):
         symbol(c, "PIX", x, Y_PIX)
-        text(c, x, Y_PIX + 2.6, "#%d · %s" % (n, FOCUS[n][2]), 4.6, "Helvetica-Bold")
-    text(c, CX, Y_PIX + 7.2, "PIXBARS hung on LX2, tilted downstage — never onto the back wall (R-25)", 4.6, color=MUTED)
+        text(c, x, Y_PIX + 2.6, "PixBar · # from rig ID test", 4.4, "Helvetica-Bold")
+    text(c, CX, Y_PIX + 7.2, "3 PIXBARS on LX2, tilted downstage — never onto the back wall (R-25)", 4.6, color=MUTED)
+    # the other three are fixed on the pelmet front, in front of the main curtain
+    for x in (PX0 + 30, CX, PX1 - 30):
+        symbol(c, "PIX", x, Y_PROS - 3.2)
+        text(c, x, Y_PROS - 7.4, "PixBar · FIXED", 4.4, "Helvetica-Bold")
 
     # booms
     for side, x, ns in (("SR BOOM", SX0 - 12, (21, 29, 30)), ("SL BOOM", SX1 + 12, (22, 31, 32))):
@@ -356,7 +364,7 @@ def page2(c):
     text(c, gx0 + 165, gy0 + 3, "STAGE", 6, "Helvetica-Bold", MUTED)
     for x, h, lab, sub in ((gx0 + 60, 92, "FOH bar (ceiling)", "C42 #1–12 FIXED · faces + specials"),
                            (gx0 + 112, 84, "LX1 (behind pelmet)", "Zoom #13–18 · projector"),
-                           (gx0 + 195, 88, "LX2", "COB #23–28, 39 · Zoom #19–20 · PixBar #33–38")):
+                           (gx0 + 195, 88, "LX2", "COB #23–28 · Zoom #19–20 · 3 PixBars")):
         c.setLineWidth(1.4)
         c.circle(x * mm, (gy0 + h) * mm, 1.8 * mm, fill=0, stroke=1)
         c.setLineWidth(0.4)
@@ -435,7 +443,7 @@ def page2(c):
     # data route and checks
     cx0 = 205
     text(c, cx0, 128, "DATA ROUTE", 8, "Helvetica-Bold", anchor="l")
-    lines = ["U1 (desk XLR): LX1 → LX2 → SR boom → SL boom → hazer · terminate",
+    lines = ["U1 (desk XLR): LX1 → pelmet PixBars → LX2 → #39 → SR boom → SL boom → hazer · terminate",
              "U2 (Art-Net/sACN): desk → switch → node 2.0.0.10 → FOH bar C42 #1–12 · terminate",
              "Every fixture keeps its desk number and address wherever it hangs."]
     yy = 122
@@ -445,7 +453,7 @@ def page2(c):
     text(c, cx0, yy - 3, "SITE-WALK CHECKS", 8, "Helvetica-Bold", anchor="l")
     yy -= 9
     checks = ["C42 #1–12 fixed: confirm the order (#1 SR end) and focus each job from where it hangs",
-              "Rig ID test: which COB PARs and PixBars are on LX1, LX2, the pelmet and the wall",
+              "Rig ID test: which COB PARs and PixBars are on LX1, LX2, the pelmet (fixed) and the wall",
               "Bar loads and trims for FOH, LX1, LX2 (R-24)", "LX1 beam rated for the projector (it hangs there now); projector bonded (R-22)",
               "Boom bases weighted, clear of props tables and water stations (R-26)",
               "LX2 and PixBars tilted off the back wall; check washout with BG-02/BG-18 (R-25)",

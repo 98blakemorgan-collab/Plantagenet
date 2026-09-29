@@ -192,7 +192,8 @@ def build(path):
             "PARs (#23–32, 39), 6 PixBars (#33–38) and the hazer (#40). **The 12 C42s are fixed on the FOH bar in number order "
             "(#1 at the stage-right end) and cannot be moved**; their jobs go by position. As installed, LX1 carries all 10 Zooms, "
             "4 COB PARs and the projector, LX2 six COB PARs and PixBars, and three PixBars sit on the pelmet in front of the main "
-            "curtain. For the show: LX1 #13–18; LX2 #19–20, 23–28, 33–39; SR boom #21, 29, 30; SL boom #22, 31, 32. The projector "
+            "curtain; those three stay. For the show: LX1 #13–18; LX2 #19–20, 23–28 and 3 PixBars; pelmet 3 PixBars (fixed); "
+            "COB #39 on its wall bracket; SR boom #21, 29, 30; SL boom #22, 31, 32 (moves: Part B3). The projector "
             "stays at LX1 centre and throws upstage. "
             "Rig plan, positions and focus: Part B §1 and §7; Quick Reference card 1."))
     d.add(box("rec", "R-24 · R-25 · R-26", "Confirm bar loads, boom bases and wing space. Turn LX2 away from the screen — the show runs "

@@ -18,6 +18,9 @@ Source for the single R13.1 download package.
   number order and cannot be moved, so their jobs go by position (faces #1+4, #5+8,
   #9+12; specials #2, 3, 6, 7, 10, 11) and the show programming moves with each job.
   Already applied; the venue base is untouched.
+- `tools/book/lx_moves.py` — Part B3 Rig Move Guide (what moves from the installed rig,
+  kit, order of work, safety, test and focus) and `TLM_Lighting_Changes_R13_1.pdf`
+  (every lighting change in one document). Built by `tools/book/build.py`.
 - `tools/make_qlab_base.py` — builds `BASE_SHOW_2026.qlab5`, the QLab base for the
   Mantra venue base, from `BASE_SHOW_2026.mtr` and the R13.1 workspace settings.
 - `tools/make_base_printouts.py` — builds the base show link map (QLab cue → Mantra

@@ -23,6 +23,7 @@ import show as S_  # noqa: E402
 from core import REV, DATE  # noqa: E402
 import make_printouts as mp  # noqa: E402  (tools/ is on sys.path via show)
 import lighting_plot  # noqa: E402
+import lx_moves  # noqa: E402
 import backdrop_sheets  # noqa: E402
 import part_00, part_a, part_b, part_c, part_d, part_e, part_g, part_h, part_i, part_j, part_k, part_l  # noqa: E402
 import to_find  # noqa: E402
@@ -37,6 +38,7 @@ PARTS = [  # letter, title, file stem
     ("A", "Master Technical Production Manual", "A_Master_Technical_Production_Manual"),
     ("B", "Lighting Design", "B_Lighting_Design"),
     ("B2", "Stage Lighting Layout Plan (A3)", "B2_Stage_Lighting_Layout_Plan"),
+    ("B3", "Rig Move Guide", "B3_Rig_Move_Guide"),
     ("C", "DMX Patch and Step-by-Step Guide", "C_DMX_Patch_and_Step_by_Step_Guide"),
     ("D", "Mantra Editor on Mac Programming Guide", "D_Mantra_Editor_on_Mac_Programming_Guide"),
     ("E", "QLab 5 Programming Guide", "E_QLab_5_Programming_Guide"),
@@ -51,7 +53,7 @@ PARTS = [  # letter, title, file stem
 ]
 # Parts kept out of the merged book to save printer ink (image-heavy); they stay as their own PDFs in Sections.
 SEPARATE = {"I2"}
-BUILDERS = {"A": part_a.build, "B": part_b.build, "B2": lighting_plot.build, "I2": backdrop_sheets.build, "C": part_c.build, "D": part_d.build, "E": part_e.build,
+BUILDERS = {"A": part_a.build, "B": part_b.build, "B2": lighting_plot.build, "B3": lx_moves.build_moves, "I2": backdrop_sheets.build, "C": part_c.build, "D": part_d.build, "E": part_e.build,
             "G": part_g.build, "H": part_h.build, "I": part_i.build, "K": part_k.build, "L": part_l.build}
 
 ABOUT = {
@@ -241,6 +243,9 @@ def main():
     merge(order, os.path.join(BOOK, "The_Little_Mermaid_Complete_Production_Book_%s.pdf" % REV))
     part_k.build_quick_guide(os.path.join(BOOK, "TLM_Setup_and_Startup_Quick_Guide_R13_1.pdf"))
     to_find.build(os.path.join(BOOK, "TLM_To_Find_and_Confirm_R13_1.pdf"))
+    changes = lx_moves.build_changes(os.path.join(BOOK, "TLM_Lighting_Changes_R13_1.pdf"))
+    shutil.copy(changes, os.path.join(OUT, "03_Lighting_Mantra", "TLM_Lighting_Changes_R13_1.pdf"))
+    shutil.copy(changes, os.path.join(PKG, "docs", "TLM_Lighting_Changes_R13_1.pdf"))
 
     # text files and folders
     write(os.path.join(OUT, "00_START_HERE.txt"), START_HERE.format(**fmt))
@@ -261,6 +266,7 @@ def main():
     # lighting plan copy and venue photos for 08_Venue_and_Rig
     shutil.copy(built["I2"], os.path.join(OUT, "06_Projection_Source", "%s_Backdrop_Sheets.pdf" % TAG))
     shutil.copy(built["B2"], os.path.join(OUT, "08_Venue_and_Rig", "%s_Stage_Lighting_Layout_Plan.pdf" % TAG))
+    shutil.copy(built["B3"], os.path.join(OUT, "08_Venue_and_Rig", "%s_Rig_Move_Guide.pdf" % TAG))
     photos = os.path.join(ROOT, "production", "assets", "venue_photos")
     if os.path.isdir(photos):
         dst = os.path.join(OUT, "08_Venue_and_Rig", "Photos")

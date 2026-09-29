@@ -73,7 +73,7 @@ def build(path):
 
     d.add(H1("3 DMX runs, network and fader map"))
     d.add(table(["Line", "Route"], [
-        ["Universe 1 (desk XLR)", "Desk → LX1 Zooms #13–18 → LX2 (#19–20, 23–28, 39, 33–38) → SR boom (#21, 29–30) → SL boom (#22, 31–32) → hazer #40 · terminate"],
+        ["Universe 1 (desk XLR)", "Desk → LX1 Zooms #13–18 → pelmet PixBars (as cabled now) → LX2 (#19–20, 23–28, PixBars) → #39 wall → SR boom (#21, 29–30) → SL boom (#22, 31–32) → hazer #40 · terminate"],
         ["Universe 2 (Ethernet)", "Desk → switch → node 2.0.0.10 → FOH bar C42 #1–12 · terminate"]],
         [38 * mm, 132 * mm], bold_first=True))
     d.add(table(["Setting", "Desk (Mantra)", "Node for universe 2"], [

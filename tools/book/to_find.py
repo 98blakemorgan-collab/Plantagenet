@@ -23,7 +23,7 @@ ITEMS = [
     ("Lighting", "Confirm fixtures #38 (PixBar) and #39 (TourCOB) exist and are patched", "LX / venue", "Rig day"),
     ("Lighting", "All 12 C42s on the FOH bar — APPROVED (runs back to the dimmer setup). Set the FOH dimmer channels feeding them to NON-DIM, 4 C42 per circuit", "LX / venue", "Rig day"),
     ("Lighting", "C42 #1–12 are fixed on the FOH bar and cannot be moved: confirm they run #1 (stage-right end) to #12 in number order, then focus each job from where it hangs (Part B §1)", "LX / venue", "Rig day"),
-    ("Lighting", "Rig ID test: record which COB PARs and PixBars are on LX1, LX2, the pelmet front and the side wall; decide whether the 3 pelmet PixBars move to LX2 or stay as a tabs wash", "LX", "Rig day"),
+    ("Lighting", "Rig ID test: record which COB PARs and PixBars are on LX1, LX2, the pelmet front and the side wall (the 3 pelmet PixBars are fixed and stay); then make the moves in Part B3", "LX", "Rig day"),
     ("Lighting", "Is the dimmer rack also on DMX? If so, which universe/addresses — it must never fade the C42 feeds", "Venue", "Site walk"),
     ("Lighting", "Check the colour-forward looks from the house: faces, screen washout, backlight (R-30)", "LX / director", "Focus"),
     ("Lighting", "Cue-to-cue: flash returns Q21/23/25/35/47/57b, the Q57 → Q57b HAYWIRE sequence, the Level=0 releases (run Q8 > S1 > Q9) and the six song fade-outs", "LX / QLab op", "Tech"),

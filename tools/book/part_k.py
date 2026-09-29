@@ -12,7 +12,8 @@ def card1():
                 ["FOH bar (fixed)", "12 × Lightsky C42 #1–12 in number order from the SR end, cannot be moved · faces #1+4, "
                  "#5+8, #9+12 · SP2 #2, V1 #3, SP1 #6, V2 #7, SP4 #10, SP3 #11", "12"],
                 ["LX1 — downstage bar", "6 × Zoom #13–18 colour wash", "6"],
-                ["LX2 — upstage bar", "2 × Zoom #19–20 (V3 Theodore, V4 Marina) · 7 × TourCOB #23–28, 39 · 6 × PixBar #33–38", "15"],
+                ["LX2 — upstage bar", "2 × Zoom #19–20 (V3 Theodore, V4 Marina) · 6 × TourCOB #23–28 · 3 × PixBar · TourCOB #39 on the wall bracket", "12"],
+                ["Pelmet front (fixed)", "3 × PixBar — tabs/apron wash, cannot be moved", "3"],
                 ["SR floor boom", "Zoom #21 high · TourCOB #29 mid, #30 shin", "3"],
                 ["SL floor boom", "Zoom #22 high · TourCOB #31 mid, #32 shin", "3"],
                 ["Floor, upstage", "Hazer #40", "1"], ["Optional", "Pinspots #41–42 on the FOH bar ends (mirror ball only)", "(2)"]],

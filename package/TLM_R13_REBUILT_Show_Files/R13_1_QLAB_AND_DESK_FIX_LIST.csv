@@ -35,3 +35,4 @@ TO DO,1,Cue-to-cue,"Check the new storm colours, white flashes and shell levels 
 DONE in fixed-FOH update,1,Mantra show memories 10-70 (C42 #1-12),"C42 jobs reassigned to the fixed FOH positions (faces #1+4, #5+8, #9+12; SP2 #2, V1 #3, SP1 #6, V2 #7, SP4 #10, SP3 #11); programming moved with each job by tools/apply_fixed_foh_jobs.py","The C42s cannot be moved and hang in number order; the old jobs put every face on the house-left half"
 DONE in fixed-FOH update,2,Book B/B2/K + base printouts,"Layout plan, labels, link map and rig ID test rebuilt from the installed rig (venue photos); as-installed vs plan table on B2 sheet 2",
 TO DO,1,Rig,"Confirm the C42 order #1 (SR end) to #12 and focus each job from its position; rig ID test for COB/PixBar positions",
+DONE in fixed-FOH update,2,Book B3 + docs,"Rig Move Guide (Part B3) and docs/TLM_Lighting_Changes_R13_1.pdf added; the 3 pelmet PixBars and COB #39 stay where they are",

@@ -40,13 +40,13 @@ SONG_LANG = {"S1": "Aqua / hot pink / gold / deep blue / magenta / lime / white 
 INSTALLED = [("FOH bar (house ceiling)", "C42 #1–12 in number order, #1 at the stage-right end",
               "FIXED — cannot be moved. Jobs are given by position (faces #1+4, #5+8, #9+12; specials #2, 3, 6, 7, 10, 11)."),
              ("Pelmet, in front of the main curtain", "3 PixBars; speakers at each end",
-              "Plan: move to LX2 with the other three. Or keep as a front-of-tabs wash for Scenes Two, Four and Nine — "
-              "decide at the site walk."),
+              "FIXED — stay. They colour the house tabs and apron for the front-of-tabs scenes (Two, Four, Nine) and "
+              "join the storm, magic and song effects; check glare into the front rows at the focus."),
              ("LX1, beam behind the pelmet", "10 Zooms #13–22, 4 COB PARs (#29–32, confirm), projector at the centre",
               "Keep #13–18 (top wash). #19–20 to LX2 (V3/V4 steep top light); #21–22 and the 4 COBs to the SR/SL booms "
               "(side light). Projector stays."),
              ("LX2, upstage beam", "6 COB PARs (#23–28, confirm) with PixBars between them",
-              "Stays as the backlight row; add #19–20 and the pelmet PixBars."),
+              "Stays as the backlight and effect row; add #19–20."),
              ("Side wall by LX2 (back right)", "1 COB PAR (#39, confirm)", "Stays: extra backlight / side.")]
 
 SPECIALS = [("SP1", "Ariel", "#6 C42 (FOH)", "DSC mark; solo, duet, transformation, restore (57c)"),
@@ -82,9 +82,10 @@ FOCUS = [(1, "C42", "FOH 1", "U2:101", "Face DSR — from house left (outer)"),
      (30, "COB", "SR boom", "U1:463", "Low side (shin) — boom arm ~0.4 m"),
      (31, "COB", "SL boom", "U1:469", "Mid side — boom arm ~1.2 m, knee to hip"),
      (32, "COB", "SL boom", "U1:475", "Low side (shin) — boom arm ~0.4 m")] + \
-    [(33 + i, "PIX", "LX2", "U1:%d" % (1 + 6 * i), "Effect row, tilted downstage off the back wall (R-25)")
+    [(33 + i, "PIX", "pelmet/LX2", "U1:%d" % (1 + 6 * i),
+      "3 fixed on the pelmet front (tabs/apron wash), 3 on LX2 (effect row off the back wall, R-25)")
      for i in range(6)] + \
-    [(39, "COB", "LX2", "U1:481", "Extra backlight — centre (confirm fitted)"),
+    [(39, "COB", "LX2 wall", "U1:481", "Extra backlight/side from the wall bracket by LX2 — stays (confirm fitted)"),
      (40, "HAZE", "Floor, US", "U1:487", "Atmosphere — P5 M4 HAZE (50 %, fan 50 %)"),
      (41, "PIN", "FOH SR end", "U1:37", "Mirror ball (optional, not patched)"),
      (42, "PIN", "FOH SL end", "U1:38", "Mirror ball (optional, not patched)")]
@@ -136,7 +137,8 @@ def build(path):
               "suits it: a cross pair per face zone (**DSR #1 + #4 · DSC #5 + #8 · DSL #9 + #12**) and the specials on "
               "the units nearest their marks (**SP2 #2 · V1 #3 · SP1 #6 · V2 #7 · SP4 #10 · SP3 #11**). The show "
               "file's programming moved with the jobs; only focus is set on the bar."))
-    d.add(P("Positions for the show: all 12 × C42 on the FOH bar (#1–12, fixed), LX1 downstage bar (Zoom #13–18), LX2 upstage bar (Zoom #19–20, COB #23–28, 39, PixBar #33–38), a floor boom in each "
+    d.add(P("Positions for the show: all 12 × C42 on the FOH bar (#1–12, fixed), LX1 downstage bar (Zoom #13–18), LX2 upstage bar (Zoom #19–20, COB #23–28, 3 PixBars), 3 PixBars on the pelmet front (fixed), COB #39 on the "
+            "wall bracket by LX2, a floor boom in each "
             "wing (SR #21, 29, 30 · SL #22, 31, 32) and the hazer upstage on the floor (#40). The projector hangs "
             "at the centre of LX1 (venue photos) and throws upstage onto the painted back wall (R-11). The drawn plan with every "
             "fixture, mark and address is B2, the Stage Lighting Layout Plan (A3)."))
@@ -157,7 +159,7 @@ def build(path):
          "Body light and colour contrast for dance, off the screen"],
         ["Backlight (LX2 COB #23–28, 39)", "Highest levels in the rig (60–100 %), strong saturated colour",
          "Depth, haze beams, the storm and lair energy"],
-        ["Effects (PixBar #33–38)", "Two-colour splits in storm, magic, jellyfish and every song",
+        ["Effects (PixBar #33–38: 3 pelmet, 3 LX2)", "Two-colour splits in storm, magic, jellyfish and every song",
          "Movement and impact without strobe"],
         ["Specials (C42 #2, 3, 6, 7, 10, 11, Zoom #19–20)", "Hard pools on marks, added per cue",
          "Character entrances, shell, voice transfer"]],
@@ -220,6 +222,7 @@ def build(path):
         "V2 Flanders (#7) crosses from just stage-left of centre to a mark stage-right of centre; tape the mark "
         "where the pool lands cleanly.",
         "LX1 Zooms: overlap by a third; barn doors cut the top edge so nothing reaches the screen.",
+        "Pelmet PixBars (fixed): tilt down onto the tabs and apron, not into the front rows. "
         "LX2: COB PARs down-and-forward to head height at the DS edge; PixBars tilted downstage, never onto the "
         "screen (R-25). The show runs the backlight hard, so check screen washout with BG-02 and BG-18 running.",
         "Side booms: Zoom high at head height across the stage; COB mid and low for bodies and dance.",

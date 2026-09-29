@@ -547,7 +547,7 @@ FIXTURES = [
 # Where each fixture hangs (fixture number -> position).
 HANG = {n: pos for ns, pos in [(range(1, 13), "FOH"), (range(13, 19), "LX1"), ((19, 20), "LX2"), ((21,), "SR boom"),
                                 ((22,), "SL boom"), (range(23, 29), "LX2"), ((29, 30), "SR boom"),
-                                ((31, 32), "SL boom"), (range(33, 40), "LX2"), ((40,), "floor US"),
+                                ((31, 32), "SL boom"), (range(33, 39), "pelmet/LX2"), ((39,), "LX2 wall"), ((40,), "floor US"),
                                 ((41,), "FOH SR"), ((42,), "FOH SL")] for n in ns}
 
 # Where each fixture hangs now, as installed (venue photos). The base files use this;
