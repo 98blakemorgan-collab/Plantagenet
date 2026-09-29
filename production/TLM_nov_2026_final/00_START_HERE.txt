@@ -1,0 +1,37 @@
+THE LITTLE MERMAID - Plantagenet Hall - show folder - R13.1 (28 September 2026)
+
+01_Production_Book     Complete book + one PDF per part (Sections), quick guide, to-find list
+02_QLab                README + cue list. THE SHOW FOLDER is package/TLM_nov_2026_final:
+                         TLM_nov_2026_final.qlab5  (479 cues, 83 master cues, songs S1-S10)
+                         media/  80 files (TLM_nov_2026_final_MEDIA_MANIFEST.csv) - assembled on the Mac by
+                         package/ASSEMBLE_TLM_nov_2026_final.command from the Drive zips
+03_Lighting_Mantra     TLM_nov_2026_final.mtr + memory map, section map, labels, lighting changes,
+                       show previz and venue base previz
+04_Sound_StudioLive    mixer template + backups
+05_Stream_Deck         exported profile
+06_Projection_Source   originals, rejects, rights/prompt log (not used in the show)
+07_Rehearsal_and_Tech_Notes
+08_Venue_and_Rig       layout plan (B2), rig move guide (B3), venue and rig photos
+99_Show_Backups
+TLM_nov_2026_final_File_Guide.pdf     every file in the build, what it is and who uses it
+TLM_nov_2026_final_Build_Check.txt    the latest triple check of the build (tools/verify_show.py)
+VENUE BASE PACKAGE           base/Plantagenet_Players_Base_2026_r1 - the venue rig on its own (base Mantra file,
+                             QLab base, guide, printouts, previz)
+
+THE SHOW
+- The Mantra show is split by scene: P2 Act One, P3 Act Two, P4 the ten songs, P5 FX, P6-P7 looks, P8 backup.
+  QLab fires every cue by page/memory/cue and releases each memory as it leaves it (31 releases).
+- Flash returns are QLab pre-waits - no link times to type into the desk.
+- Songs are QLab groups S1-S10 with 66 section GOs.
+- The book is paged to the licensed script revised April 2026, with the 28 Sep 2026 casting.
+- The 12 Lightsky C42s and the 3 pelmet PixBars are fixed. C42 jobs go by position: faces #1+4, #5+8,
+  #9+12; SP2 #2, V1 #3, SP1 #6, V2 #7, SP4 #10, SP3 #11. Eight moves from the installed rig: Part B3.
+- Lighting and sound review: white flash hits, one storm palette, house backlight, shell levels,
+  starting sound levels, storm layer fades, looping house music (TLM_nov_2026_final_Lighting_Changes.pdf).
+
+BOOK: 01_Production_Book/The_Little_Mermaid_Complete_Production_Book_R13.1.pdf
+      (Includes Part J, the prompt copy with the licensed script - production use only.)
+FIRST: 01_Production_Book/TLM_nov_2026_final_To_Find_and_Confirm.pdf - what is still to supply or decide.
+SET-UP: 01_Production_Book/TLM_nov_2026_final_Setup_and_Startup_Quick_Guide.pdf (cards 6-7).
+
+Rebuild everything in this folder with: python3 tools/book/build.py

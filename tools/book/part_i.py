@@ -157,7 +157,7 @@ def build(path):
     used = sorted({os.path.basename(f).split("_")[0] for _, a, f in plan if f})
     d.add(title_block("PART I · %s · %s" % (REV, DATE), "Projection Backgrounds",
                       "The backdrops, matched to the cyclorama calls in the April 2026 script and wired into "
-                      "TLM_Show_R13_1.qlab5."))
+                      "TLM_nov_2026_final.qlab5."))
     d.add(stats([(str(len(used)), "backdrops in the cue plan"), ("26", "backdrop designs BG-01…BG-26"),
                  (str(len([p for p in plan if p[1] == "in"])), "picture changes"),
                  (str(len([p for p in plan if p[1] == "black"])), "fades to black"),
@@ -168,7 +168,7 @@ def build(path):
                "They play from the workspace itself: every picture change is a Video cue plus a 2-second "
                "fade in/out inside the numbered cue group, so the picture always changes with the light and "
                "sound on the same GO. The files live in `media/video` and `media/stills` inside "
-               "TLM_R13_REBUILT_Show_Files and are found by relative path."]))
+               "TLM_nov_2026_final and are found by relative path."]))
 
     d.add(H1("1 Projection cue plan"))
     d.add(P("What is on the screen from cue to cue, read from the workspace. Each change is a 2 s crossfade; "
@@ -246,7 +246,7 @@ def build(path):
         "Make it loop: join clips and cross-dissolve the end into the start (or ping-pong water and particles). "
         "The show loops are 15–16 s.",
         "Export 1920×1080, 24–30 fps, no audio, H.264/HEVC. **Keep the same file name** so its cue picks it up.",
-        "Copy it into `TLM_R13_REBUILT_Show_Files/media/video` (or `stills`), replacing the old file, then test on "
+        "Copy it into `TLM_nov_2026_final/media/video` (or `stills`), replacing the old file, then test on "
         "the real projector with the stage lights on."]))
     d.add(box("rule", "RULES FOR EVERY BACKGROUND",
               ["One look for the whole show: every prompt ends with the same style line. Keep the lower centre "

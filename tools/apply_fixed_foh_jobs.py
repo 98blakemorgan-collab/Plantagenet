@@ -10,13 +10,13 @@ house-right half, so the jobs are reassigned by position:
   face DSR  #1 + #4    face DSC  #5 + #8    face DSL  #9 + #12   (a cross pair per zone)
   SP2 Spirit #2 · V1 Dame #3 · SP1 Ariel #6 · V2 Flanders #7 · SP4 Shell #10 · SP3 Octavia #11
 
-In TLM_SHOW_2026_R13_FLASHY_SCENE_SPLIT.mtr every show memory (10-70) moves each
+In TLM_nov_2026_final.mtr every show memory (10-70) moves each
 job's programming to its new desk number. Patch, fixtures, network, rig view, live
 scene, the venue P1 looks (0-9) and memories 100-109 are not touched, so the file
-still matches BASE_SHOW_2026.mtr (tools/check_mantra_base.py).
+still matches Plantagenet_Players_Base_2026_r1.mtr (tools/check_mantra_base.py).
 
 Runs only on the file it was written for (SHA-256 checked) and records the new
-hash in BUILD_METADATA.json and ASSEMBLE_R13_1.command.
+hash in BUILD_METADATA.json and ASSEMBLE_TLM_nov_2026_final.command.
 """
 import hashlib
 import json
@@ -24,10 +24,10 @@ import os
 import re
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-SHOW = os.path.join(ROOT, "package", "TLM_R13_REBUILT_Show_Files")
-MTR = os.path.join(SHOW, "TLM_SHOW_2026_R13_FLASHY_SCENE_SPLIT.mtr")
+SHOW = os.path.join(ROOT, "package", "TLM_nov_2026_final")
+MTR = os.path.join(SHOW, "TLM_nov_2026_final.mtr")
 META = os.path.join(SHOW, "BUILD_METADATA.json")
-ASSEMBLER = os.path.join(ROOT, "package", "ASSEMBLE_R13_1.command")
+ASSEMBLER = os.path.join(ROOT, "package", "ASSEMBLE_TLM_nov_2026_final.command")
 MTR_IN = "9301c0f9375e4483a6f0e819f23f2a2466e027e322dcf32a5a12f69522619a1b"
 
 # new desk number -> the desk number whose job (and programming) it takes over

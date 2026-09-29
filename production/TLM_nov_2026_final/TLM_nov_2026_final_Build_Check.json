@@ -1,0 +1,191 @@
+[
+ {
+  "pass": 1,
+  "id": "1.1",
+  "status": "OK",
+  "title": "Every package file is present, with no stray files",
+  "detail": "32 files in package/, all 13 control files present"
+ },
+ {
+  "pass": 1,
+  "id": "1.2",
+  "status": "OK",
+  "title": "Control-file SHA-256 = BUILD_METADATA.json + assembler (show) = BASE_METADATA.json (base)",
+  "detail": "4 files, 3 places each: qlab 97f1e0cfd574…, mantra 9f1900285313…, mantra_base e273d54b71ab…, qlab_base 35cf343d1870…"
+ },
+ {
+  "pass": 1,
+  "id": "1.3",
+  "status": "OK",
+  "title": "Mantra [ZZ_FileEnd] Size footers match the file sizes",
+  "detail": "show 4482340 bytes, base 198628 bytes"
+ },
+ {
+  "pass": 1,
+  "id": "1.4",
+  "status": "OK",
+  "title": "Mantra files are well formed (sections, cue keys in order, memory headers)",
+  "detail": "440 + 120 sections"
+ },
+ {
+  "pass": 1,
+  "id": "1.5",
+  "status": "OK",
+  "title": "QLab workspaces are intact (references, round trip, totalCues)",
+  "detail": "show 479 cues (totalCues 479), base 456 cues"
+ },
+ {
+  "pass": 1,
+  "id": "1.6",
+  "status": "OK",
+  "title": "CSV and JSON files parse with the expected rows",
+  "detail": "manifest 80, section map 153, fix list and SFX map rectangular, metadata JSON valid"
+ },
+ {
+  "pass": 1,
+  "id": "1.7",
+  "status": "OK",
+  "title": "Scripts compile (Python) and parse (bash)",
+  "detail": "33 Python files compile; assembler and build_package.sh parse"
+ },
+ {
+  "pass": 2,
+  "id": "2.1",
+  "status": "OK",
+  "title": "Cue numbers are unique; emergency cues E1–E3 present",
+  "detail": "173 numbered cues, none repeated"
+ },
+ {
+  "pass": 2,
+  "id": "2.2",
+  "status": "OK",
+  "title": "Every OSC message: what QLab sends = the cue name, on the MANTRA patch",
+  "detail": "187 OSC cues checked, all on the MANTRA patch"
+ },
+ {
+  "pass": 2,
+  "id": "2.3",
+  "status": "OK",
+  "title": "Every OSC target exists in the Mantra show file",
+  "detail": "every page/memory/cue exists; levels 0 or 100; fades 0–10 s"
+ },
+ {
+  "pass": 2,
+  "id": "2.4",
+  "status": "OK",
+  "title": "Section map names = the Mantra cue names (and the P8 backup copies)",
+  "detail": "153 positions: names match, and every P8 backup cue equals its performance cue"
+ },
+ {
+  "pass": 2,
+  "id": "2.5",
+  "status": "OK",
+  "title": "Releases: each memory is released as the show leaves it; nothing stacks",
+  "detail": "one scene/song memory up at a time through all 97 show groups; ends on P3M6"
+ },
+ {
+  "pass": 2,
+  "id": "2.6",
+  "status": "OK",
+  "title": "Flash hits return by themselves (QLab pre-wait 0.1–1.5 s)",
+  "detail": "5 flash cues, each with an automatic return"
+ },
+ {
+  "pass": 2,
+  "id": "2.7",
+  "status": "OK",
+  "title": "Fades target a cue that is already running, with the level in their name",
+  "detail": "97 fade cues: targets exist and are already running; FADE TO levels match"
+ },
+ {
+  "pass": 2,
+  "id": "2.8",
+  "status": "OK",
+  "title": "Audio: every file in the manifest, every manifest file used, levels ≤ 0 dB, songs at 0 dB",
+  "detail": "80 media targets (69 audio cues) all in the 80-file manifest; all 80 used"
+ },
+ {
+  "pass": 2,
+  "id": "2.9",
+  "status": "OK",
+  "title": "Bundled placeholder sounds exist and are as long as their cues expect",
+  "detail": "11 bundled WAVs, each used and long enough"
+ },
+ {
+  "pass": 2,
+  "id": "2.10",
+  "status": "OK",
+  "title": "No strobe, macro or reset values in the show; chases under 3 flashes a second",
+  "detail": "strobe, colour macro, control and reset are 0 in every show cue; chases ≤ 3 steps/s"
+ },
+ {
+  "pass": 2,
+  "id": "2.11",
+  "status": "OK",
+  "title": "Patch: 40 fixtures, types by number, no address overlaps",
+  "detail": "show and base: 12 C42 · 10 Zoom · 11 COB · 6 PixBar · hazer, no overlaps"
+ },
+ {
+  "pass": 2,
+  "id": "2.12",
+  "status": "OK",
+  "title": "Fixed FOH C42 jobs: programming follows the positions",
+  "detail": "faces #1, 4, 5, 8, 9, 12; Spirit #2, Octavia #11, Shell #10, Dame #3, Flanders #7, Ariel #6"
+ },
+ {
+  "pass": 2,
+  "id": "2.13",
+  "status": "OK",
+  "title": "Review edits still in place (white flashes, storm palette, house blue, shell levels)",
+  "detail": "all four lighting fixes found in the show file"
+ },
+ {
+  "pass": 2,
+  "id": "2.14",
+  "status": "OK",
+  "title": "Venue base matches the show file (patch, fixtures, network, rig view, P1, 100–109)",
+  "detail": "OK: Plantagenet_Players_Base_2026_r1.mtr matches TLM_nov_2026_final.mtr (38 sections: patch, fixtures, network, rig view, P1, memories 100-109) · OK: Plantagenet_Players_Base_2026_r1.qlab5 fires all 48 P1-P5 memories of Plantagenet_Players_Base_2026_r1.mtr and nothing else"
+ },
+ {
+  "pass": 2,
+  "id": "2.15",
+  "status": "OK",
+  "title": "The base is a separate package: complete on its own, and nothing of it in the show package",
+  "detail": "base/Plantagenet_Players_Base_2026_r1 complete (files, docs, guide, previz, checksums); nothing of it in the show package"
+ },
+ {
+  "pass": 3,
+  "id": "3.1",
+  "status": "OK",
+  "title": "Rebuilding the book, printouts and base docs reproduces the committed files",
+  "detail": "75 committed outputs compared (PDFs by text, others byte for byte): all current"
+ },
+ {
+  "pass": 3,
+  "id": "3.2",
+  "status": "OK",
+  "title": "Fixture names, jobs, specials and hang positions agree across the paperwork",
+  "detail": "labels, Part B focus/specials and the 8 moves agree; C42s and pelmet PixBars never move"
+ },
+ {
+  "pass": 3,
+  "id": "3.3",
+  "status": "OK",
+  "title": "No stale statements left in the book sources or package notes",
+  "detail": "none of 6 stale patterns found"
+ },
+ {
+  "pass": 3,
+  "id": "3.4",
+  "status": "OK",
+  "title": "Every file the read-me files and README point to exists",
+  "detail": "all file names in README, READ_ME_FIRST and 00_START_HERE exist"
+ },
+ {
+  "pass": 3,
+  "id": "3.5",
+  "status": "OK",
+  "title": "Every file in the package, base and production folders is described in the File Guide",
+  "detail": "all 115 files described"
+ }
+]

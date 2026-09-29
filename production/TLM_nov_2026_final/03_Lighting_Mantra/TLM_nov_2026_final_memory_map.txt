@@ -1,0 +1,47 @@
+TLM_nov_2026_final.mtr - memory map (R13.1, 28 September 2026)
+Patch, custom fixtures, rig view and network as Plantagenet_Players_Base_2026_r1 (venue base). Desk opens on Page 2.
+QLab fires /PlayMemory/Page=P/Memory=M/Cue=C/Level=100/Fade=ms  and releases with Level=0.
+
+P1  Venue / rig base           Venue house looks (base file)
+    M1 STAGE WORK · M2 FULL WHITE · M3 WARM · M4 COOL · M5 BLUE · M6 RED · M9 PIXBAR WASH · M10 CURTAIN CALL
+P2  Act One — scene sections   Performance
+    M1 Q1–11 · M2 Q12–17 · M3 ship/storm Q18–27.5 · M4 shore/duet Q28–30.5 · M5 bar/transformation Q31–37 · M6 interval Q38 · M9 WORK/FOCUS · M10 SAFE LIGHT
+P3  Act Two — scene sections   Performance
+    M1 palace Q39–44 · M2 jellyfish Q45–49 · M3 lair/voice/haywire Q50–58.5 · M4 dry land Q59–59.7 · M5 wedding Q60–63.5 · M6 bows/end Q64–65
+P4  Songs                      Performance
+    M1 S1 Rock Lobster … M10 S10 He's a Pirate
+P5  FX / chases                Q57/Q57b + manual
+    M1 WARM CHASE · M2 COOL CHASE · M3 PARTY CHASE · M4 HAZE · M5 HAYWIRE · M6 JELLY PULSE
+P6  Look library               Rehearsal / rebuild
+    M01 BLACKOUT … M10 MAGIC
+P7  Look library               Rehearsal / rebuild
+    M11 LAIR … M16 BOWS · M7 = M17 SAFE LIGHT
+P8  Backup / reference         Emergency only
+    M1 = the full 153-position list (BACKUP - 01 PRESHOW …)
+
+LOOK LIBRARY
+  M01 BLACKOUT     P6 M1
+  M02 HOUSE        P6 M2
+  M03 UNDERWATER   P6 M3
+  M04 COMEDY       P6 M4
+  M05 ROYAL        P6 M5
+  M06 SHIP         P6 M6
+  M07 SHORE        P6 M7
+  M08 STORM        P6 M8
+  M09 LIGHTNING    P6 M9
+  M10 MAGIC        P6 M10
+  M11 LAIR         P7 M1
+  M12 VOICE SHELL  P7 M2
+  M13 JELLYFISH    P7 M3
+  M14 DRYLAND      P7 M4
+  M15 WEDDING      P7 M5
+  M16 BOWS         P7 M6
+  M17 SAFE LIGHT   P7 M7
+
+NOT STORED IN THE FILE - SET ON THE DESK
+  Tools > Setup > Remote Triggers: OSC, Play Memory, port 8000
+  Turn off Art-Net or sACN, whichever the universe-2 node does not use
+  NO link times: flash returns are fired by QLab pre-waits (Q21/23/25 +0.2 s, Q35 +0.3 s, Q47 +1 s, Q57b +0.3 s)
+
+Levels and colours are starting recipes - set final levels in the venue with performers.
+No strobe anywhere; lightning = single flash cues. HAYWIRE (P5 M5) starts at Q57 and stops at Q57b.

@@ -47,9 +47,9 @@ def build(path, parts):
     d.add(table(["File", "What"], [
         [S_.QLAB_NAME, "QLab 5 workspace — %d cues, %d master groups, songs S1–S10, emergency E1–E3" % (S_.TOTAL_QLAB_CUES, S_.N_MASTER)],
         [S_.MTR_NAME, "Mantra Lite show — %d positions over P2/P3/P4, FX P5, looks P6–P7, backup P8" % S_.N_POSITIONS],
-        ["R13_MANTRA_SECTION_MAP.csv", "Every QLab → Mantra target (page, memory, cue)"],
-        ["R13_MEDIA_MANIFEST.csv", "The 80 media files the workspace uses"],
-        ["R13_1_QLAB_AND_DESK_FIX_LIST.csv", "Show-control fixes and what is still to do"],
+        ["TLM_nov_2026_final_MANTRA_SECTION_MAP.csv", "Every QLab → Mantra target (page, memory, cue)"],
+        ["TLM_nov_2026_final_MEDIA_MANIFEST.csv", "The 80 media files the workspace uses"],
+        ["TLM_nov_2026_final_QLAB_AND_DESK_FIX_LIST.csv", "Show-control fixes and what is still to do"],
         ["docs/FOH_Flashing_Lights_and_Haze_Notice.pdf", "Front-of-house notice, ready to print"]], [70 * mm, 100 * mm], bold_first=True))
     d.add(H2("Document control"))
     d.add(table(["Rev", "Date", "Notes"], [

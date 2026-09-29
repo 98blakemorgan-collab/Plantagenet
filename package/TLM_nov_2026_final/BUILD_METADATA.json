@@ -1,0 +1,103 @@
+{
+  "revision": "R13.1",
+  "based_on": "R13 REBUILT",
+  "project_folder": "TLM_nov_2026_final",
+  "mantra": "TLM_nov_2026_final.mtr",
+  "mantra_base": "Plantagenet_Players_Base_2026_r1.mtr",
+  "qlab_base": "Plantagenet_Players_Base_2026_r1.qlab5",
+  "qlab": "TLM_nov_2026_final.qlab5",
+  "scene_split": true,
+  "positions": 153,
+  "media_manifest_count": 80,
+  "media_files": {
+    "r13_original": 106,
+    "new_sfx_v2": 38,
+    "new_extra_sfx": [
+      "Q057-5_SFX_Voice_Restore_Resolve.wav",
+      "Q063-5_SFX_Finale_Transition_Magic.wav (spare)",
+      "Q019-2_SFX_Rain_Burst.wav"
+    ],
+    "songs_mp3": 9,
+    "sfx_pack_originals": 40
+  },
+  "sha256": {
+    "mantra": "9f1900285313f4da98713534c3f1f21806e906fdda4693fba8fd7f6463beab12",
+    "qlab": "97f1e0cfd574bc1839165e23407fac5d3847985f9ff87cb30de4f85a6c6f6774"
+  },
+  "sha256_r13_original": {
+    "mantra": "743f2eedb8a8ba2fb0ebfc14321a2c51aafae9d11d1790500e447a01220eb3d8",
+    "qlab": "324d1bc1d253b53eeb30161cd0e08c29327655717c2efb3ddbdbc9ee927d4284"
+  },
+  "r13_1_changes": [
+    "Mantra [ZZ_FileEnd] Size corrected to actual file size 4479331",
+    "Duplicate control-files zip removed",
+    "R13 validation files archived",
+    "Section map CSV extended",
+    "Fix list added",
+    "9 song tracks added as level-matched 320k MP3s (-18 LUFS); S2-S5 flagged as vocal versions needing backing",
+    "New SFX pack (40 sounds) built into 38 *_v2.wav files + originals folder, already wired into QLab"
+  ],
+  "songs_supplied": 9,
+  "total_cues": 479,
+  "r13_1_qlab_changes": [
+    "5 timed flash returns (Q21,Q23,Q25,Q35,Q47)",
+    "HAYWIRE chase on at Q57; new group Q57b (restore flash, 57c Ariel special +0.3 s, chase off, restore SFX)",
+    "31 memory-release OSC cues",
+    "6 song fade-and-stops (Q9,Q15,Q15.5,Q19,Q41,Q52)",
+    "58 audio cues re-targeted to the new SFX and the 9 supplied songs, end times set to real file lengths; their stale R11 bookmarks cleared so QLab resolves by relative path",
+    "Q19.2 periodic rain burst added",
+    "removed 11 stale memos, 10 empty disarmed placeholders and the empty SONGS cue list",
+    "selectedCueListID set to Main Cue List; totalCues 479",
+    "Machine-specific settings NOT changed: audio patch device, video stage screen, network interface",
+    "R13 workspace kept in docs/archive_R13_original/"
+  ],
+  "desk_link_times": "Not required - QLab fires the six flash returns. Only needed if running the P8 backup list by hand.",
+  "sha256_r13_1_before_package": {
+    "mantra": "95cf3c690c2cef573c58e761f27eb54491f3e102684a1ab3f597a232fcae24c2",
+    "qlab": "ea9120780d472457267244ed75895b501fa0f2cb5fb00973aadbe113e2e3aa01"
+  },
+  "r13_1_package_changes": [
+    "QLab: stale R11 alias data cleared on the 38 remaining media cues (95 old alias blobs emptied, same method as the 58 re-targeted cues); no other cue, setting or target changed; all 99 targets still resolve to the 80 manifest paths",
+    "docs/FOH_Flashing_Lights_and_Haze_Notice.pdf added",
+    "00_START_HERE.txt: manifest count corrected to 80; R11 step updated",
+    "Fix list updated",
+    "docs/TLM_nov_2026_final_Operator_Cue_Sheets.pdf and docs/TLM_nov_2026_final_Mantra_Labels.pdf rebuilt from the R13.1 QLab/Mantra files (replace the R8 printouts)",
+    "Plantagenet_Players_Base_2026_r1.mtr (clean venue base) added; its patch, custom fixtures, network, rig view, P1 looks and memories 100-109 are identical to the R13.1 show file",
+    "Plantagenet_Players_Base_2026_r1.qlab5 added (tools/make_qlab_base.py): QLab base for the Mantra base - P1 looks V1-V10, rig test T1-T41 (P2-P5 TEST memories), E1-E3; settings and MANTRA patch as the R13.1 workspace",
+    "docs/Plantagenet_Players_Base_2026_r1_Link_Map.pdf and docs/Plantagenet_Players_Base_2026_r1_Mantra_Labels.pdf added (tools/make_base_printouts.py); venue names only",
+    "docs/TLM_nov_2026_final_Zoom_Adjustment.pdf added (tools/make_zoom_sheet.py)",
+    "Plantagenet_Players_Base_2026_r1.qlab5: rig ID sweep I1-I5 added (all C42 / ZOOM / COB / PIX at once); docs/Plantagenet_Players_Base_2026_r1_Rig_ID_Test.pdf added"
+  ],
+  "sha256_before_lx_sound_edits": {
+    "mantra": "95cf3c690c2cef573c58e761f27eb54491f3e102684a1ab3f597a232fcae24c2",
+    "qlab": "5dca0842f16f9c12c096e4389d939a564bca6a3d874619dd3fa97eda1bcb86ab"
+  },
+  "r13_1_lx_sound_edits": [
+    "Mantra: flash hits Q21/Q23/Q25/Q35/Q57b and look M09 LIGHTNING are white on every colour fixture",
+    "Mantra: storm Q20-Q25b use the M08 STORM colours (levels unchanged); Q26 is a low deep-blue tail (back 45 %, side 30 %)",
+    "Mantra: Q1/Q2/Q3/Q38/Q65 backlight in the M02 HOUSE colour",
+    "Mantra: Q36 and Q52-Q56 side/backlight at the M12 VOICE SHELL levels",
+    "Mantra: the same edits made at each cue's P8 backup position; [ZZ_FileEnd] Size re-checked",
+    "QLab: starting levels on all 69 audio cues (songs 0 dB, beds -15/-18 dB, SFX -6 dB, thunder -3 dB, house music -6 dB); FADE TO cues at Q3/Q46/Q51 keep the same drop",
+    "QLab: storm - Q22 fades out Q20 (3 s); Q26 fades out Q25 and takes Q22 to -21 dB (4 s); Q27 fade-outs 2.5 s (fade cues moved from Q27, total cue count unchanged)",
+    "QLab: Q19 wind/rain bed disarmed; Q19/Q19.2 notes updated",
+    "QLab: Q1/Q2/Q37/Q38/Q65 music set to loop"
+  ],
+  "sha256_before_fixed_foh_jobs": {
+    "mantra": "9301c0f9375e4483a6f0e819f23f2a2466e027e322dcf32a5a12f69522619a1b"
+  },
+  "r13_1_fixed_foh_jobs": [
+    "C42 #1-12 are fixed on the FOH bar in number order (#1 stage-right end); jobs reassigned by position: faces DSR #1+#4, DSC #5+#8, DSL #9+#12; SP2 Spirit #2, V1 Dame #3, SP1 Ariel #6, V2 Flanders #7, SP4 Shell #10, SP3 Octavia #11",
+    "Mantra show memories 10-70: each job's programming moved to its new desk number (296 cue sections); patch, fixtures, network, rig view, live scene, P1 and memories 100-109 unchanged"
+  ],
+  "base_package": "Plantagenet_Players_Base_2026_r1 - separate download, checksums in its BASE_METADATA.json",
+  "names": {
+    "show_folder": "TLM_nov_2026_final",
+    "qlab": "TLM_nov_2026_final.qlab5",
+    "mantra": "TLM_nov_2026_final.mtr",
+    "formerly": "TLM_R13_REBUILT_Show_Files / TLM_Show_R13_1.qlab5 / TLM_SHOW_2026_R13_FLASHY_SCENE_SPLIT.mtr"
+  },
+  "final_names": [
+    "QLab workspaceName set to TLM_nov_2026_final (strings only)"
+  ]
+}

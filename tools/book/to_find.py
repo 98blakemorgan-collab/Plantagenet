@@ -1,4 +1,4 @@
-"""TLM_To_Find_and_Confirm_R13_1.pdf — the open-items list for the R13.1 show."""
+"""TLM_nov_2026_final_To_Find_and_Confirm.pdf — the open-items list for the R13.1 show."""
 from core import *  # noqa: F401,F403
 import show as S_
 

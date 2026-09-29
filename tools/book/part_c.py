@@ -84,12 +84,12 @@ def build(path):
                                          ["Wing 1 25–36", "COB #25–28 LX2 · #29–30 SR · #31–32 SL · PixBar #33–36"],
                                          ["Wing 2 37–48", "PixBar #37–38 · COB #39 · hazer #40 · pinspots #41–42 · 43–48 spare"]],
                 [30 * mm, 140 * mm], bold_first=True))
-    d.add(P("Both wings must be connected (fixtures 25–42). Printed fader labels: 03_Lighting_Mantra/TLM_R13_1_Mantra_Labels.pdf."))
+    d.add(P("Both wings must be connected (fixtures 25–42). Printed fader labels: 03_Lighting_Mantra/TLM_nov_2026_final_Mantra_Labels.pdf."))
 
     d.add(H1("4 Step-by-step patch procedure"))
     for title, items in [
         ("1 Back up what is on the desk", ["FAT32 USB stick in the Mantra. Home › Tools › Export Show — keep it untouched as the venue restore point.",
-                                           "Keep BASE_SHOW_2026.mtr (the clean venue base) on the stick too."]),
+                                           "Keep Plantagenet_Players_Base_2026_r1.mtr (the clean venue base) on the stick too."]),
         ("2 Load the R13.1 show file", ["Copy %s to the stick (check it in Mantra Editor first — Part D §9)." % S_.MTR_NAME,
                                         "Home › Tools › Import Show › choose it. Check five custom fixture types: CX 42 NEW, ZOOM 12 CHANNEL, TOURCOB PAR, PIXBAR 6CH, HAZER 2CH."]),
         ("3 Clear the output", ["A L, then O, so nothing is live while you check the patch."]),

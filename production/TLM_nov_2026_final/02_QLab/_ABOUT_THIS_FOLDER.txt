@@ -1,0 +1,1 @@
+QLab: README, the cue list as a spreadsheet. The show folder itself is package/TLM_nov_2026_final.

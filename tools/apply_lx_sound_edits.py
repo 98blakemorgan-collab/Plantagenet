@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Apply the R13.1 lighting and sound review edits to the show files, in place.
 
-  Mantra  TLM_SHOW_2026_R13_FLASHY_SCENE_SPLIT.mtr
+  Mantra  TLM_nov_2026_final.mtr
     L1  Flash hits white: Q21, Q23, Q25, Q35, Q57b and the M09 LIGHTNING look
     L2  Storm Q20-Q25b take their colours from M08 STORM (levels kept);
         Q26 becomes a low deep-blue storm tail
@@ -10,7 +10,7 @@
         levels so the shell special is the brightest thing on stage
     Every edited cue is also edited at its position in the P8 backup list.
 
-  QLab  TLM_Show_R13_1.qlab5
+  QLab  TLM_nov_2026_final.qlab5
     S1  Starting levels on every audio cue (songs stay at 0 dB); the three
         absolute FADE TO cues keep the same drop from the new level
     S2  Storm layers: Q22 fades out Q20, Q26 fades out Q25 and takes Q22 down
@@ -19,7 +19,7 @@
     S4  House, preshow, end-of-act, interval and exit music loop
 
 Runs only on the exact R13.1 files it was written for (SHA-256 checked) and
-records the new hashes in BUILD_METADATA.json and ASSEMBLE_R13_1.command.
+records the new hashes in BUILD_METADATA.json and ASSEMBLE_TLM_nov_2026_final.command.
 """
 import hashlib
 import json
@@ -29,12 +29,12 @@ import plistlib
 import re
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-SHOW = os.path.join(ROOT, "package", "TLM_R13_REBUILT_Show_Files")
-MTR = os.path.join(SHOW, "TLM_SHOW_2026_R13_FLASHY_SCENE_SPLIT.mtr")
-QLAB = os.path.join(SHOW, "TLM_Show_R13_1.qlab5")
+SHOW = os.path.join(ROOT, "package", "TLM_nov_2026_final")
+MTR = os.path.join(SHOW, "TLM_nov_2026_final.mtr")
+QLAB = os.path.join(SHOW, "TLM_nov_2026_final.qlab5")
 META = os.path.join(SHOW, "BUILD_METADATA.json")
-ASSEMBLER = os.path.join(ROOT, "package", "ASSEMBLE_R13_1.command")
-SECTION_MAP = os.path.join(SHOW, "R13_MANTRA_SECTION_MAP.csv")
+ASSEMBLER = os.path.join(ROOT, "package", "ASSEMBLE_TLM_nov_2026_final.command")
+SECTION_MAP = os.path.join(SHOW, "TLM_nov_2026_final_MANTRA_SECTION_MAP.csv")
 
 MTR_IN = "95cf3c690c2cef573c58e761f27eb54491f3e102684a1ab3f597a232fcae24c2"
 QLAB_IN = "5dca0842f16f9c12c096e4389d939a564bca6a3d874619dd3fa97eda1bcb86ab"

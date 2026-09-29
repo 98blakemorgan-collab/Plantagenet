@@ -1,0 +1,64 @@
+THE LITTLE MERMAID - R13.1 BUILD CHECK
+======================================
+
+PASS 1 - FILES
+  [OK  ] 1.1 Every package file is present, with no stray files
+         32 files in package/, all 13 control files present
+  [OK  ] 1.2 Control-file SHA-256 = BUILD_METADATA.json + assembler (show) = BASE_METADATA.json (base)
+         4 files, 3 places each: qlab 97f1e0cfd574…, mantra 9f1900285313…, mantra_base e273d54b71ab…, qlab_base 35cf343d1870…
+  [OK  ] 1.3 Mantra [ZZ_FileEnd] Size footers match the file sizes
+         show 4482340 bytes, base 198628 bytes
+  [OK  ] 1.4 Mantra files are well formed (sections, cue keys in order, memory headers)
+         440 + 120 sections
+  [OK  ] 1.5 QLab workspaces are intact (references, round trip, totalCues)
+         show 479 cues (totalCues 479), base 456 cues
+  [OK  ] 1.6 CSV and JSON files parse with the expected rows
+         manifest 80, section map 153, fix list and SFX map rectangular, metadata JSON valid
+  [OK  ] 1.7 Scripts compile (Python) and parse (bash)
+         33 Python files compile; assembler and build_package.sh parse
+
+PASS 2 - THE SHOW (QLab <-> Mantra <-> media)
+  [OK  ] 2.1 Cue numbers are unique; emergency cues E1–E3 present
+         173 numbered cues, none repeated
+  [OK  ] 2.2 Every OSC message: what QLab sends = the cue name, on the MANTRA patch
+         187 OSC cues checked, all on the MANTRA patch
+  [OK  ] 2.3 Every OSC target exists in the Mantra show file
+         every page/memory/cue exists; levels 0 or 100; fades 0–10 s
+  [OK  ] 2.4 Section map names = the Mantra cue names (and the P8 backup copies)
+         153 positions: names match, and every P8 backup cue equals its performance cue
+  [OK  ] 2.5 Releases: each memory is released as the show leaves it; nothing stacks
+         one scene/song memory up at a time through all 97 show groups; ends on P3M6
+  [OK  ] 2.6 Flash hits return by themselves (QLab pre-wait 0.1–1.5 s)
+         5 flash cues, each with an automatic return
+  [OK  ] 2.7 Fades target a cue that is already running, with the level in their name
+         97 fade cues: targets exist and are already running; FADE TO levels match
+  [OK  ] 2.8 Audio: every file in the manifest, every manifest file used, levels ≤ 0 dB, songs at 0 dB
+         80 media targets (69 audio cues) all in the 80-file manifest; all 80 used
+  [OK  ] 2.9 Bundled placeholder sounds exist and are as long as their cues expect
+         11 bundled WAVs, each used and long enough
+  [OK  ] 2.10 No strobe, macro or reset values in the show; chases under 3 flashes a second
+         strobe, colour macro, control and reset are 0 in every show cue; chases ≤ 3 steps/s
+  [OK  ] 2.11 Patch: 40 fixtures, types by number, no address overlaps
+         show and base: 12 C42 · 10 Zoom · 11 COB · 6 PixBar · hazer, no overlaps
+  [OK  ] 2.12 Fixed FOH C42 jobs: programming follows the positions
+         faces #1, 4, 5, 8, 9, 12; Spirit #2, Octavia #11, Shell #10, Dame #3, Flanders #7, Ariel #6
+  [OK  ] 2.13 Review edits still in place (white flashes, storm palette, house blue, shell levels)
+         all four lighting fixes found in the show file
+  [OK  ] 2.14 Venue base matches the show file (patch, fixtures, network, rig view, P1, 100–109)
+         OK: Plantagenet_Players_Base_2026_r1.mtr matches TLM_nov_2026_final.mtr (38 sections: patch, fixtures, network, rig view, P1, memories 100-109) · OK: Plantagenet_Players_Base_2026_r1.qlab5 fires all 48 P1-P5 memories of Plantagenet_Players_Base_2026_r1.mtr and nothing else
+  [OK  ] 2.15 The base is a separate package: complete on its own, and nothing of it in the show package
+         base/Plantagenet_Players_Base_2026_r1 complete (files, docs, guide, previz, checksums); nothing of it in the show package
+
+PASS 3 - PAPERWORK
+  [OK  ] 3.1 Rebuilding the book, printouts and base docs reproduces the committed files
+         75 committed outputs compared (PDFs by text, others byte for byte): all current
+  [OK  ] 3.2 Fixture names, jobs, specials and hang positions agree across the paperwork
+         labels, Part B focus/specials and the 8 moves agree; C42s and pelmet PixBars never move
+  [OK  ] 3.3 No stale statements left in the book sources or package notes
+         none of 6 stale patterns found
+  [OK  ] 3.4 Every file the read-me files and README point to exists
+         all file names in README, READ_ME_FIRST and 00_START_HERE exist
+  [OK  ] 3.5 Every file in the package, base and production folders is described in the File Guide
+         all 115 files described
+
+RESULT: PASS — 27 checks, 27 OK, 0 failed, 0 skipped

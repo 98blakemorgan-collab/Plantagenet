@@ -7,13 +7,15 @@ and level of every fixture in each look and cue of the Mantra show file. It is a
 the light lands, not a photometric simulation.
 
 Writes one JPEG per render to OUT (default: scratchpad-style folder given on the command line) and
-production/TLM_Show_R13_1/03_Lighting_Mantra/TLM_Lighting_Previz_R13_1.pdf:
+production/TLM_nov_2026_final/03_Lighting_Mantra/TLM_nov_2026_final_Lighting_Previz.pdf:
   - the whole rig at full, and each look M01-M17
   - each fixture on its own, in open white, with where it hangs marked
   - every show cue as programmed (tabs open or closed as called), with its backdrop on the wall
   - every song section
 
-Usage: python3 tools/lighting_previz.py [image_dir]      (needs numpy, pillow, reportlab)
+Usage: python3 tools/lighting_previz.py [--base] [image_dir]      (needs numpy, pillow, reportlab)
+  --base   the venue base instead: the rig as installed with the venue's own looks (Plantagenet_Players_Base_2026_r1), written to
+           03_Lighting_Mantra/Plantagenet_Players_Base_2026_r1_Previz.pdf
 """
 import json
 import math
@@ -36,7 +38,8 @@ PHOTOS = os.path.join(ROOT, "production", "assets", "venue_photos")
 THUMBS = os.path.join(ROOT, "production", "assets", "thumbs")
 OPEN_PHOTO = os.path.join(PHOTOS, "15_Stage_tabs_open_from_house.jpg")
 CLOSED_PHOTO = os.path.join(PHOTOS, "16_Stage_tabs_closed_from_house.jpg")
-PDF = os.path.join(ROOT, "production", "TLM_Show_R13_1", "03_Lighting_Mantra", "TLM_Lighting_Previz_R13_1.pdf")
+PDF = os.path.join(ROOT, "production", "TLM_nov_2026_final", "03_Lighting_Mantra", "TLM_nov_2026_final_Lighting_Previz.pdf")
+BASE_PDF = os.path.join(ROOT, "production", "TLM_nov_2026_final", "03_Lighting_Mantra", "Plantagenet_Players_Base_2026_r1_Previz.pdf")
 
 W, H = 1288, 966            # output size (the photos are 2576 x 1932: every coordinate below is full-size / 2)
 LW, LH = 644, 483           # light maps are built at half the output size and scaled up
@@ -224,6 +227,34 @@ def fixture_parts(n):
     return parts
 
 
+def base_parts(n):
+    """The venue base: the rig as installed (venue photos) with the venue's general-cover focus.
+    C42s spread across by FOH-bar position; all 10 Zooms and COBs #29-32 on LX1; COBs #23-28 on LX2."""
+    t = TYPE_OF.get(n, "")
+    if 1 <= n <= 12:
+        u, v = -0.78 + (n - 1) * 1.56 / 11, 0.28
+        return [("floor", (u, v, 1.7, 1.6, "hard", 0.9)),
+                ("wall", (u, 1.4, 1.3, 1.3, 0.4)),
+                ("valance", (u, 0.10)),
+                ("beam", (foh_src(n), ("floor", u, v), 26, 150, 0.35)),
+                ("curtain", (u, 1.5, 1.6, 1.4, 0.8)),
+                ("apron", (u, 0.5, 1.7, 0.55))]
+    if 13 <= n <= 22 or 29 <= n <= 32:
+        u = (-0.82 + (n - 13) * 1.64 / 9) if n <= 22 else (-0.6 + (n - 29) * 0.38)
+        g = 0.62 if n <= 22 else 0.42
+        sx, _ = OPEN.floor_xy(u, 0.12)
+        return [("floor", (u, 0.45, 2.0, 1.8, "soft", g)),
+                ("wall", (u, 0.5, 1.6, 0.9, 0.3)),
+                ("beam", ((sx, 700.0), ("floor", u, 0.45), 34, 200, 0.45))]
+    if 23 <= n <= 28:
+        u = -0.7 + (n - 23) * 1.4 / 5
+        sx, _ = OPEN.floor_xy(u, 0.85)
+        return [("floor", (u, 0.35, 2.0, 1.8, "soft", 0.5)),
+                ("wall", (u, 0.15, 1.6, 0.35, 0.18)),
+                ("beam", ((sx, 745.0), ("floor", u, 0.35), 26, 220, 1.0))]
+    return fixture_parts(n)
+
+
 def gauss_d2(d2, hard):
     if hard == "hard":
         return np.clip((1.0 - d2) / 0.28, 0, 1) ** 1.5 * 0.92 + np.exp(-2.2 * d2) * 0.08
@@ -233,11 +264,11 @@ def gauss_d2(d2, hard):
 class Masks:
     """Per-fixture light maps at LW x LH for one stage view, cached."""
 
-    def __init__(self, geom, closed):
+    def __init__(self, geom, closed, rig="show"):
         ys, xs = np.mgrid[0:LH, 0:LW].astype(np.float32)
         full = 1.0 / (SC * LW / W)      # light-map px -> full-size photo px
         self.fx, self.fy = xs * full, ys * full
-        self.geom, self.closed = geom, closed
+        self.geom, self.closed, self.rig = geom, closed, rig
         self.c = geom.coords(self.fx, self.fy)
         self.cache = {}
 
@@ -257,7 +288,7 @@ class Masks:
         light = np.zeros((LH, LW), np.float32)
         beam = np.zeros((LH, LW), np.float32)
         c = self.c
-        for kind, p in fixture_parts(n):
+        for kind, p in (base_parts(n) if self.rig == "base" else fixture_parts(n)):
             if not self.closed:
                 if kind == "floor":
                     u0, v0, ru, rv, hard, g = p
@@ -304,11 +335,15 @@ class Masks:
 _t = open(mp.MTR, encoding="latin-1").read()
 _secs = re.split(r"^\[([^\]]+)\]\s*$", _t, flags=re.M)
 MTR = {_secs[i]: _secs[i + 1] for i in range(1, len(_secs), 2)}
+BASE_MTR_PATH = mp.BASE_MTR
+_tb = open(BASE_MTR_PATH, encoding="latin-1").read()
+_sb = re.split(r"^\[([^\]]+)\]\s*$", _tb, flags=re.M)
+BASE_MTR = {_sb[i]: _sb[i + 1] for i in range(1, len(_sb), 2)}
 
 
-def state_of(mem_id, k):
+def state_of(mem_id, k, secs=None):
     """{fixture: (level 0-1, (r, g, b) 0-1)} for Memory mem_id cue k."""
-    sec = MTR.get("Memory%d-Cue%d" % (mem_id, k), "")
+    sec = (MTR if secs is None else secs).get("Memory%d-Cue%d" % (mem_id, k), "")
     kv = dict(l.split("=", 1) for l in sec.splitlines() if "=" in l)
     out = {}
     for key, v in kv.items():
@@ -348,6 +383,7 @@ _lum = ALB_OPEN.mean(axis=2)
 _ys, _xs = np.mgrid[0:H, 0:W]
 WALLMASK = ((_lum > 0.16) & (_xs > 540 * SC) & (_xs < 1548 * SC) & (_ys > 700 * SC) & (_ys < 1322 * SC)).astype(np.float32)
 M_OPEN, M_CLOSED = Masks(OPEN, False), Masks(CLOSEDG, True)
+MB_OPEN, MB_CLOSED = Masks(OPEN, False, "base"), Masks(CLOSEDG, True, "base")
 
 
 def up(a):
@@ -371,9 +407,12 @@ def projection(bg):
     return canvas * WALLMASK[..., None]
 
 
-def render(state, closed=False, bg=None, haze=HAZE, mark=None):
+def render(state, closed=False, bg=None, haze=HAZE, mark=None, rig="show"):
     """state: {fixture: (level, rgb)}. Returns a PIL image."""
-    masks = M_CLOSED if closed else M_OPEN
+    if rig == "base":
+        masks = MB_CLOSED if closed else MB_OPEN
+    else:
+        masks = M_CLOSED if closed else M_OPEN
     alb = ALB_CLOSED if closed else ALB_OPEN
     light = np.zeros((3, LH, LW), np.float32)
     beams = np.zeros((3, LH, LW), np.float32)
@@ -412,12 +451,11 @@ except OSError:
     FONT = ImageFont.load_default()
 
 
-def source_marker(n):
-    t = part_b.FOCUS[[f[0] for f in part_b.FOCUS].index(n)][1]
+def source_marker(n, rig="show"):
     if n <= 12:
         x, _ = foh_src(n)
         return [(x, 40, "#%d FOH bar" % n)]
-    for kind, p in fixture_parts(n):
+    for kind, p in (base_parts(n) if rig == "base" else fixture_parts(n)):
         if kind == "beam":
             (sx, sy) = p[0]
             return [(sx, sy, "#%d" % n)]
@@ -432,6 +470,7 @@ def source_marker(n):
 # --------------------------------------------------------------------------
 
 POSITION = {n: pos for n, _t, pos, _a, _r in part_b.FOCUS}
+TYPE_OF = {n: t for n, t, _p, _a, _r in part_b.FOCUS}
 ROLE = {n: r for n, _t, _p, _a, r in part_b.FOCUS}
 TYPE = {n: t for n, t, _p, _a, _r in part_b.FOCUS}
 TYPENAME = {"C42": "Lightsky C42", "ZM": "Tour Pro Zoom", "COB": "TourCOB PAR", "PIX": "PixBar", "HAZE": "Hazer"}
@@ -481,6 +520,48 @@ def jobs():
     return out
 
 
+BASE_FIX = {"C42": "Lightsky C42", "ZM": "Tour Pro Zoom", "COB": "TourCOB PAR", "PIX": "PixBar", "HAZE": "Hazer"}
+
+
+def jobs_base():
+    """The venue base: installed rig, venue looks P1, internal memories 100-109, each fixture, rig ID sweeps."""
+    out = []
+    rig = list(range(1, 40))
+    out.append(("whole", "base-full", "Whole rig at full", "Every fixture at 100 % open white, as installed, tabs open",
+                {n: (1.0, WHITE) for n in rig}, False, None, None))
+    out.append(("whole", "base-full-closed", "Tabs closed, rig at full",
+                "Only the FOH bar and the pelmet PixBars reach the tabs", {n: (1.0, WHITE) for n in rig}, True, None, None))
+    for mid in range(0, 10):
+        if "Memory%d-Cue0" % mid not in BASE_MTR:
+            continue
+        st, name = state_of(mid, 0, BASE_MTR)
+        out.append(("look", "base-P1M%d" % (mid + 1), name, "Venue look · P1 M%d · QLab base V%d" % (mid + 1, mid + 1),
+                    st, False, None, None))
+    for mid in range(100, 110):
+        if "Memory%d-Cue0" % mid not in BASE_MTR:
+            continue
+        st, name = state_of(mid, 0, BASE_MTR)
+        out.append(("look", "base-M%d" % mid, name, "Venue memory %d (internal, from the venue base)" % mid,
+                    st, False, None, None))
+    for key, label, ns in (("I1", "ALL C42 (12)", range(1, 13)), ("I2", "ALL ZOOM (10)", range(13, 23)),
+                           ("I3", "ALL COB (11)", list(range(23, 33)) + [39]), ("I4", "ALL PIX (6)", range(33, 39))):
+        out.append(("sweep", "base-%s" % key, "%s %s" % (key, label), "Rig ID sweep %s: every fixture of one type at "
+                    "full white" % key, {n: (1.0, WHITE) for n in ns}, False, None, None))
+    for n in range(1, 41):
+        where = mp.INSTALLED.get(n, "")
+        if n == 40:
+            st = {k: (0.6, WHITE) for k in range(23, 29)}
+            out.append(("fixture", "base-fx-40", "#40 Hazer", "T40 · floor upstage: the LX2 COBs with no haze and "
+                        "with haze", st, False, None, None))
+            continue
+        note = (" (assumed: pelmet)" if n in PELMET_PIX else " (assumed: LX2)" if n in LX2_PIX else
+                " (assumed)" if 23 <= n <= 32 or n == 39 else "")
+        out.append(("fixture", "base-fx-%02d" % n, "#%d %s" % (n, BASE_FIX.get(TYPE_OF[n], TYPE_OF[n])),
+                    "T%d · hangs %s%s · %s" % (n, where, note, mp.FIXTURES[n - 1][0]), {n: (1.0, WHITE)}, False, None,
+                    source_marker(n, "base")))
+    return out
+
+
 def last_bg(num):
     """Backdrop on the wall at cue num (the last VIDEO fired at or before it)."""
     bg = None
@@ -492,29 +573,29 @@ def last_bg(num):
     return bg
 
 
-def main(outdir):
+def main(outdir, rig="show"):
     os.makedirs(outdir, exist_ok=True)
     index = []
-    for group, key, title, sub, st, closed, bg, mark in jobs():
-        if key == "fx-40":
-            a = render(st, haze=0.0)
-            b = render(st, haze=1.1)
+    for group, key, title, sub, st, closed, bg, mark in (jobs_base() if rig == "base" else jobs()):
+        if key.endswith("fx-40"):
+            a = render(st, haze=0.0, rig=rig)
+            b = render(st, haze=1.1, rig=rig)
             im = Image.new("RGB", (W, H))
             im.paste(a.crop((0, 0, W // 2, H)), (0, 0))
             im.paste(b.crop((W // 2, 0, W, H)), (W // 2, 0))
             ImageDraw.Draw(im).line([(W // 2, 0), (W // 2, H)], fill=(255, 214, 90), width=2)
         else:
-            im = render(st, closed=closed, bg=bg, mark=mark)
+            im = render(st, closed=closed, bg=bg, mark=mark, rig=rig)
         f = key.replace(".", "_") + ".jpg"
         im.save(os.path.join(outdir, f), quality=80, optimize=True)
         index.append({"group": group, "key": key, "file": f, "title": title, "sub": sub, "closed": closed,
                       "bg": bg or ""})
     json.dump(index, open(os.path.join(outdir, "index.json"), "w"), indent=1)
-    build_pdf(outdir, index)
-    print("%d renders -> %s\n%s" % (len(index), outdir, PDF))
+    build_pdf(outdir, index, rig)
+    print("%d renders -> %s\n%s" % (len(index), outdir, BASE_PDF if rig == "base" else PDF))
 
 
-def build_pdf(outdir, index):
+def build_pdf(outdir, index, rig="show"):
     from reportlab.lib.pagesizes import A4, landscape
     from reportlab.lib.units import mm
     from reportlab.pdfgen import canvas
@@ -533,31 +614,46 @@ def build_pdf(outdir, index):
             im.resize((width, width * H // W), Image.LANCZOS).save(f, quality=70, optimize=True)
         return f
 
-    c = canvas.Canvas(PDF, pagesize=(pw, ph))
-    c.setTitle("TLM R13.1 Lighting Previz")
-    heads = {"whole": "The whole rig and the look library", "look": "The whole rig and the look library",
-             "fixture": "Each fixture on its own (open white, 100 %)", "cue": "Every cue as programmed",
-             "song": "Song sections"}
+    base = rig == "base"
+    doc_title = "Venue Base Lighting Previz" if base else "Lighting Previz"
+    c = canvas.Canvas(BASE_PDF if base else PDF, pagesize=(pw, ph))
+    c.setTitle("Plantagenet Hall Venue Base Lighting Previz" if base else "TLM R13.1 Lighting Previz")
+    heads = ({"whole": "The installed rig and the venue looks", "look": "The installed rig and the venue looks",
+              "sweep": "Rig ID sweeps — one fixture type at a time (QLab base I1–I4)",
+              "fixture": "Each fixture on its own, as installed (QLab base T1–T40)"} if base else
+             {"whole": "The whole rig and the look library", "look": "The whole rig and the look library",
+              "fixture": "Each fixture on its own (open white, 100 %)", "cue": "Every cue as programmed",
+              "song": "Song sections"})
+    strap = ("Plantagenet Hall · venue base Plantagenet_Players_Base_2026_r1 · the rig as installed with the venue's own looks — a sketch "
+             "of where the light lands, drawn on photos of the stage." if base else
+             "The Little Mermaid · Plantagenet Hall · R13.1 lighting previz — a sketch of where the light lands, drawn "
+             "on photos of the stage; check every look in the venue.")
 
     def page_head(title, n):
         c.setFont("Sans-Bold", 13)
         c.drawString(14 * mm, ph - 13 * mm, title)
         c.setFont("Sans", 7.5)
-        c.drawString(14 * mm, ph - 18 * mm, "The Little Mermaid · Plantagenet Hall · R13.1 lighting previz — a sketch of where "
-                     "the light lands, drawn on photos of the stage; check every look in the venue.")
-        c.drawRightString(pw - 14 * mm, 8 * mm, "Lighting Previz · page %d" % n)
+        c.drawString(14 * mm, ph - 18 * mm, strap)
+        c.drawRightString(pw - 14 * mm, 8 * mm, "%s · page %d" % (doc_title, n))
 
     # cover
     page = 1
     c.setFont("Sans-Bold", 26)
-    c.drawString(14 * mm, ph - 30 * mm, "Lighting Previz")
+    c.drawString(14 * mm, ph - 30 * mm, doc_title)
     c.setFont("Sans", 11)
-    c.drawString(14 * mm, ph - 38 * mm, "The Little Mermaid · Plantagenet Hall · R13.1 · the lighting drawn on the stage")
-    full = next(i for i in index if i["key"] == "full")
+    c.drawString(14 * mm, ph - 38 * mm, "Plantagenet Hall · Plantagenet_Players_Base_2026_r1 · the installed rig and the venue looks, drawn on "
+                 "the stage" if base else "The Little Mermaid · Plantagenet Hall · R13.1 · the lighting drawn on the stage")
+    full = next(i for i in index if i["key"] in ("full", "base-full"))
     c.drawImage(thumb(full, 1000), 14 * mm, 30 * mm, width=168 * mm, height=126 * mm)
     c.setFont("Sans", 8.5)
     y = ph - 52 * mm
-    for line in ["How to read it", "",
+    lines = (["How to read it", "",
+              "The venue base: the rig as it hangs now", "(venue photos) with the venue's own focus —", "no show jobs, no booms.", "",
+              "Pictures: the whole rig, the venue looks P1", "M1–M10 and memories 100–109, the rig ID", "sweeps I1–I4 and every fixture on its own", "(T1–T40 in the QLab base).", "",
+              "C42 #1–12 fixed on the FOH bar, #1 at the", "stage-right end. All 10 Zooms and COBs", "#29–32 on LX1; COBs #23–28 on LX2.", "",
+              "Assumed until the rig ID test: which COBs", "are on LX1/LX2, pelmet PixBars #33, #35, #37", "and LX2 PixBars #34, #36, #38.", "",
+              "A sketch, not a photometric simulation."] if base else None)
+    for line in lines or ["How to read it", "",
                  "Each picture relights a photo of the stage", "taken from the house. Pools on the floor and",
                  "the back wall show where each fixture lands;", "faint beams show it in light haze.", "",
                  "Colours and levels are read from the show file", "for every look, cue and song section.", "",
@@ -568,10 +664,11 @@ def build_pdf(outdir, index):
         c.setFont("Sans-Bold" if line == "How to read it" else "Sans", 9 if line == "How to read it" else 8.5)
         c.drawString(190 * mm, y, line)
         y -= 4.6 * mm
-    c.drawRightString(pw - 14 * mm, 8 * mm, "Lighting Previz · page 1")
+    c.drawRightString(pw - 14 * mm, 8 * mm, "%s · page 1" % doc_title)
     c.showPage()
 
-    groups = [("whole", 4), ("look", 4), ("fixture", 4), ("cue", 4), ("song", 9)]
+    groups = ([("whole", 4), ("look", 4), ("sweep", 4), ("fixture", 4)] if base else
+              [("whole", 4), ("look", 4), ("fixture", 4), ("cue", 4), ("song", 9)])
     for g, per in groups:
         items = [i for i in index if i["group"] == g]
         cols = 2 if per == 4 else 3
@@ -595,5 +692,7 @@ def build_pdf(outdir, index):
 
 
 if __name__ == "__main__":
-    main(sys.argv[1] if len(sys.argv) > 1 else os.path.join(ROOT, "production", "TLM_Show_R13_1", "03_Lighting_Mantra",
-                                                             "Previz"))
+    args = [a for a in sys.argv[1:] if not a.startswith("--")]
+    rig = "base" if "--base" in sys.argv else "show"
+    main(args[0] if args else os.path.join(ROOT, "production", "TLM_nov_2026_final", "03_Lighting_Mantra",
+                                           "Base_Previz" if rig == "base" else "Previz"), rig)

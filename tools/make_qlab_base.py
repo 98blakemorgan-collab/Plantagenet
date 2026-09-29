@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
-"""Build BASE_SHOW_2026.qlab5: the QLab 5 base workspace for the Mantra venue base.
+"""Build Plantagenet_Players_Base_2026_r1.qlab5: the QLab 5 base workspace for the Mantra venue base.
 
-It matches BASE_SHOW_2026.mtr memory for memory:
+It matches Plantagenet_Players_Base_2026_r1.mtr memory for memory:
   - P1 venue looks (STAGE WORK, FULL STAGE WHITE, ...): one GO each; every
     look releases the other P1 looks, so only one is ever up.
   - Rig ID I1-I4: every fixture of one type at once (C42, ZOOM, COB, PIX); I5 clears.
@@ -16,7 +16,7 @@ workspace, and the cues are cloned from its own OSC, group, memo and script
 cues, so they are written exactly the way QLab 5 writes them.
 
 Usage: python3 tools/make_qlab_base.py
-Output: package/TLM_R13_REBUILT_Show_Files/BASE_SHOW_2026.qlab5
+Output: base/Plantagenet_Players_Base_2026_r1/Plantagenet_Players_Base_2026_r1.qlab5
 """
 import copy
 import os
@@ -25,11 +25,11 @@ import re
 import uuid
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-SHOW = os.path.join(ROOT, "package", "TLM_R13_REBUILT_Show_Files")
-TEMPLATE = os.path.join(SHOW, "TLM_Show_R13_1.qlab5")
-MTR = os.path.join(SHOW, "BASE_SHOW_2026.mtr")
-OUT = os.path.join(SHOW, "BASE_SHOW_2026.qlab5")
-NAME = "BASE_SHOW_2026"
+SHOW = os.path.join(ROOT, "package", "TLM_nov_2026_final")
+TEMPLATE = os.path.join(SHOW, "TLM_nov_2026_final.qlab5")
+MTR = os.path.join(ROOT, "base", "Plantagenet_Players_Base_2026_r1", "Plantagenet_Players_Base_2026_r1.mtr")
+OUT = os.path.join(ROOT, "base", "Plantagenet_Players_Base_2026_r1", "Plantagenet_Players_Base_2026_r1.qlab5")
+NAME = "Plantagenet_Players_Base_2026_r1"
 
 UID = plistlib.UID
 LOOK_FADE, TEST_FADE, OFF_FADE = 2000, 0, 2000
@@ -254,7 +254,7 @@ def build():
         return q.osc(msg, label, uid_for(tag, str(i), str(level)))
 
     cues = [q.memo("0", "%s - QLab base for the Mantra venue base" % NAME,
-                   "Load BASE_SHOW_2026.mtr on the Mantra (Home > Tools > Import Show). "
+                   "Load Plantagenet_Players_Base_2026_r1.mtr on the Mantra (Home > Tools > Import Show). "
                    "Every cue sends OSC to the MANTRA patch (2.0.0.1 port 8000, Play Memory). "
                    "P1 looks: one at a time. T1-T40: one fixture at a time. E2 ALL OFF clears the desk.")]
 

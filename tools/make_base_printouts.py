@@ -1,16 +1,16 @@
 #!/usr/bin/env python3
-"""Build the BASE_SHOW_2026 printouts: the link map and the Mantra label sheet.
+"""Build the Plantagenet_Players_Base_2026_r1 printouts: the link map and the Mantra label sheet.
 
 Everything is read from the base show files, so the printouts show what they
 actually do:
-  - BASE_SHOW_2026.qlab5   which QLab cue sends which OSC to which page/memory
-  - BASE_SHOW_2026.mtr     memory names, which fixtures each memory lights, patch
+  - Plantagenet_Players_Base_2026_r1.qlab5   which QLab cue sends which OSC to which page/memory
+  - Plantagenet_Players_Base_2026_r1.mtr     memory names, which fixtures each memory lights, patch
 
 Usage:  python3 tools/make_base_printouts.py            (needs reportlab)
-Output: package/TLM_R13_REBUILT_Show_Files/docs/BASE_SHOW_2026_Link_Map.pdf
-        package/TLM_R13_REBUILT_Show_Files/docs/BASE_SHOW_2026_Mantra_Labels.pdf
-        package/TLM_R13_REBUILT_Show_Files/docs/BASE_SHOW_2026_Rig_ID_Test.pdf
-        (both also copied to production/TLM_Show_R13_1/03_Lighting_Mantra)
+Output: base/Plantagenet_Players_Base_2026_r1/docs/Plantagenet_Players_Base_2026_r1_Link_Map.pdf
+        base/Plantagenet_Players_Base_2026_r1/docs/Plantagenet_Players_Base_2026_r1_Mantra_Labels.pdf
+        base/Plantagenet_Players_Base_2026_r1/docs/Plantagenet_Players_Base_2026_r1_Rig_ID_Test.pdf
+        (both also copied to production/TLM_nov_2026_final/03_Lighting_Mantra)
 """
 import os
 import plistlib
@@ -21,10 +21,10 @@ import make_printouts as mp
 from make_printouts import P, esc, mm, colors, landscape, A4, Spacer, PageBreak, Table, TableStyle, ParagraphStyle
 
 ROOT = mp.ROOT
-QLAB = os.path.join(mp.SHOW, "BASE_SHOW_2026.qlab5")
-MTR = os.path.join(mp.SHOW, "BASE_SHOW_2026.mtr")
-PROD = os.path.join(ROOT, "production", "TLM_Show_R13_1", "03_Lighting_Mantra")
-FOOTER = "Plantagenet Hall · venue base · BASE_SHOW_2026.mtr + BASE_SHOW_2026.qlab5 · %s" % mp.DATE
+QLAB = mp.BASE_QLAB
+MTR = mp.BASE_MTR
+PROD = os.path.join(ROOT, "production", "TLM_nov_2026_final", "03_Lighting_Mantra")
+FOOTER = "Plantagenet Hall · venue base · Plantagenet_Players_Base_2026_r1.mtr + Plantagenet_Players_Base_2026_r1.qlab5 · %s" % mp.DATE
 
 # Neutral venue names: fixture type (desk model) + where it hangs. No show names.
 TYPE_OF = {"CX 42 NEW": "C42", "ZOOM 12 CHANNEL": "ZOOM", "TOURCOB PAR": "COB", "PIXBAR 6CH": "PIX",
@@ -157,10 +157,10 @@ def build_link_map(mems, patch, qlab):
     wsname, net, cues = qlab
     fixnames = base_fixtures(patch)
     st = mp.styles(7.0)
-    path = os.path.join(mp.OUT, "BASE_SHOW_2026_Link_Map.pdf")
-    doc = mp.Doc(path, "BASE_SHOW_2026 Link Map", FOOTER, landscape(A4))
-    story = [P("BASE_SHOW_2026 — what is linked to what, and where", st["title"]),
-             P("Read from %s and BASE_SHOW_2026.mtr. Use the two together: QLab base on the Mac, base show on the "
+    path = os.path.join(mp.BASE_DOCS, "Plantagenet_Players_Base_2026_r1_Link_Map.pdf")
+    doc = mp.Doc(path, "Plantagenet_Players_Base_2026_r1 Link Map", FOOTER, landscape(A4))
+    story = [P("Plantagenet_Players_Base_2026_r1 — what is linked to what, and where", st["title"]),
+             P("Read from %s and Plantagenet_Players_Base_2026_r1.mtr. Use the two together: QLab base on the Mac, base show on the "
                "Mantra. Fader number = fixture number." % os.path.basename(QLAB), st["sub"]), Spacer(0, 3 * mm)]
 
     # 1 the chain
@@ -172,7 +172,7 @@ def build_link_map(mems, patch, qlab):
               "%s · OSC over %s to %s port %d. Message: /PlayMemory/Page=P/Memory=M/Cue=1/Level=L/Fade=ms "
               "(L 100 = play, 0 = release)" % (osc_patch["name"], "TCP" if cs["useTcp"] else "UDP", cs["host"], cs["port"]),
               "IP 2.0.0.1 · Tools › Setup › Remote Triggers: OSC · Play Memory · port 8000 (set on the desk)",
-              "Page P, memory M of BASE_SHOW_2026.mtr lights the fixtures listed in section 2",
+              "Page P, memory M of Plantagenet_Players_Base_2026_r1.mtr lights the fixtures listed in section 2",
               "U1: %s · U2: %s" % (UNIVERSE_ROUTE[1], UNIVERSE_ROUTE[2])]]
     story += [mp.make_table(chain[0], [chain[1]], [52 * mm, 70 * mm, 55 * mm, 50 * mm, 50 * mm], st), Spacer(0, 3 * mm)]
 
@@ -269,12 +269,12 @@ def build_labels(mems, patch, qlab):
     _, _, cues = qlab
     names = base_fixtures(patch)
     st = mp.styles(7.5)
-    path = os.path.join(mp.OUT, "BASE_SHOW_2026_Mantra_Labels.pdf")
-    doc = mp.Doc(path, "BASE_SHOW_2026 Mantra Labels", FOOTER, landscape(A4))
+    path = os.path.join(mp.BASE_DOCS, "Plantagenet_Players_Base_2026_r1_Mantra_Labels.pdf")
+    doc = mp.Doc(path, "Plantagenet_Players_Base_2026_r1 Mantra Labels", FOOTER, landscape(A4))
     story = mp.fixture_labels(st, names, BASE_KEY) + [PageBreak()]
 
     cue_of = first_cue(cues)
-    story += [P("Playback labels — BASE_SHOW_2026", st["title"]),
+    story += [P("Playback labels — Plantagenet_Players_Base_2026_r1", st["title"]),
               P("P1 = venue looks. P2–P5 = rig test, one fixture per memory. Header = page · memory · QLab cue.",
                 st["sub"]), Spacer(0, 2 * mm)]
     for pg, pname in [(1, "VENUE LOOKS"), (2, "TEST 1–10"), (3, "TEST 11–20"), (4, "TEST 21–30"), (5, "TEST 31–40")]:
@@ -304,7 +304,7 @@ def build_labels(mems, patch, qlab):
     story += [mp.label_strip([mp.fit_label(x, tab_w - 2.4 * mm, big=13) for x in tabs], tab_w, 11 * mm),
               Spacer(0, 3 * mm)]
     rem = ParagraphStyle("rem", fontName="Sans-Bold", fontSize=12, leading=14, textColor=mp.INK)
-    for txt in ("BASE SHOW  ·  desk: BASE_SHOW_2026.mtr  ·  QLab: BASE_SHOW_2026.qlab5",
+    for txt in ("BASE SHOW  ·  desk: Plantagenet_Players_Base_2026_r1.mtr  ·  QLab: Plantagenet_Players_Base_2026_r1.qlab5",
                 "V = venue look (one at a time)  ·  T = one fixture  ·  E2 = all off  ·  E3 = work light"):
         t = Table([[P(esc(txt), rem)]], colWidths=[277 * mm], rowHeights=[10 * mm])
         t.setStyle(TableStyle([("BOX", (0, 0), (-1, -1), 1, mp.HEAD), ("VALIGN", (0, 0), (-1, -1), "MIDDLE"),
@@ -333,8 +333,8 @@ def build_rig_test(mems, patch, qlab):
     _, _, cues = qlab
     names = base_fixtures(patch)
     st = mp.styles(7.4)
-    path = os.path.join(mp.OUT, "BASE_SHOW_2026_Rig_ID_Test.pdf")
-    doc = mp.Doc(path, "BASE_SHOW_2026 Rig ID Test", FOOTER, landscape(A4))
+    path = os.path.join(mp.BASE_DOCS, "Plantagenet_Players_Base_2026_r1_Rig_ID_Test.pdf")
+    doc = mp.Doc(path, "Plantagenet_Players_Base_2026_r1 Rig ID Test", FOOTER, landscape(A4))
     tick = "☐"
     test_of = {}
     for c in cues:
@@ -352,7 +352,7 @@ def build_rig_test(mems, patch, qlab):
                "mis-addressed units. About 30 minutes, two people: one at the Mac (QLab) and desk, one on stage "
                "with this sheet.", st["sub"]), Spacer(0, 3 * mm)]
     setup = [["<b>Set up</b>",
-              "Mantra: import BASE_SHOW_2026.mtr (Home › Tools › Import Show). QLab: open BASE_SHOW_2026.qlab5 and "
+              "Mantra: import Plantagenet_Players_Base_2026_r1.mtr (Home › Tools › Import Show). QLab: open Plantagenet_Players_Base_2026_r1.qlab5 and "
               "check the MANTRA network patch reaches the desk. House and work lights off. GO <b>E2</b> (all off)."],
              ["<b>Part 1 · types</b>",
               "GO %s one at a time. Every fixture of that type comes on together. On stage: count them, check "
@@ -454,8 +454,8 @@ def main():
     qlab = load_qlab()
     bad = [c["num"] for c in qlab[2] for p, m, _, _ in c["fires"] + c["releases"] if idx(p, m) not in mems]
     if bad:
-        raise SystemExit("QLab base fires memories that are not in BASE_SHOW_2026.mtr: %s" % bad)
-    os.makedirs(mp.OUT, exist_ok=True)
+        raise SystemExit("QLab base fires memories that are not in Plantagenet_Players_Base_2026_r1.mtr: %s" % bad)
+    os.makedirs(mp.BASE_DOCS, exist_ok=True)
     for path in (build_link_map(mems, patch, qlab), build_labels(mems, patch, qlab),
                  build_rig_test(mems, patch, qlab)):
         shutil.copy(path, os.path.join(PROD, os.path.basename(path)))

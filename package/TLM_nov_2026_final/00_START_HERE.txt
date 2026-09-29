@@ -1,0 +1,89 @@
+THE LITTLE MERMAID - SHOW FILES  TLM_nov_2026_final  (R13.1, 29 Sep 2026)
+=========================================================================
+
+OPEN THESE
+  QLab 5 :  TLM_nov_2026_final.qlab5                      (edited - use this one)
+  Mantra :  TLM_nov_2026_final.mtr  (footer fixed)
+  Base   :  NOT in this folder. The venue base is its own download,
+            Plantagenet_Players_Base_2026_r1 (Mantra base, QLab base,
+            guide, rig ID test). The show file is built on it and matches
+            its patch, fixtures, network, rig view and P1 looks.
+  Read   :  docs/TLM_nov_2026_final_File_Guide.pdf       every file, what it is, who uses it
+            docs/TLM_nov_2026_final_Lighting_Changes.pdf  every lighting change
+            docs/TLM_nov_2026_final_Review_and_Fix_List.pdf
+
+LIGHTING AND SOUND REVIEW (29 Sep 2026, already in these files)
+  - Mantra: lightning/transformation/restore flashes are white; the storm
+    Q20-Q25b holds the M08 STORM colours; Q26 is a low blue tail; preshow,
+    interval and end backlight is the M02 HOUSE blue; the shell cues keep
+    side/back low so the shell special is brightest.
+  - The 12 C42s are FIXED on the FOH bar (#1 at the stage-right end), so
+    their jobs go by position: faces #1+4, #5+8, #9+12; Spirit #2, Dame #3,
+    Ariel #6, Flanders #7, Shell #10, Octavia #11. The programming moved
+    with the jobs; the venue base is unchanged.
+  - QLab: every sound has a starting level (songs 0 dB, SFX -6, beds -15);
+    Q22 fades out Q20, Q26 fades out Q25 and takes Q22 down, Q27 fades the
+    rest over 2.5 s; Q19's wind/rain bed is off; house, preshow, end of Act
+    One, interval and exit music loop.
+
+ALREADY DONE IN R13.1 (no action needed)
+  - Lightning / transformation / jelly / restore flashes return by themselves
+    (QLab timed returns) - do NOT also set desk link times.
+  - New Q57b "Ariel restored"; HAYWIRE chase starts at Q57, stops at Q57b.
+  - QLab releases each Mantra memory when it moves on, so songs and earlier
+    scenes can't stay lit underneath.
+  - Songs fade out at Q9, Q15, Q15.5, Q19, Q41, Q52.
+  - 58 audio cues now point at the new SFX and the 9 supplied songs, with
+    correct lengths. Old placeholder files are no longer used.
+  - Q19.2 now plays a rain burst.
+  - Removed stale memo cues, empty MUS placeholders, empty SONGS list.
+  - Old R11 aliases cleared on the remaining 38 media cues (package fix).
+  - Flashing-lights/haze notice ready to print: docs/FOH_Flashing_Lights_and_Haze_Notice.pdf
+  - Printouts rebuilt for R13.1 (replace the R8 sheets and desk labels):
+      docs/TLM_nov_2026_final_Operator_Cue_Sheets.pdf  SM calls, QLab GO list, Mantra
+                                              backup, haze/FX + deck
+      docs/TLM_nov_2026_final_Mantra_Labels.pdf        fader labels, P1-P8 playback
+                                              rows, reminder strips, page tabs
+
+SETUP ON THE SHOW MAC
+1. (Optional tidy) Rename or remove any old TLM_R11_FLASHY_Show_Files
+   folder. Since the R13.1 package, no cue carries an R11 alias any more,
+   so QLab cannot pick it up by mistake.
+2. Put this folder, named exactly TLM_nov_2026_final, on the
+   Desktop, and open TLM_nov_2026_final.qlab5.
+   Check: no missing-media warnings; select Q4's audio and confirm the
+   target ends in _v2.wav. If any audio cue shows as missing, drag the
+   file named in TLM_nov_2026_final_SFX_RETARGET_MAP.csv onto it. Then File > Save.
+3. QLab Workspace Settings (these are specific to the show Mac):
+     Audio   Patch 1 -> StudioLive USB device (NOT System Output)
+     Video   Stage 1 -> projector output (NOT built-in display)
+     Network MANTRA -> interface = wired Ethernet
+4. Mantra: Home > Tools > Import Show > TLM_nov_2026_final.mtr
+   Network: Art-Net and sACN are both on - turn off the one the U2 node
+   doesn't use.
+5. Test P2 M10 SAFE LIGHT, then a cue-to-cue.
+
+STILL TO SUPPLY
+  - Backing tracks for S2 Feeling Good, S3 Part of Your World,
+    S4 Wellerman (if it has vocals), S5 Time of My Life - the current files
+    are vocal versions and are named "swap for backing".
+    Save the backing track under a NEW name and drag it onto the S#.0 cue.
+  - S7 jellyfish chorus song (still to be decided).
+  - House, preshow, end of Act One, interval and exit music (Q1, Q2, Q37,
+    Q38, Q65) and Ariel's recorded line Q42.5 - still silent placeholders.
+  Always use a NEW filename when swapping audio - a same-name swap keeps
+  the old end time in QLab.
+
+FILES
+  TLM_nov_2026_final.qlab5 / TLM_nov_2026_final.mtr
+  docs/TLM_nov_2026_final_File_Guide.pdf          every file in the build, and the build check
+  docs/TLM_nov_2026_final_Lighting_Changes.pdf    every lighting change in one document
+  docs/TLM_nov_2026_final_Zoom_Adjustment.pdf     how to set zoom on the Zooms #13-22 and
+                                         a sheet to record the values
+  TLM_nov_2026_final_MANTRA_SECTION_MAP.txt/.csv   which QLab cue fires each Mantra cue
+  TLM_nov_2026_final_MEDIA_MANIFEST.csv            80 media files used by R13.1
+  TLM_nov_2026_final_SFX_RETARGET_MAP.csv        new SFX -> cues
+  TLM_nov_2026_final_QLAB_AND_DESK_FIX_LIST.csv  what is done / what is left
+  docs/                             review, R13.1 cue sheets + Mantra labels,
+                                    FOH notice, R13 guide & book, R9 book,
+                                    archive_R13_original (R13 workspace)

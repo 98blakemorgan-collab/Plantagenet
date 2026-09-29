@@ -10,38 +10,35 @@ The media is not inside this zip; it's too large to send this way. The
 script pulls it from the three zips in your Drive folder TLM_R13.
 
 STEPS (on the show Mac)
- 1. Unzip this package anywhere, e.g. Downloads/TLM_R13_1_Package.
+ 1. Unzip this package anywhere, e.g. Downloads/TLM_nov_2026_final_Package.
  2. From Drive > TLM_R13, download into that same folder:
         TLM_R13_1.zip   TLM_R13_1_SFX.zip   TLM_Backdrops_R10.zip
     (links in SOURCE_ZIPS.csv). Do NOT let Safari unzip them.
     The 10 untouched placeholder sounds (S07, Q1, Q2, Q11, Q37, Q38, Q42.5,
     Q43, Q59, Q65) are not in those zips - they are already in this package.
- 3. Double-click ASSEMBLE_R13_1.command.
+ 3. Double-click ASSEMBLE_TLM_nov_2026_final.command.
     If macOS blocks it: right-click > Open, or in Terminal run
-        bash ~/Downloads/TLM_R13_1_Package/ASSEMBLE_R13_1.command
- 4. It builds OUTPUT/TLM_R13_REBUILT_Show_Files and checks:
+        bash ~/Downloads/TLM_nov_2026_final_Package/ASSEMBLE_TLM_nov_2026_final.command
+ 4. It builds OUTPUT/TLM_nov_2026_final and checks:
       - all 80 media files QLab uses are at the exact paths it expects
-      - the QLab and Mantra files (show + base) match the checked
-        R13.1 checksums
+      - the QLab and Mantra show files match the checked checksums
       - whether an old TLM_R11_FLASHY_Show_Files folder is still around
     Results go in OUTPUT/ASSEMBLY_REPORT.txt.
- 5. Move OUTPUT/TLM_R13_REBUILT_Show_Files to the Desktop (keep that exact
-    name), open TLM_Show_R13_1.qlab5 and carry on from step 3 of
+ 5. Move OUTPUT/TLM_nov_2026_final to the Desktop (keep that exact
+    name), open TLM_nov_2026_final.qlab5 and carry on from step 3 of
     00_START_HERE.txt inside it.
 
 FINAL FOLDER LAYOUT
- TLM_R13_REBUILT_Show_Files/
+ TLM_nov_2026_final/
    00_START_HERE.txt
-   TLM_Show_R13_1.qlab5                       <- open this
-   TLM_SHOW_2026_R13_FLASHY_SCENE_SPLIT.mtr   <- import on Mantra
-   BASE_SHOW_2026.mtr                         <- clean venue base (restore point)
-   BASE_SHOW_2026.qlab5                       <- QLab base for it (rig check)
+   TLM_nov_2026_final.qlab5   <- open this
+   TLM_nov_2026_final.mtr     <- import on Mantra
    BUILD_METADATA.json
-   R13_MEDIA_MANIFEST.csv   R13_MANTRA_SECTION_MAP.csv/.txt
-   R13_1_SFX_RETARGET_MAP.csv   R13_1_QLAB_AND_DESK_FIX_LIST.csv
-   docs/            review PDF, R13.1 cue sheets + Mantra labels, FOH notice,
-                    base show link map + labels,
-                    R13 guide & book, R9 book, archive_R13_original
+   TLM_nov_2026_final_MEDIA_MANIFEST.csv   TLM_nov_2026_final_MANTRA_SECTION_MAP.csv/.txt
+   TLM_nov_2026_final_SFX_RETARGET_MAP.csv   TLM_nov_2026_final_QLAB_AND_DESK_FIX_LIST.csv
+   docs/            file guide, lighting changes, cue sheets, Mantra labels,
+                    zoom sheet, FOH notice, review PDF (+ from the zips: R13
+                    guide & book, R9 book, archive_R13_original)
    media/
      audio/
        00_SFX_Pack_2026-09-28_originals/   (untouched pack sources, reference)
@@ -56,4 +53,10 @@ FINAL FOLDER LAYOUT
      stills/
      video/
 
-See R13_1_REVIEW_NOTES.txt for what was checked and what is still to do.
+See TLM_nov_2026_final_REVIEW_NOTES.txt for what was checked and what is still to do,
+TLM_nov_2026_final_BUILD_CHECK.txt for the latest triple check of every file, and
+docs/TLM_nov_2026_final_File_Guide.pdf (inside the show folder) for every file.
+
+The venue base (the Plantagenet Hall rig on its own) is a SEPARATE
+download and is not in this package: Plantagenet_Players_Base_2026_r1.zip
+(base Mantra file, QLab base, its guide, printouts and previz).

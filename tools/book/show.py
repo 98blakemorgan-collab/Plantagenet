@@ -1,8 +1,8 @@
 """R13.1 show data, read straight from the show files in the package.
 
 Everything the book states about cues, Mantra positions, songs and media comes
-from here, so the book always matches TLM_Show_R13_1.qlab5 and
-TLM_SHOW_2026_R13_FLASHY_SCENE_SPLIT.mtr.
+from here, so the book always matches TLM_nov_2026_final.qlab5 and
+TLM_nov_2026_final.mtr.
 """
 import csv
 import os
@@ -106,9 +106,9 @@ def mem(page, m):
     return MEMS.get(PAGE_LAYOUT.get(page, {}).get(m), {})
 
 
-MANIFEST = list(csv.DictReader(open(os.path.join(SHOW, "R13_MEDIA_MANIFEST.csv"), newline="")))
-SFX_MAP = list(csv.DictReader(open(os.path.join(SHOW, "R13_1_SFX_RETARGET_MAP.csv"), newline="")))
-FIXLIST = list(csv.DictReader(open(os.path.join(SHOW, "R13_1_QLAB_AND_DESK_FIX_LIST.csv"), newline="")))
+MANIFEST = list(csv.DictReader(open(os.path.join(SHOW, "TLM_nov_2026_final_MEDIA_MANIFEST.csv"), newline="")))
+SFX_MAP = list(csv.DictReader(open(os.path.join(SHOW, "TLM_nov_2026_final_SFX_RETARGET_MAP.csv"), newline="")))
+FIXLIST = list(csv.DictReader(open(os.path.join(SHOW, "TLM_nov_2026_final_QLAB_AND_DESK_FIX_LIST.csv"), newline="")))
 PLACEHOLDER_CUES = ["S7", "Q1", "Q2", "Q11", "Q37", "Q38", "Q42.5", "Q43", "Q59", "Q65"]
 
 # Backgrounds actually used, in show order: code -> (file, first cue)

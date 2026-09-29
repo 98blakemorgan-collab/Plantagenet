@@ -1,0 +1,94 @@
+THE LITTLE MERMAID - R13.1 PACKAGE REVIEW NOTES  (28 Sep 2026)
+================================================================
+
+Sources reviewed (Drive folder TLM_R13):
+  TLM_nov_2026_final_Review_and_Fix_List.pdf           read in full
+  TLM_R13_1_Show_Control_Files_EDITED.zip     unpacked and checked file by file
+  TLM_R13_1.zip / _SFX.zip / Backdrops_R10    too large to open here (Drive
+                                              limit is 10 MB per download) -
+                                              the assembler checks them on your Mac
+
+1. VERIFIED IN THE EDITED CONTROL FILES
+  - QLab and Mantra files match the SHA-256 values in BUILD_METADATA.json
+    (as supplied, before the package fixes below).
+  - QLab workspace decodes: 479 cues, 99 media targets. Every target
+    resolves to one of the 80 paths in TLM_nov_2026_final_MEDIA_MANIFEST.csv, and every
+    manifest path is used. Nothing is missing or extra.
+  - TLM_nov_2026_final_SFX_RETARGET_MAP.csv: all 38 "Done" rows point at manifest files.
+    The only file not in the manifest is Q063-5 Finale Transition Magic,
+    which is correctly marked "Spare - not used".
+  - Mantra section map: 153 positions, matching BUILD_METADATA.
+  - New Q019-2 rain burst WAV is 6.0 s, matching the review PDF.
+
+2. FIXES APPLIED IN THIS PACKAGE
+  a) QLab - old R11 aliases removed (this was TO-DO priority 1).
+     38 media cues (all video cues plus the audio that was not re-targeted)
+     still carried alias data pointing at TLM_R11_FLASHY_Show_Files, so QLab
+     could open R11 media if that folder was on the Mac. The alias data is
+     now emptied, the same way R13.1 already did it for the other 58 cues,
+     so QLab finds every file by its path inside the show folder.
+     Checked after editing: only those alias blobs changed; every cue,
+     setting and file target is otherwise identical; all 99 targets still
+     match the manifest. New QLab SHA-256 is in BUILD_METADATA.json.
+  b) Front-of-house flashing-lights and haze notice:
+     docs/FOH_Flashing_Lights_and_Haze_Notice.pdf (A4, ready to print).
+  c) 00_START_HERE.txt said the manifest lists 79 files. It lists 80
+     (the Q19.2 rain burst was added). Corrected.
+  d) Fix list, START_HERE and BUILD_METADATA updated to match.
+  e) The 10 placeholder sounds R13.1 left untouched (S07, Q1, Q2, Q11, Q37,
+     Q38, Q42.5, Q43, Q59, Q65) are in none of the Drive zips. They are
+     bundled in this package, taken from TLM_nov_2026_final on Drive;
+     each file's length matches what the QLab workspace expects.
+  f) Printouts rebuilt for R13.1 from the QLab workspace, the Mantra file
+     and the section map (the R8 ones still showed one long P2 M1 list):
+       docs/TLM_nov_2026_final_Operator_Cue_Sheets.pdf - SM master calls, QLab GO list
+         (incl. song-section GOs and the automatic flash returns), Mantra
+         backup with P2/P3/P4 targets + P8 positions, haze/FX + deck
+       docs/TLM_nov_2026_final_Mantra_Labels.pdf - fixture fader labels (patch
+         unchanged), playback rows for P1-P8, reminder strips, page tabs
+     Rebuild with: python3 tools/make_printouts.py
+
+3. STILL TO DO (these can't be done in the files)
+  Show Mac, in QLab Workspace Settings (they depend on that Mac's hardware):
+    - Audio: Patch 1 -> StudioLive USB (outs 1-2 -> desk ch 11-12)
+    - Video: Stage 1 -> projector
+    - Network: MANTRA patch interface -> wired Ethernet
+  Mantra: turn off Art-Net or sACN, whichever the U2 node doesn't use.
+  Rig: confirm fixtures #38 (PixBar) and #39 (TourCOB) exist.
+  Audio to supply (always save under a NEW filename, then drag onto the cue):
+    - Backing tracks for S2 Feeling Good, S3 Part of Your World,
+      S5 Time of My Life; check S4 Wellerman for vocals
+    - Choose S7 jellyfish chorus
+    - House, preshow, end of Act One, interval and exit music
+      (Q1, Q2, Q37, Q38, Q65), and Ariel's recorded line Q42.5
+    - S1 Rock Lobster is the 7:05 music-video cut; confirm the edit
+  Front of house: print and post the notice from docs/.
+  Print: the R13.1 cue sheets and Mantra labels from docs/ (bin the R8 ones).
+  Cue-to-cue: flash return timings (Q21/23/25/35/47), the Q57 -> Q57b
+  sequence, the Level=0 memory releases (run Q8 > S1 > Q9) and the six song
+  fade-outs.
+
+4. OPTIONAL
+  - Q063-5 Finale Transition Magic is included as a spare. Add it as a
+    new cue at Q63.5/Q64 if wanted.
+  - Unused spares (6 videos, 22 stills, and the old placeholder WAVs beside
+    the *_v2 files) are kept by the assembler and can be deleted after tech.
+
+5. LIGHTING AND SOUND REVIEW EDITS  (applied with tools/apply_lx_sound_edits.py)
+  Mantra (each edit also made at the cue's P8 backup position):
+    - Flash hits Q21, Q23, Q25, Q35, Q57b and look M09 LIGHTNING are white on
+      every colour fixture. They were full white plus saturated colour.
+    - Storm Q20-Q25b take the M08 STORM colours, levels unchanged, so each
+      flash returns to the colour it left. Q26 is now a low deep-blue tail.
+    - Q1, Q2, Q3, Q38, Q65 backlight is the M02 HOUSE colour (it changed
+      colour in front of the audience).
+    - Q36 and Q52-Q56 side and backlight at the M12 VOICE SHELL levels, so
+      the shell special is the brightest thing on stage.
+  QLab:
+    - Starting levels on every sound (songs 0 dB, SFX -6, beds -15); the
+      FADE TO cues at Q3/Q46/Q51 keep the same drop.
+    - Storm: Q22 fades out Q20, Q26 fades out Q25 and takes Q22 to -21 dB,
+      Q27 fades the rest over 2.5 s. Total cue count unchanged (479).
+    - Q19's wind/rain bed is disarmed, so the rain lands on Q19.2.
+    - House, preshow, end-of-act, interval and exit music loop.
+  Check all of it from the house at cue-to-cue; trim levels with the real files.

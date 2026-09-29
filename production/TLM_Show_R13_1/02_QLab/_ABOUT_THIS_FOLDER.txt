@@ -1,1 +1,0 @@
-QLab: README, the R13.1 cue list as a spreadsheet. The show folder itself is package/TLM_R13_REBUILT_Show_Files (also holds BASE_SHOW_2026.qlab5, the QLab base for the Mantra venue base).

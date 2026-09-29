@@ -1,0 +1,11 @@
+{
+  "name": "Plantagenet_Players_Base_2026_r1",
+  "date": "28 September 2026",
+  "home": "base/Plantagenet_Players_Base_2026_r1 (not in the show package)",
+  "sha256": {
+    "mantra_base": "e273d54b71abb69bc9e2c6d5b431ebb5ceb09e22673f6b67d082fbfc66c63076",
+    "qlab_base": "35cf343d1870a12dd1218a6e0a8a85fa60b1b60d760c7f60a96014bf45d3e4ba"
+  },
+  "fixtures": 40,
+  "qlab_base_cues": 57
+}

@@ -116,7 +116,7 @@ def build_moves(path):
     d.add(table(["", "#", "Type", "From", "To", "Hang with / aim", "Job after the move", "✓"], rows,
                 [8 * mm, 9 * mm, 20 * mm, 12 * mm, 38 * mm, 34 * mm, 41 * mm, 8 * mm]))
     d.add(box("verify", "CONFIRM FIRST", "The four LX1 COB PARs are assumed to be #29–32 (the photos show four COBs on LX1 "
-              "and the patch has four boom COBs). Run the rig ID test (docs/BASE_SHOW_2026_Rig_ID_Test.pdf, T23–T32) "
+              "and the patch has four boom COBs). Run the rig ID test (docs/Plantagenet_Players_Base_2026_r1_Rig_ID_Test.pdf, T23–T32) "
               "before anything comes down and write the real numbers on this sheet."))
     d.add(H2("What stays"))
     d.add(table(["Where", "Fixtures", "Note"], [list(r) for r in STAYS], [30 * mm, 44 * mm, 96 * mm], bold_first=True))
@@ -133,7 +133,7 @@ def build_moves(path):
         "DMX female–female barrels to bridge the gaps left on LX1; one terminator for the end of the line",
         "Power: one 10 A feed to each boom (Part C §5), IEC/powerCON leads to each boom fixture",
         "Cable mats or ramps for the wing crossings, black gaffer, white tape for the boom bases",
-        "Printed base labels (docs/BASE_SHOW_2026_Mantra_Labels.pdf) and this sheet on a clipboard",
+        "Printed base labels (docs/Plantagenet_Players_Base_2026_r1_Mantra_Labels.pdf) and this sheet on a clipboard",
     ], cols=1))
 
     d.add(H1("3 Order of work — the best way"))
@@ -285,7 +285,7 @@ def build_changes(path):
     d.add(H1("4 Files and paperwork"))
     d.add(table(["File", "What changed"], [
         [S_.MTR_NAME, "Section 1 fixes; C42 programming moved with the new jobs (show memories 10–70 only)"],
-        ["BASE_SHOW_2026.mtr / .qlab5", "Unchanged — still match the show file's patch, P1 looks and memories 100–109"],
+        ["Plantagenet_Players_Base_2026_r1.mtr / .qlab5", "Unchanged — still match the show file's patch, P1 looks and memories 100–109"],
         ["B2 Stage Lighting Layout Plan", "FOH bar in fixed order with job tags; pelmet PixBars fixed; projector at LX1; "
          "as-installed → plan table"],
         ["B3 Rig Move Guide", "New: the moves, kit, order of work, safety, test and focus"],

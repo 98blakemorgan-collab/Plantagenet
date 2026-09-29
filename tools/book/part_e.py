@@ -1,4 +1,4 @@
-"""Part E — QLab 5 Programming Guide for TLM_Show_R13_1.qlab5."""
+"""Part E — QLab 5 Programming Guide for TLM_nov_2026_final.qlab5."""
 import os
 
 from core import *  # noqa: F401,F403
@@ -69,13 +69,13 @@ def build(path):
         ["media/audio/01_Music_Songs", "S01–S10 song tracks (S07 still to choose)"],
         ["media/audio/02–08 …", "House/interval music, underscore, ambience beds, storm, magic, stings, voice"],
         ["media/video · media/stills", "BG backdrops (Part I) and VID-99 black"],
-        ["R13_MEDIA_MANIFEST.csv", "The 80 media files the workspace uses, by relative path"],
-        ["R13_1_SFX_RETARGET_MAP.csv", "Which new SFX file plays on which cue"],
-        ["R13_MANTRA_SECTION_MAP.csv/.txt", "Which QLab cue fires each Mantra cue"],
-        ["R13_1_QLAB_AND_DESK_FIX_LIST.csv", "Done / still to do"],
+        ["TLM_nov_2026_final_MEDIA_MANIFEST.csv", "The 80 media files the workspace uses, by relative path"],
+        ["TLM_nov_2026_final_SFX_RETARGET_MAP.csv", "Which new SFX file plays on which cue"],
+        ["TLM_nov_2026_final_MANTRA_SECTION_MAP.csv/.txt", "Which QLab cue fires each Mantra cue"],
+        ["TLM_nov_2026_final_QLAB_AND_DESK_FIX_LIST.csv", "Done / still to do"],
         ["docs/", "Cue sheets, Mantra labels, FOH notice, review and fix list"]],
         [60 * mm, 110 * mm]))
-    d.add(P("To assemble the folder from the Drive zips use `ASSEMBLE_R13_1.command` from the R13.1 package "
+    d.add(P("To assemble the folder from the Drive zips use `ASSEMBLE_TLM_nov_2026_final.command` from the R13.1 package "
             "(it checks all 80 media paths and the file checksums)."))
 
     d.add(H1("3 Workspace settings"))

@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
-"""Check that the venue base BASE_SHOW_2026.mtr matches the R13.1 Mantra show file,
-and that the QLab base BASE_SHOW_2026.qlab5 matches BASE_SHOW_2026.mtr.
+"""Check that the venue base Plantagenet_Players_Base_2026_r1.mtr matches the R13.1 Mantra show file,
+and that the QLab base Plantagenet_Players_Base_2026_r1.qlab5 matches Plantagenet_Players_Base_2026_r1.mtr.
 
 The show file is built on the venue base, so these must be identical in both:
 custom fixtures, patch, network, rig view, recent colours, live scene, the P1
@@ -18,10 +18,10 @@ import re
 import sys
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-SHOW_DIR = os.path.join(ROOT, "package", "TLM_R13_REBUILT_Show_Files")
-BASE = os.path.join(SHOW_DIR, "BASE_SHOW_2026.mtr")
-SHOW = os.path.join(SHOW_DIR, "TLM_SHOW_2026_R13_FLASHY_SCENE_SPLIT.mtr")
-QLAB_BASE = os.path.join(SHOW_DIR, "BASE_SHOW_2026.qlab5")
+SHOW_DIR = os.path.join(ROOT, "package", "TLM_nov_2026_final")
+BASE = os.path.join(ROOT, "base", "Plantagenet_Players_Base_2026_r1", "Plantagenet_Players_Base_2026_r1.mtr")
+SHOW = os.path.join(SHOW_DIR, "TLM_nov_2026_final.mtr")
+QLAB_BASE = os.path.join(ROOT, "base", "Plantagenet_Players_Base_2026_r1", "Plantagenet_Players_Base_2026_r1.qlab5")
 
 SHARED = ["CustomFixtures", "Patch", "Network", "RigView", "RecentColours", "LiveScene"]
 VENUE_MEMORIES = list(range(0, 10)) + list(range(100, 110))

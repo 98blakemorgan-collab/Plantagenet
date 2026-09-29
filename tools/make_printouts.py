@@ -3,13 +3,13 @@
 
 Everything is read from the show files in the package, so the printouts
 always match what QLab and the Mantra actually do:
-  - TLM_Show_R13_1.qlab5                       cue order, triggers, media, OSC
-  - TLM_SHOW_2026_R13_FLASHY_SCENE_SPLIT.mtr   memory names, chases, patch
-  - R13_MANTRA_SECTION_MAP.csv                 P8 backup positions, cue names
+  - TLM_nov_2026_final.qlab5                       cue order, triggers, media, OSC
+  - TLM_nov_2026_final.mtr   memory names, chases, patch
+  - TLM_nov_2026_final_MANTRA_SECTION_MAP.csv                 P8 backup positions, cue names
 
 Usage:  python3 tools/make_printouts.py            (needs reportlab)
-Output: package/TLM_R13_REBUILT_Show_Files/docs/TLM_R13_1_Operator_Cue_Sheets.pdf
-        package/TLM_R13_REBUILT_Show_Files/docs/TLM_R13_1_Mantra_Labels.pdf
+Output: package/TLM_nov_2026_final/docs/TLM_nov_2026_final_Operator_Cue_Sheets.pdf
+        package/TLM_nov_2026_final/docs/TLM_nov_2026_final_Mantra_Labels.pdf
 """
 import csv
 import os
@@ -27,10 +27,15 @@ from reportlab.platypus import (KeepTogether, PageBreak, Paragraph,
                                 SimpleDocTemplate, Spacer, Table, TableStyle)
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-SHOW = os.path.join(ROOT, "package", "TLM_R13_REBUILT_Show_Files")
-QLAB = os.path.join(SHOW, "TLM_Show_R13_1.qlab5")
-MTR = os.path.join(SHOW, "TLM_SHOW_2026_R13_FLASHY_SCENE_SPLIT.mtr")
-MAP = os.path.join(SHOW, "R13_MANTRA_SECTION_MAP.csv")
+SHOW = os.path.join(ROOT, "package", "TLM_nov_2026_final")
+QLAB = os.path.join(SHOW, "TLM_nov_2026_final.qlab5")
+MTR = os.path.join(SHOW, "TLM_nov_2026_final.mtr")
+# The venue base lives in its own package, not in the show folder
+BASE_DIR = os.path.join(ROOT, "base", "Plantagenet_Players_Base_2026_r1")
+BASE_MTR = os.path.join(BASE_DIR, "Plantagenet_Players_Base_2026_r1.mtr")
+BASE_QLAB = os.path.join(BASE_DIR, "Plantagenet_Players_Base_2026_r1.qlab5")
+BASE_DOCS = os.path.join(BASE_DIR, "docs")
+MAP = os.path.join(SHOW, "TLM_nov_2026_final_MANTRA_SECTION_MAP.csv")
 OUT = os.path.join(SHOW, "docs")
 
 REV = "R13.1"
@@ -120,7 +125,7 @@ def bg_code(path):
 # The untouched R13 placeholder sounds are the ones bundled in the package
 # media folder, minus the new files R13.1 added (listed in the retarget map).
 NEW_FILES = {os.path.basename(r["New_file"]) for r in
-             csv.DictReader(open(os.path.join(SHOW, "R13_1_SFX_RETARGET_MAP.csv"), newline=""))}
+             csv.DictReader(open(os.path.join(SHOW, "TLM_nov_2026_final_SFX_RETARGET_MAP.csv"), newline=""))}
 PLACEHOLDERS = set()
 for dp, _, fs in os.walk(os.path.join(SHOW, "media")):
     PLACEHOLDERS.update(f for f in fs if f not in NEW_FILES)
@@ -342,10 +347,10 @@ def is_critical(g):
 
 def build_cue_sheets(groups, by_pmc, mems):
     st = styles()
-    footer = ("Cue sheets %s · %s · built from TLM_Show_R13_1.qlab5 + %s · "
+    footer = ("Cue sheets %s · %s · built from TLM_nov_2026_final.qlab5 + %s · "
               "tinted = critical (flash / water) · blue = song · heavy rule = interval · "
               "write final page/line in pencil" % (REV, DATE, os.path.basename(MTR)))
-    path = os.path.join(OUT, "TLM_R13_1_Operator_Cue_Sheets.pdf")
+    path = os.path.join(OUT, "TLM_nov_2026_final_Operator_Cue_Sheets.pdf")
     doc = Doc(path, "TLM R13.1 Operator Cue Sheets", footer, landscape(A4))
     story = []
 
@@ -639,7 +644,7 @@ def build_labels(mems):
     tag = TAG
     footer = ("%s · LSC Mantra Lite + 2 wings · %s · labels %s · %s"
               % (SHOWNAME, os.path.basename(MTR), REV, DATE))
-    path = os.path.join(OUT, "TLM_R13_1_Mantra_Labels.pdf")
+    path = os.path.join(OUT, "TLM_nov_2026_final_Mantra_Labels.pdf")
     doc = Doc(path, "TLM R13.1 Mantra Labels", footer, landscape(A4))
     story = []
 

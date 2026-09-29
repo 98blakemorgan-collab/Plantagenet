@@ -36,7 +36,7 @@ SONG_LANG = {"S1": "Aqua / hot pink / gold / deep blue / magenta / lime / white 
              "S10": "Deep blue / amber / cyan / red / gold / bright white finale"}
 
 # The rig as installed (venue photos, 29 Sep 2026) and what the plan does with each position.
-# COB and PixBar numbers per position are assumed until the rig ID test (docs/BASE_SHOW_2026_Rig_ID_Test.pdf).
+# COB and PixBar numbers per position are assumed until the rig ID test (docs/Plantagenet_Players_Base_2026_r1_Rig_ID_Test.pdf).
 INSTALLED = [("FOH bar (house ceiling)", "C42 #1–12 in number order, #1 at the stage-right end",
               "FIXED — cannot be moved. Jobs are given by position (faces #1+4, #5+8, #9+12; specials #2, 3, 6, 7, 10, 11)."),
              ("Pelmet, in front of the main curtain", "3 PixBars; speakers at each end",

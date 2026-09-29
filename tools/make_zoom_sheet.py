@@ -2,13 +2,13 @@
 """Build the zoom adjustment sheet for the Tour Pro Zooms (#13-22).
 
 Read from the show files, so the numbers match what the desk will do:
-  - BASE_SHOW_2026.mtr and TLM_SHOW_2026_R13_FLASHY_SCENE_SPLIT.mtr
+  - Plantagenet_Players_Base_2026_r1.mtr and TLM_nov_2026_final.mtr
       Zoom channel layout, patch addresses, the ZOOM value every memory stores
-  - BASE_SHOW_2026.qlab5   the QLab test cue that brings each Zoom up alone
+  - Plantagenet_Players_Base_2026_r1.qlab5   the QLab test cue that brings each Zoom up alone
 
 Usage:  python3 tools/make_zoom_sheet.py            (needs reportlab)
-Output: package/TLM_R13_REBUILT_Show_Files/docs/TLM_R13_1_Zoom_Adjustment.pdf
-        (also copied to production/TLM_Show_R13_1/03_Lighting_Mantra)
+Output: package/TLM_nov_2026_final/docs/TLM_nov_2026_final_Zoom_Adjustment.pdf
+        (also copied to production/TLM_nov_2026_final/03_Lighting_Mantra)
 """
 import collections
 import os
@@ -21,7 +21,7 @@ from make_printouts import P, esc, mm, colors, landscape, A4, Spacer, Table, Tab
 
 ZOOMS = range(13, 23)
 MODEL = "ZOOM 12 CHANNEL"
-FILES = [("base", os.path.join(mp.SHOW, "BASE_SHOW_2026.mtr")), ("show", mp.MTR)]
+FILES = [("base", mp.BASE_MTR), ("show", mp.MTR)]
 NOTES = {19: "voice special V3 Theodore: book says 13°", 20: "voice special V4 Marina: book says 13°"}
 
 
@@ -73,11 +73,11 @@ def build():
                 if len(lit) == 1:
                     tests[next(iter(lit))] = c["num"]
 
-    path = os.path.join(mp.OUT, "TLM_R13_1_Zoom_Adjustment.pdf")
+    path = os.path.join(mp.OUT, "TLM_nov_2026_final_Zoom_Adjustment.pdf")
     doc = mp.Doc(path, "TLM R13.1 Zoom Adjustment", "%s · zoom sheet · %s · %s" % (mp.SHOWNAME, mp.REV, mp.DATE),
                  landscape(A4))
     story = [P("Adjusting zoom — Tour Pro Zoom #13–22", st["title"]),
-             P("Read from BASE_SHOW_2026.mtr, %s and BASE_SHOW_2026.qlab5." % os.path.basename(mp.MTR), st["sub"]),
+             P("Read from Plantagenet_Players_Base_2026_r1.mtr, %s and Plantagenet_Players_Base_2026_r1.qlab5." % os.path.basename(mp.MTR), st["sub"]),
              Spacer(0, 3 * mm)]
 
     warn = Table([[P("<b>WHY A ZOOM CHANGE WON'T STICK</b> &nbsp; Every memory stores a ZOOM value for #13–22 "
@@ -92,7 +92,7 @@ def build():
 
     steps = [
         ["<b>1 Find the value</b><br/>(focus session)",
-         "Load BASE_SHOW_2026.mtr on the desk and BASE_SHOW_2026.qlab5 in QLab. GO the fixture's test cue (table "
+         "Load Plantagenet_Players_Base_2026_r1.mtr on the desk and Plantagenet_Players_Base_2026_r1.qlab5 in QLab. GO the fixture's test cue (table "
          "below) so it is the only light on. On the Mantra select that fixture, open its attributes and turn "
          "ZOOM (look under the beam attributes — the exact Mantra Lite button names are not confirmed here). "
          "Zoom snaps, range 0–255. Check the fixture manual for which end is narrow, or just watch the beam. "
