@@ -21,6 +21,10 @@ Source for the single R13.1 download package.
 - `tools/book/lx_moves.py` — Part B3 Rig Move Guide (what moves from the installed rig,
   kit, order of work, safety, test and focus) and `TLM_Lighting_Changes_R13_1.pdf`
   (every lighting change in one document). Built by `tools/book/build.py`.
+- `tools/lighting_previz.py` — draws the lighting onto photos of the stage (tabs open /
+  closed): the whole rig, every look, each fixture on its own, every cue and song section,
+  with colours and levels from the show file. Writes the renders and
+  `03_Lighting_Mantra/TLM_Lighting_Previz_R13_1.pdf` (`pip install numpy pillow reportlab`).
 - `tools/make_qlab_base.py` — builds `BASE_SHOW_2026.qlab5`, the QLab base for the
   Mantra venue base, from `BASE_SHOW_2026.mtr` and the R13.1 workspace settings.
 - `tools/make_base_printouts.py` — builds the base show link map (QLab cue → Mantra
