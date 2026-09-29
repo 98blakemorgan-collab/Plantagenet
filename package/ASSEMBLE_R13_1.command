@@ -23,7 +23,7 @@ ZIPS="TLM_R13_1.zip TLM_R13_1_SFX.zip TLM_Backdrops_R10.zip"
 QLAB_SHA="5dca0842f16f9c12c096e4389d939a564bca6a3d874619dd3fa97eda1bcb86ab"
 MTR_SHA="95cf3c690c2cef573c58e761f27eb54491f3e102684a1ab3f597a232fcae24c2"
 BASE_SHA="e273d54b71abb69bc9e2c6d5b431ebb5ceb09e22673f6b67d082fbfc66c63076"
-QBASE_SHA="8850e88195582eaff5e70a37148757d9ab34d28fab4cda7bdd04540df2faff4b"
+QBASE_SHA="f11ccc032baae0658bb17c2de9b71c58203156269b3656bbf00353c2aea3d2ec"
 
 say() { echo "$*" | tee -a "$REPORT"; }
 sha() { if command -v shasum >/dev/null 2>&1; then shasum -a 256 "$1" | cut -d' ' -f1; else sha256sum "$1" | cut -d' ' -f1; fi; }

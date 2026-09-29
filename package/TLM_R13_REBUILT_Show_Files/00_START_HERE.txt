@@ -10,8 +10,9 @@ OPEN THESE
             back to the venue base (it has none of the show cues).
   QLab base: BASE_SHOW_2026.qlab5  goes with BASE_SHOW_2026.mtr. Same
             settings and MANTRA patch as the show workspace. V1-V10 P1
-            venue looks (one at a time), T1-T40 rig test one fixture per
-            GO, E1 panic, E2 all Mantra memories off, E3 stage work.
+            venue looks (one at a time), I1-I4 every fixture of one type
+            (C42, ZOOM, COB, PIX; I5 clears), T1-T40 rig test one fixture
+            per GO, E1 panic, E2 all Mantra memories off, E3 stage work.
             Only use it with the BASE file loaded on the desk - on the
             show file its P2-P5 cues would fire show memories.
   Read   :  docs/TLM_R13_1_Review_and_Fix_List.pdf
@@ -72,6 +73,8 @@ FILES
                                          page/memory, and where every fixture is
   docs/BASE_SHOW_2026_Mantra_Labels.pdf  desk labels for the base show (venue
                                          names only, no show names)
+  docs/BASE_SHOW_2026_Rig_ID_Test.pdf    rig ID test: find every fixture, check
+                                         type, position, address; fault table
   docs/TLM_R13_1_Zoom_Adjustment.pdf     how to set zoom on the Zooms #13-22 and
                                          a sheet to record the values
   R13_MANTRA_SECTION_MAP.txt/.csv   which QLab cue fires each Mantra cue

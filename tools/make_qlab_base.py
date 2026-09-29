@@ -4,6 +4,7 @@
 It matches BASE_SHOW_2026.mtr memory for memory:
   - P1 venue looks (STAGE WORK, FULL STAGE WHITE, ...): one GO each; every
     look releases the other P1 looks, so only one is ever up.
+  - Rig ID I1-I4: every fixture of one type at once (C42, ZOOM, COB, PIX); I5 clears.
   - Rig test T1-T40 (P2 M1 - P5 M10, the TEST memories): one fixture per GO,
     each releasing the one before.
   - E1 STOP ALL (QLab panic), E2 ALL OFF (releases every base memory),
@@ -32,6 +33,8 @@ NAME = "BASE_SHOW_2026"
 
 UID = plistlib.UID
 LOOK_FADE, TEST_FADE, OFF_FADE = 2000, 0, 2000
+# Rig ID sweep: last word of the TEST memory names -> label (the hazer is left to its own test cue)
+ID_TYPES = [("LIGHTSKY", "C42"), ("ZOOM", "ZOOM"), ("TOURCOB", "COB"), ("PIXBAR", "PIX")]
 
 
 # --------------------------------------------------------------------------
@@ -261,6 +264,27 @@ def build():
         kids = [mem_osc(i, 100, LOOK_FADE, "look")]
         kids += [mem_osc(j, 0, LOOK_FADE, "look-off-%d" % i) for j in looks if j != i]
         cues.append(q.group("V%d" % m, mems[i], "Mantra P%d M%d %s at 100 %%, other P1 looks off" % (p, m, mems[i]), kids))
+
+    # Type sweep: every fixture of one type at once, from the TEST memories ("TEST 23 TOURCOB" -> TOURCOB)
+    cues.append(q.memo("I", "RIG ID - one fixture type at a time",
+                       "I1-I4 light every fixture of one type together so you can count and find them. "
+                       "Each releases the other test memories. I5 clears. Then run T1-T40."))
+    by_type = {}
+    for i in tests:
+        by_type.setdefault(mems[i].split()[-1], []).append(i)
+    n = 0
+    for word, label in ID_TYPES:
+        group = by_type.get(word, [])
+        if not group:
+            continue
+        n += 1
+        kids = [mem_osc(i, 100, TEST_FADE, "id-%s" % word) for i in group]
+        kids += [mem_osc(j, 0, TEST_FADE, "id-off-%s" % word) for j in tests if j not in group]
+        cues.append(q.group("I%d" % n, "ALL %s (%d)" % (label, len(group)),
+                            "Mantra %s: %d fixtures at 100 %%, other test memories off"
+                            % (", ".join("P%d M%d" % pm(i) for i in group), len(group)), kids))
+    cues.append(q.group("I%d" % (n + 1), "RIG ID END", "Releases every test memory.",
+                        [mem_osc(j, 0, TEST_FADE, "id-end") for j in tests]))
 
     cues.append(q.memo("T", "RIG TEST - one fixture at a time",
                        "T1-T40 = the TEST memories on P2-P5, one per fixture in patch order. "

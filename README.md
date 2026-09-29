@@ -13,7 +13,7 @@ Source for the single R13.1 download package.
 - `tools/make_qlab_base.py` — builds `BASE_SHOW_2026.qlab5`, the QLab base for the
   Mantra venue base, from `BASE_SHOW_2026.mtr` and the R13.1 workspace settings.
 - `tools/make_base_printouts.py` — builds the base show link map (QLab cue → Mantra
-  page/memory → fixture → fader/DMX) and base label sheet in `docs/`.
+  page/memory → fixture → fader/DMX), base label sheet and rig ID test in `docs/`.
 - `tools/make_zoom_sheet.py` — builds the zoom adjustment sheet for the Tour Pro
   Zooms #13–22 (where zoom lives, the stored values, a fill-in table).
 - `tools/check_mantra_base.py` — checks that the venue base `BASE_SHOW_2026.mtr`
