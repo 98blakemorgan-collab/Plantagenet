@@ -11,8 +11,8 @@ from core import NAVY, TEAL, CORAL, REV, DATE, colors
 import part_b
 
 W, H = landscape(A3)
-INK = colors.HexColor("#1b2a3a")
-MUTED = colors.HexColor("#6b7a8c")
+INK = colors.black
+MUTED = colors.HexColor("#555555")
 GRID = colors.HexColor("#dfe5ec")
 FLOOR = colors.HexColor("#f4f6f9")
 WET = colors.HexColor("#d9ecfb")
@@ -36,6 +36,8 @@ def P(x, y):
 
 
 def text(c, x, y, s, size=6, font="Helvetica", color=INK, anchor="c"):
+    if color not in (MUTED, colors.white) and color != colors.HexColor("#c8c8c8"):
+        color = INK  # all text in black; colour stays on symbols and lines
     c.setFont(font, size)
     c.setFillColor(color)
     f = {"c": c.drawCentredString, "l": c.drawString, "r": c.drawRightString}[anchor]
@@ -261,7 +263,7 @@ def plan(c):
     text(c, PX0 + 14, 208, "US floor · P5 M4 · 50 % / fan 50 %", 4.3, color=MUTED)
 
     # house
-    text(c, CX, 30, "AUDIENCE  (flat floor, loose chairs)", 11, "Helvetica-Bold", colors.HexColor("#c3ccd6"))
+    text(c, CX, 30, "AUDIENCE  (flat floor, loose chairs)", 11, "Helvetica-Bold", colors.HexColor("#c8c8c8"))
     text(c, CX, 25, "FOH bar hangs from the house ceiling · second ceiling rail further back (spare position, check load) · "
          "control at the back (QLab Mac, Mantra, StudioLive)", 5, color=MUTED)
     # north arrow style orientation
@@ -272,12 +274,13 @@ def plan(c):
 def panel(c):
     x0, x1 = 296, 410
     # title block
-    c.setFillColor(NAVY)
-    c.rect(x0 * mm, 250 * mm, (x1 - x0) * mm, 37 * mm, fill=1, stroke=0)
-    text(c, x0 + 5, 279, "THE LITTLE MERMAID · PLANTAGENET HALL", 7, "Helvetica-Bold", colors.white, "l")
-    text(c, x0 + 5, 269, "Stage Lighting Layout Plan", 15, "Helvetica-Bold", colors.white, "l")
-    text(c, x0 + 5, 261, "Plan view · rig, specials, marks and fixture schedule", 6.5, color=colors.HexColor("#cfd9e6"), anchor="l")
-    text(c, x0 + 5, 254, "%s · %s · NOT TO SCALE — indicative, verify on site" % (REV, DATE), 5.6, color=colors.HexColor("#cfd9e6"), anchor="l")
+    c.setStrokeColor(NAVY)
+    c.setLineWidth(1.2)
+    c.rect(x0 * mm, 250 * mm, (x1 - x0) * mm, 37 * mm, fill=0, stroke=1)
+    text(c, x0 + 5, 279, "THE LITTLE MERMAID · PLANTAGENET HALL", 7, "Helvetica-Bold", INK, "l")
+    text(c, x0 + 5, 269, "Stage Lighting Layout Plan", 15, "Helvetica-Bold", INK, "l")
+    text(c, x0 + 5, 261, "Plan view · rig, specials, marks and fixture schedule", 6.5, color=MUTED, anchor="l")
+    text(c, x0 + 5, 254, "%s · %s · NOT TO SCALE — indicative, verify on site" % (REV, DATE), 5.6, color=MUTED, anchor="l")
 
     # legend
     y = 243
@@ -300,15 +303,17 @@ def panel(c):
     text(c, x0, y, "FIXTURE SCHEDULE", 7, "Helvetica-Bold", anchor="l")
     y -= 5
     cols = [(x0, "#"), (x0 + 7, "Type"), (x0 + 17, "Position"), (x0 + 33, "DMX"), (x0 + 47, "Focus / job")]
-    c.setFillColor(NAVY)
-    c.rect((x0 - 1) * mm, (y - 1.4) * mm, (x1 - x0 + 1) * mm, 4.4 * mm, fill=1, stroke=0)
+    c.setStrokeColor(INK)
+    c.setLineWidth(0.8)
+    c.line((x0 - 1) * mm, (y + 3) * mm, x1 * mm, (y + 3) * mm)
+    c.line((x0 - 1) * mm, (y - 1.4) * mm, x1 * mm, (y - 1.4) * mm)
     for cx, h in cols:
-        text(c, cx, y, h, 5, "Helvetica-Bold", colors.white, "l")
+        text(c, cx, y, h, 5, "Helvetica-Bold", INK, "l")
     y -= 4.3
     for i, n in enumerate(sorted(FOCUS)):
         t, pos, addr, role = FOCUS[n]
         if i % 2:
-            c.setFillColor(colors.HexColor("#eef2f6"))
+            c.setFillColor(colors.HexColor("#f5f7fa"))
             c.rect((x0 - 1) * mm, (y - 1.2) * mm, (x1 - x0 + 1) * mm, 3.9 * mm, fill=1, stroke=0)
         role = role.replace(" (confirm it exists, R13.1 fix list)", " (confirm fitted)")
         if len(role) > 52:
@@ -323,7 +328,7 @@ def panel(c):
 
 
 def page2(c):
-    text(c, 20, 280, "Stage Lighting Layout Plan — sections, booms and checks", 14, "Helvetica-Bold", NAVY, "l")
+    text(c, 20, 280, "Stage Lighting Layout Plan — sections, booms and checks", 14, "Helvetica-Bold", INK, "l")
     text(c, 20, 273, "Side section and boom elevations are indicative. Record the measured trim heights and positions at the site walk.",
          6.5, color=MUTED, anchor="l")
 
@@ -400,14 +405,16 @@ def page2(c):
     text(c, 20, ty, "SPECIALS AND MARKS", 8, "Helvetica-Bold", anchor="l")
     ty -= 6
     heads = [(20, "Special"), (36, "Character"), (62, "Fixture"), (112, "Mark / use")]
-    c.setFillColor(NAVY)
-    c.rect(19 * mm, (ty - 1.5) * mm, 170 * mm, 5 * mm, fill=1, stroke=0)
+    c.setStrokeColor(INK)
+    c.setLineWidth(0.8)
+    c.line(19 * mm, (ty + 3.5) * mm, 189 * mm, (ty + 3.5) * mm)
+    c.line(19 * mm, (ty - 1.5) * mm, 189 * mm, (ty - 1.5) * mm)
     for x, h in heads:
-        text(c, x, ty, h, 5.8, "Helvetica-Bold", colors.white, "l")
+        text(c, x, ty, h, 5.8, "Helvetica-Bold", INK, "l")
     ty -= 5
     for i, (sp, ch, fx, use) in enumerate(part_b.SPECIALS):
         if i % 2:
-            c.setFillColor(colors.HexColor("#eef2f6"))
+            c.setFillColor(colors.HexColor("#f5f7fa"))
             c.rect(19 * mm, (ty - 1.5) * mm, 170 * mm, 4.6 * mm, fill=1, stroke=0)
         for (x, _h), v in zip(heads, (sp, ch, fx, use)):
             text(c, x, ty, v, 5.6, "Helvetica-Bold" if x == 20 else "Helvetica", anchor="l")

@@ -38,7 +38,8 @@ def build(path, parts):
     d.add(H1("Contents"))
     rows = [["**%s**" % L if L else "", T, str(n), str(s)] for L, T, n, s in parts]
     d.add(table(["Part", "Title", "Pages", "Starts on page"], rows, [16 * mm, 110 * mm, 18 * mm, 26 * mm]))
-    d.add(P("Page numbers are the page of the complete book PDF. Each part is also a separate PDF in "
+    d.add(P("Laid out to print economically: rules instead of solid fills, pale row tints and swatches. "
+            "Page numbers are the page of the complete book PDF. Each part is also a separate PDF in "
             "01_Production_Book/Sections. Part J reproduces the licensed script: production use only.", "muted"))
     d.add(PageBreak(), H1("The show at a glance"))
     d.add(bullets(AT_A_GLANCE))

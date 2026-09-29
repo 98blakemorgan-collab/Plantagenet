@@ -40,13 +40,13 @@ SHOWNAME = "THE LITTLE MERMAID · Plantagenet Hall"
 for name, f in (("Sans", "DejaVuSans.ttf"), ("Sans-Bold", "DejaVuSans-Bold.ttf")):
     pdfmetrics.registerFont(TTFont(name, "/usr/share/fonts/truetype/dejavu/" + f))
 
-INK = colors.HexColor("#1b2430")
-MUTED = colors.HexColor("#5b6675")
+INK = colors.black
+MUTED = colors.HexColor("#555555")
 RULE = colors.HexColor("#b9c2cc")
 HEAD = colors.HexColor("#123a5a")
-TINT = colors.HexColor("#fde7d9")   # critical rows
-SONG = colors.HexColor("#e6f0fa")   # song rows
-AUTO = colors.HexColor("#eef5e8")   # auto-follow rows
+TINT = colors.HexColor("#fdf1ea")   # critical rows (pale: printer-friendly)
+SONG = colors.HexColor("#f0f6fc")   # song rows
+AUTO = colors.HexColor("#f4f9f0")   # auto-follow rows
 
 # --------------------------------------------------------------------------
 # QLab workspace
@@ -210,9 +210,9 @@ def styles(size=7.2):
     return {
         "b": base,
         "bb": ParagraphStyle("bb", parent=base, fontName="Sans-Bold"),
-        "h": ParagraphStyle("h", parent=base, fontName="Sans-Bold", textColor=colors.white),
+        "h": ParagraphStyle("h", parent=base, fontName="Sans-Bold", textColor=INK),
         "m": ParagraphStyle("m", parent=base, textColor=MUTED, fontSize=size - 0.6),
-        "title": ParagraphStyle("t", parent=base, fontName="Sans-Bold", fontSize=13, leading=16, textColor=HEAD),
+        "title": ParagraphStyle("t", parent=base, fontName="Sans-Bold", fontSize=13, leading=16, textColor=INK),
         "sub": ParagraphStyle("s", parent=base, fontSize=8, leading=10, textColor=MUTED),
         "note": ParagraphStyle("n", parent=base, fontSize=7.4, leading=9.4),
     }
@@ -232,7 +232,8 @@ def make_table(header, rows, widths, st, row_styles=(), interval_after=None):
         data.append([c if not isinstance(c, str) else P(c, st["b"]) for c in r])
     t = Table(data, colWidths=widths, repeatRows=1)
     cmds = [
-        ("BACKGROUND", (0, 0), (-1, 0), HEAD),
+        ("LINEABOVE", (0, 0), (-1, 0), 0.8, INK),
+        ("LINEBELOW", (0, 0), (-1, 0), 1.0, INK),
         ("VALIGN", (0, 0), (-1, -1), "TOP"),
         ("LINEBELOW", (0, 0), (-1, -1), 0.3, RULE),
         ("TOPPADDING", (0, 0), (-1, -1), 1.6),
@@ -402,9 +403,9 @@ def build_cue_sheets(groups, by_pmc, mems):
             fn = g["track"][1] if g["track"] else ""
             flag = ""
             if "swap for backing" in fn:
-                flag = " <font color='#b0412e'>[vocal — swap for backing]</font>"
+                flag = " <b>[vocal — swap for backing]</b>"
             if "TBA" in fn or "to be decided" in track.lower():
-                flag = " <font color='#b0412e'>[song still to choose]</font>"
+                flag = " <b>[song still to choose]</b>"
             for k, x in enumerate(x for x in g["mantra"]):
                 sec = secs.get(x["num"], "")
                 if k == 0:

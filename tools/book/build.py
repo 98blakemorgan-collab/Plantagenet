@@ -49,6 +49,8 @@ PARTS = [  # letter, title, file stem
     ("K", "Quick Reference Cards", "K_Quick_Reference_Cards"),
     ("L", "Stream Deck and Tech Test Run", "L_Stream_Deck_and_Tech_Test_Run"),
 ]
+# Parts kept out of the merged book to save printer ink (image-heavy); they stay as their own PDFs in Sections.
+SEPARATE = {"I2"}
 BUILDERS = {"A": part_a.build, "B": part_b.build, "B2": lighting_plot.build, "I2": backdrop_sheets.build, "C": part_c.build, "D": part_d.build, "E": part_e.build,
             "G": part_g.build, "H": part_h.build, "I": part_i.build, "K": part_k.build, "L": part_l.build}
 
@@ -226,13 +228,16 @@ def main():
         start, rows = ncover + 1, []
         for L, title, _s in PARTS:
             n = pages(built[L])
+            if L in SEPARATE:
+                rows.append((L, title + " — separate file (full-colour images)", n, "—"))
+                continue
             rows.append((L, title, n, start))
             start += n
         part_00.build(cover, [("00", "Cover and Contents", ncover, 1)] + rows)
         ncover = pages(cover)
     print("00 %3d pages" % ncover)
 
-    order = [("00 Cover and Contents", cover)] + [("%s %s" % (L, t), built[L]) for L, t, _s in PARTS]
+    order = [("00 Cover and Contents", cover)] + [("%s %s" % (L, t), built[L]) for L, t, _s in PARTS if L not in SEPARATE]
     merge(order, os.path.join(BOOK, "The_Little_Mermaid_Complete_Production_Book_%s.pdf" % REV))
     part_k.build_quick_guide(os.path.join(BOOK, "TLM_Setup_and_Startup_Quick_Guide_R13_1.pdf"))
     to_find.build(os.path.join(BOOK, "TLM_To_Find_and_Confirm_R13_1.pdf"))

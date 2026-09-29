@@ -3,13 +3,13 @@ from core import *  # noqa: F401,F403
 import show as S_
 from calls import SCENES
 
-STBY = colors.HexColor("#fff3d6")
-GO = colors.HexColor("#e3f3e3")
+STBY = colors.HexColor("#fff9ec")
+GO = colors.HexColor("#f1f9f1")
 
 
 def scene_table(cues):
     data = [[Paragraph(md(h), S["head"]) for h in ("Q", "Page", "Standby at / GO on", "DSM calls", "Depts", "What happens")]]
-    cmds = [("BACKGROUND", (0, 0), (-1, 0), NAVY), ("VALIGN", (0, 0), (-1, -1), "TOP"),
+    cmds = [("LINEABOVE", (0, 0), (-1, 0), 0.8, INK), ("LINEBELOW", (0, 0), (-1, 0), 1.0, INK), ("VALIGN", (0, 0), (-1, -1), "TOP"),
             ("LINEBELOW", (0, 0), (-1, -1), 0.3, RULE), ("TOPPADDING", (0, 0), (-1, -1), 1.6),
             ("BOTTOMPADDING", (0, 0), (-1, -1), 1.6), ("LEFTPADDING", (0, 0), (-1, -1), 3)]
     for q, sp, sl, gp, gl, depts, what, note in cues:

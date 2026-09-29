@@ -16,8 +16,8 @@ import show as S_
 W, H = landscape(A4)
 HERE = os.path.dirname(os.path.abspath(__file__))
 STILLS = os.path.join(HERE, "..", "..", "production", "assets", "stills")
-INK = colors.HexColor("#1b2a3a")
-MUTED = colors.HexColor("#6b7a8c")
+INK = colors.black
+MUTED = colors.HexColor("#555555")
 RULE = colors.HexColor("#c9d2dc")
 
 
