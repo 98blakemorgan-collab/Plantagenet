@@ -65,6 +65,7 @@
     "Fix list updated",
     "docs/TLM_R13_1_Operator_Cue_Sheets.pdf and docs/TLM_R13_1_Mantra_Labels.pdf rebuilt from the R13.1 QLab/Mantra files (replace the R8 printouts)",
     "BASE_SHOW_2026.mtr (clean venue base) added; its patch, custom fixtures, network, rig view, P1 looks and memories 100-109 are identical to the R13.1 show file",
-    "BASE_SHOW_2026.qlab5 added (tools/make_qlab_base.py): QLab base for the Mantra base - P1 looks V1-V10, rig test T1-T41 (P2-P5 TEST memories), E1-E3; settings and MANTRA patch as the R13.1 workspace"
+    "BASE_SHOW_2026.qlab5 added (tools/make_qlab_base.py): QLab base for the Mantra base - P1 looks V1-V10, rig test T1-T41 (P2-P5 TEST memories), E1-E3; settings and MANTRA patch as the R13.1 workspace",
+    "docs/BASE_SHOW_2026_Link_Map.pdf and docs/BASE_SHOW_2026_Mantra_Labels.pdf added (tools/make_base_printouts.py)"
   ]
 }

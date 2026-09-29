@@ -12,6 +12,8 @@ Source for the single R13.1 download package.
   (`pip install reportlab`).
 - `tools/make_qlab_base.py` — builds `BASE_SHOW_2026.qlab5`, the QLab base for the
   Mantra venue base, from `BASE_SHOW_2026.mtr` and the R13.1 workspace settings.
+- `tools/make_base_printouts.py` — builds the base show link map (QLab cue → Mantra
+  page/memory → fixture → fader/DMX) and base label sheet in `docs/`.
 - `tools/check_mantra_base.py` — checks that the venue base `BASE_SHOW_2026.mtr`
   still matches the R13.1 Mantra show file (patch, fixtures, network, rig view,
   P1 looks, memories 100–109), and that `BASE_SHOW_2026.qlab5` fires exactly its

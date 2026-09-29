@@ -68,6 +68,9 @@ FILES
   TLM_Show_R13_1.qlab5 / TLM_SHOW_2026_R13_FLASHY_SCENE_SPLIT.mtr
   BASE_SHOW_2026.mtr                venue base the show file is built on
   BASE_SHOW_2026.qlab5              QLab base that fires the venue base memories
+  docs/BASE_SHOW_2026_Link_Map.pdf       which QLab base cue fires which Mantra
+                                         page/memory, and where every fixture is
+  docs/BASE_SHOW_2026_Mantra_Labels.pdf  desk labels for the base show
   R13_MANTRA_SECTION_MAP.txt/.csv   which QLab cue fires each Mantra cue
   R13_MEDIA_MANIFEST.csv            80 media files used by R13.1
   R13_1_SFX_RETARGET_MAP.csv        new SFX -> cues

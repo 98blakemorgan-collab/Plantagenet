@@ -543,6 +543,12 @@ FIXTURES = [
     ("COB", "BACK C"), ("HAZE", "HAZE"), ("PIN", "PIN SR"), ("PIN", "PIN SL"),
 ] + [("", "")] * 6
 
+# Where each fixture hangs (fixture number -> position).
+HANG = {n: pos for ns, pos in [(range(1, 9), "FOH"), (range(9, 19), "LX1"), ((19, 20), "LX2"), ((21,), "SR boom"),
+                                ((22,), "SL boom"), (range(23, 29), "LX2"), ((29, 30), "SR boom"),
+                                ((31, 32), "SL boom"), (range(33, 40), "LX2"), ((40,), "floor US"),
+                                ((41,), "FOH SR"), ((42,), "FOH SL")] for n in ns}
+
 TYPE_COL = {"C42": "#f2c14e", "ZOOM": "#5fa8d3", "COB": "#e07a5f", "PIX": "#9b72cf",
             "HAZE": "#8d99ae", "PIN": "#8d99ae", "": "#ffffff"}
 
@@ -575,18 +581,11 @@ def label_strip(cells, col_w, height, extra=()):
     return t
 
 
-def build_labels(mems):
-    st = styles(7.5)
-    tag = ParagraphStyle("tag", fontName="Sans", fontSize=7.5, leading=9, alignment=1, textColor=INK)
+def fixture_labels(st):
+    """Fixture fader labels: 4 strips of 12 (console, wing 1, wing 2) and the key."""
     num = ParagraphStyle("num", fontName="Sans-Bold", fontSize=9, leading=10.5, alignment=1, textColor=INK)
-    footer = ("%s · LSC Mantra Lite + 2 wings · %s · labels %s · %s"
-              % (SHOWNAME, os.path.basename(MTR), REV, DATE))
-    path = os.path.join(OUT, "TLM_R13_1_Mantra_Labels.pdf")
-    doc = Doc(path, "TLM R13.1 Mantra Labels", footer, landscape(A4))
-    story = []
-
-    # fixture faders: 4 strips of 12
     fx_w = 23.08 * mm
+    story = []
     story += [P("Fixture fader labels", st["title"]),
               P("Cut on the lines and stick one above each fixture fader. Number = Mantra fixture number. "
                 "Colour bar = fixture type.", st["sub"]), Spacer(0, 3 * mm)]
@@ -604,6 +603,34 @@ def build_labels(mems):
                    "Hung: 1–8 FOH · 9–18 LX1 · 19–20, 23–28, 33–39 LX2 · 21, 29–30 SR boom · 22, 31–32 SL boom · "
                    "40 floor US · 41–42 FOH (pinspots only if the mirror ball is used). 43–48 spare. "
                    "Confirm #38 PIX 6 and #39 BACK C exist on the rig.", st["note"]))
+    return story
+
+
+TAG = ParagraphStyle("tag", fontName="Sans", fontSize=7.5, leading=9, alignment=1, textColor=INK)
+PB_W = 27.7 * mm
+
+
+def playback_strip(pn, pname, cells, st, heads=None, cmds=()):
+    """One page of 10 playback labels. cells = (memory or None, label, note); heads = extra header text."""
+    row = []
+    for k, (mid, name, note) in enumerate(cells):
+        head = P("P%d · M%d" % (pn, k + 1) + (" · <b>%s</b>" % esc(heads[k]) if heads and heads[k] else ""), TAG)
+        row.append([head] if mid is None else
+                   [head, fit_label(name, PB_W - 2.4 * mm)] + ([P(esc(note), TAG)] if note else []))
+    return KeepTogether([P("<b>PAGE %d · %s</b>" % (pn, pname), st["m"]),
+                         label_strip(row, PB_W, 19 * mm, list(cmds)), Spacer(0, 2.2 * mm)])
+
+
+def build_labels(mems):
+    st = styles(7.5)
+    tag = TAG
+    footer = ("%s · LSC Mantra Lite + 2 wings · %s · labels %s · %s"
+              % (SHOWNAME, os.path.basename(MTR), REV, DATE))
+    path = os.path.join(OUT, "TLM_R13_1_Mantra_Labels.pdf")
+    doc = Doc(path, "TLM R13.1 Mantra Labels", footer, landscape(A4))
+    story = []
+
+    story += fixture_labels(st)
     story.append(PageBreak())
 
     # playback faders: one strip per page. (memory, label, note under the label)
@@ -628,18 +655,13 @@ def build_labels(mems):
         (6, "LOOKS", [(50 + i, look(50 + i), "") for i in range(10)]),
         (7, "LOOKS", [(60 + i, look(60 + i), "") for i in range(7)] + [empty] * 3),
     ]
-    pb_w = 27.7 * mm
+    pb_w = PB_W
     story += [P("Playback labels — one strip per page", st["title"]),
               P("QLab plays these memories. Keep the P2 strip on the desk in Act One, swap to P3 at the interval. "
                 "Songs are on P4. Blank = empty memory.", st["sub"]), Spacer(0, 2 * mm)]
     for pn, pname, cells in pages + [(8, "BACKUP", [(70, "BACKUP", "reference only")] + [empty] * 9)]:
         if pn == 8:
             story.append(PageBreak())
-        row = []
-        for k, (mid, name, note) in enumerate(cells):
-            head = P("P%d · M%d" % (pn, k + 1) + (" · <b>S%d</b>" % (k + 1) if pn == 4 else ""), tag)
-            row.append([head] if mid is None else
-                       [head, fit_label(name, pb_w - 2.4 * mm)] + ([P(esc(note), tag)] if note else []))
         cmds = []
         if pn in (2, 3, 4):
             cmds.append(("BOX", (0, 0), (-1, -1), 2, HEAD))
@@ -647,8 +669,8 @@ def build_labels(mems):
             cmds.append(("BACKGROUND", (9, 0), (9, 0), colors.HexColor("#d9f2d9")))
         if pn == 5:
             cmds.append(("BACKGROUND", (4, 0), (4, 0), TINT))
-        story.append(KeepTogether([P("<b>PAGE %d · %s</b>" % (pn, pname), st["m"]),
-                                   label_strip(row, pb_w, 19 * mm, cmds), Spacer(0, 2.2 * mm)]))
+        heads = ["S%d" % (k + 1) for k in range(10)] if pn == 4 else None
+        story.append(playback_strip(pn, pname, cells, st, heads, cmds))
 
     # reminder strips, page tabs, write-in blanks
     story += [Spacer(0, 2 * mm), P("Desk strips, page tabs and spares", st["title"]),
