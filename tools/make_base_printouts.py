@@ -23,9 +23,31 @@ ROOT = mp.ROOT
 QLAB = os.path.join(mp.SHOW, "BASE_SHOW_2026.qlab5")
 MTR = os.path.join(mp.SHOW, "BASE_SHOW_2026.mtr")
 PROD = os.path.join(ROOT, "production", "TLM_Show_R13_1", "03_Lighting_Mantra")
-FOOTER = "%s · BASE_SHOW_2026.qlab5 + BASE_SHOW_2026.mtr · %s · %s" % (mp.SHOWNAME, mp.REV, mp.DATE)
+FOOTER = "Plantagenet Hall · venue base · BASE_SHOW_2026.mtr + BASE_SHOW_2026.qlab5 · %s" % mp.DATE
 
-# Mantra network (not stored in the QLab file; see Part C)
+# Neutral venue names: fixture type (desk model) + where it hangs. No show names.
+TYPE_OF = {"CX 42 NEW": "C42", "ZOOM 12 CHANNEL": "ZOOM", "TOURCOB PAR": "COB", "PIXBAR 6CH": "PIX",
+           "HAZER 2CH": "HAZE"}
+BASE_KEY = ("<b>Key</b> · yellow Lightsky C42 (U2) · blue Tour Pro Zoom · orange TourCOB PAR · violet PixBar · "
+            "grey hazer. Label = fixture type and where it hangs. Fixtures 1–40 are the venue patch; faders 41–48 "
+            "are free.")
+
+
+def base_fixtures(patch):
+    """[(type, label)] for faders 1-48 from the base patch."""
+    out = []
+    for n in range(1, 49):
+        pt = patch.get(n)
+        if not pt:
+            out.append(("", ""))
+            continue
+        typ = TYPE_OF.get(pt["model"], "")
+        hang = mp.HANG.get(n, "").replace(" boom", "").replace("floor ", "")
+        out.append((typ, "%s %s" % (typ or pt["model"], hang)))
+    return out
+
+
+# Mantra network (not stored in the QLab file)
 UNIVERSE_ROUTE = {1: "desk DMX XLR out", 2: "Art-Net / sACN → node 2.0.0.10 → FOH bar"}
 SHORT = {"STAGE WORK": "WORK", "FULL STAGE WHITE": "WHITE", "WARM STAGE": "WARM", "COOL STAGE": "COOL",
          "BLUE STAGE": "BLUE", "RED STAGE": "RED", "PIXBAR WASH": "PIXBAR", "CURTAIN CALL": "CURTAIN CALL"}
@@ -95,14 +117,14 @@ def ranges(ns):
     return ", ".join(str(a) if a == b else "%d–%d" % (a, b) for a, b in out)
 
 
-def lit_text(mem):
+def lit_text(mem, names):
     lit = mem["lit"]
     if not lit:
         return "nothing (all at 0)"
     levels = sorted({round(v * 100 / 65535) for v in lit.values()})
     lv = "%d %%" % levels[0] if len(levels) == 1 else "%d–%d %%" % (levels[0], levels[-1])
-    names = " " + mp.FIXTURES[next(iter(lit)) - 1][1] if len(lit) == 1 else ""
-    return "#%s%s at %s" % (ranges(lit), names, lv)
+    one = " " + names[next(iter(lit)) - 1][1] if len(lit) == 1 else ""
+    return "#%s%s at %s" % (ranges(lit), one, lv)
 
 
 def first_cue(cues):
@@ -124,6 +146,7 @@ def fader(n):
 
 def build_link_map(mems, patch, qlab):
     wsname, net, cues = qlab
+    fixnames = base_fixtures(patch)
     st = mp.styles(7.0)
     path = os.path.join(mp.OUT, "BASE_SHOW_2026_Link_Map.pdf")
     doc = mp.Doc(path, "BASE_SHOW_2026 Link Map", FOOTER, landscape(A4))
@@ -176,7 +199,7 @@ def build_link_map(mems, patch, qlab):
             continue
         fires = ["P%d M%d · %d %% · %.1f s" % (p, m, lv, f / 1000) for p, m, lv, f in c["fires"]]
         names = [mems[idx(p, m)]["name"] for p, m, _, _ in c["fires"]]
-        lights = [lit_text(mems[idx(p, m)]) for p, m, _, _ in c["fires"]]
+        lights = [lit_text(mems[idx(p, m)], fixnames) for p, m, _, _ in c["fires"]]
         rel = c["releases"]
         if rel:
             rel_txt = "P%d M%s" % (rel[0][0], ranges([m for _, m, _, _ in rel])) if len({p for p, _, _, _ in rel}) == 1 \
@@ -202,11 +225,11 @@ def build_link_map(mems, patch, qlab):
             if c["num"].startswith("T") and len(lit) == 1:
                 test_of[next(iter(lit))] = (c["num"], p, m)
     rows = []
-    for n in range(1, 43):
-        typ, label = mp.FIXTURES[n - 1]
-        pt = patch.get(n)
-        dmx = "U%d : %d–%d" % (pt["u"], pt["a"], pt["b"]) if pt else "not patched"
-        model = pt["model"] if pt else "(optional pinspot)"
+    for n in sorted(patch):
+        typ, label = fixnames[n - 1]
+        pt = patch[n]
+        dmx = "U%d : %d–%d" % (pt["u"], pt["a"], pt["b"])
+        model = pt["model"]
         t = test_of.get(n)
         in_looks = [c["num"] for c in looks if any(n in mems[idx(p, m)]["lit"] for p, m, _, _ in c["fires"])]
         rows.append(["<b>%d</b>" % n, "<b>%s</b>" % esc(label), esc(model), mp.HANG.get(n, ""), fader(n), dmx,
@@ -218,9 +241,7 @@ def build_link_map(mems, patch, qlab):
     table.setStyle(TableStyle([("TOPPADDING", (0, 1), (-1, -1), 1.1), ("BOTTOMPADDING", (0, 1), (-1, -1), 1.1)]))
     story.append(table)
     story.append(Spacer(0, 2 * mm))
-    story.append(P("Universe 1 = %s. Universe 2 = %s. Pinspots #41–42 are not in the base patch: add them as "
-                   "generic dimmers at U1:37–38 only if the mirror ball is used (Part C step 5)."
-                   % (UNIVERSE_ROUTE[1], UNIVERSE_ROUTE[2]), st["note"]))
+    story.append(P("Universe 1 = %s. Universe 2 = %s." % (UNIVERSE_ROUTE[1], UNIVERSE_ROUTE[2]), st["note"]))
     doc.build(story)
     return path
 
@@ -229,17 +250,18 @@ def build_link_map(mems, patch, qlab):
 # Label sheet
 # --------------------------------------------------------------------------
 
-def build_labels(mems, qlab):
+def build_labels(mems, patch, qlab):
     _, _, cues = qlab
+    names = base_fixtures(patch)
     st = mp.styles(7.5)
     path = os.path.join(mp.OUT, "BASE_SHOW_2026_Mantra_Labels.pdf")
     doc = mp.Doc(path, "BASE_SHOW_2026 Mantra Labels", FOOTER, landscape(A4))
-    story = mp.fixture_labels(st) + [PageBreak()]
+    story = mp.fixture_labels(st, names, BASE_KEY) + [PageBreak()]
 
     cue_of = first_cue(cues)
     story += [P("Playback labels — BASE_SHOW_2026", st["title"]),
-              P("For the base show only (the R13.1 show has its own sheet). P1 = venue looks. P2–P5 = rig test, one "
-                "fixture per memory. Header = page · memory · QLab cue.", st["sub"]), Spacer(0, 2 * mm)]
+              P("P1 = venue looks. P2–P5 = rig test, one fixture per memory. Header = page · memory · QLab cue.",
+                st["sub"]), Spacer(0, 2 * mm)]
     for pg, pname in [(1, "VENUE LOOKS"), (2, "TEST 1–10"), (3, "TEST 11–20"), (4, "TEST 21–30"), (5, "TEST 31–40")]:
         cells, heads, cmds = [], [], []
         for k in range(10):
@@ -253,7 +275,7 @@ def build_labels(mems, qlab):
                 cells.append((i, SHORT.get(mem["name"], mem["name"]), ""))
             else:
                 n = next(iter(mem["lit"]))
-                typ, label = mp.FIXTURES[n - 1]
+                typ, label = names[n - 1]
                 cells.append((i, label, "fixture %d" % n))
                 cmds.append(("LINEABOVE", (k, 0), (k, 0), 3.5, colors.HexColor(mp.TYPE_COL[typ])))
             heads.append(cue_of.get(i, ""))
@@ -285,7 +307,7 @@ def main():
     if bad:
         raise SystemExit("QLab base fires memories that are not in BASE_SHOW_2026.mtr: %s" % bad)
     os.makedirs(mp.OUT, exist_ok=True)
-    for path in (build_link_map(mems, patch, qlab), build_labels(mems, qlab)):
+    for path in (build_link_map(mems, patch, qlab), build_labels(mems, patch, qlab)):
         shutil.copy(path, os.path.join(PROD, os.path.basename(path)))
         print(os.path.relpath(path, ROOT))
 

@@ -581,8 +581,17 @@ def label_strip(cells, col_w, height, extra=()):
     return t
 
 
-def fixture_labels(st):
-    """Fixture fader labels: 4 strips of 12 (console, wing 1, wing 2) and the key."""
+KEY = ("<b>Key</b> · yellow Lightsky C42 (U2) · blue Tour Pro Zoom · orange TourCOB PAR · violet PixBar · "
+       "grey hazer / pinspots. FACE 1 = DSR, 2 = DSC, 3 = DSL; L / R = lit from house left / right. "
+       "Hung: 1–8 FOH · 9–18 LX1 · 19–20, 23–28, 33–39 LX2 · 21, 29–30 SR boom · 22, 31–32 SL boom · "
+       "40 floor US · 41–42 FOH (pinspots only if the mirror ball is used). 43–48 spare. "
+       "Confirm #38 PIX 6 and #39 BACK C exist on the rig.")
+
+
+def fixture_labels(st, fixtures=None, key=KEY):
+    """Fixture fader labels: 4 strips of 12 (console, wing 1, wing 2) and the key.
+    fixtures = [(type, label)] for faders 1-48 (default: the show names)."""
+    fixtures = fixtures or FIXTURES
     num = ParagraphStyle("num", fontName="Sans-Bold", fontSize=9, leading=10.5, alignment=1, textColor=INK)
     fx_w = 23.08 * mm
     story = []
@@ -594,15 +603,11 @@ def fixture_labels(st):
         cells, cmds = [], []
         for i in range(12):
             n = blk * 12 + i + 1
-            typ, name = FIXTURES[n - 1]
+            typ, name = fixtures[n - 1]
             cells.append([P(str(n), num), fit_label(name, fx_w - 2.6 * mm, big=13)] if name else [P(str(n), num)])
             cmds.append(("LINEABOVE", (i, 0), (i, 0), 3.5, colors.HexColor(TYPE_COL[typ])))
         story += [P("<b>%s</b>" % titles[blk], st["m"]), label_strip(cells, fx_w, 16 * mm, cmds), Spacer(0, 3 * mm)]
-    story.append(P("<b>Key</b> · yellow Lightsky C42 (U2) · blue Tour Pro Zoom · orange TourCOB PAR · violet PixBar · "
-                   "grey hazer / pinspots. FACE 1 = DSR, 2 = DSC, 3 = DSL; L / R = lit from house left / right. "
-                   "Hung: 1–8 FOH · 9–18 LX1 · 19–20, 23–28, 33–39 LX2 · 21, 29–30 SR boom · 22, 31–32 SL boom · "
-                   "40 floor US · 41–42 FOH (pinspots only if the mirror ball is used). 43–48 spare. "
-                   "Confirm #38 PIX 6 and #39 BACK C exist on the rig.", st["note"]))
+    story.append(P(key, st["note"]))
     return story
 
 
